@@ -1,0 +1,4 @@
+cmake_minimum_required (VERSION 2.8)
+project(Eng)
+add_subdirectory(Eng-Pil)
+add_subdirectory(Eng-Core)
