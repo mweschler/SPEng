@@ -3,13 +3,17 @@ set(TESTS mytest.cpp)
 
 
 #setup Gtest
-add_definitions(-D_VARIADIC_MAX=10)
+if(WIN32)
+	add_definitions(-D_VARIADIC_MAX=10)
+endif()
 add_subdirectory(gtest-1.7.0)
 enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 #tests
-add_definitions( /OPT:NOREF)
+if(WIN32)
+	add_definitions( /OPT:NOREF)
+endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-PIL 
 ${CMAKE_SOURCE_DIR}/Eng-Core
