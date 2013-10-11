@@ -12,7 +12,11 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_definitions( /OPT:NOREF)
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-PIL 
-${CMAKE_SOURCE_DIR}/Eng-Core)
+${CMAKE_SOURCE_DIR}/Eng-Core
+${CMAKE_SOURCE_DIR}/Eng-Gameplay
+${CMAKE_SOURCE_DIR}/Eng-Control
+)
+
 add_executable( runEngTests ${TESTS})
-target_link_libraries(runEngTests gtest Eng-Core)
+target_link_libraries(runEngTests gtest Eng-Control)
 add_test( runEngTests runEngTests)
