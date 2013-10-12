@@ -1,9 +1,9 @@
-set(CORE_SOURCE core.cpp
+set(CORE_SOURCE
     IObserver.cpp
     Subject.cpp
 	RenderManager.cpp
 	)
-set(CORE_HEADER core.h
+set(CORE_HEADER
 	IObserver.h
     Subject.h
 	Rendermanager.h
