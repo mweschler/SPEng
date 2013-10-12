@@ -1,9 +1,15 @@
 set(CORE_SOURCE core.cpp
     IObserver.cpp
-    Subject.cpp)
+    Subject.cpp
+	ConfigurationManager.cpp
+	VariableContainer.cpp)
 set(CORE_HEADER core.h
 	IObserver.h
-    Subject.h)
+    Subject.h
+	IConfigurationFacade.h
+	ConfigurationManager.h
+	IAudioFacade.h
+	VariableContainer.h)
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)
