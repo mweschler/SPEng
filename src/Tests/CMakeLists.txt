@@ -3,7 +3,7 @@ set(TESTS mytest.cpp)
 
 
 #setup Gtest
-if(WIN32)
+if(MSVC)
 	add_definitions(-D_VARIADIC_MAX=10)
 endif()
 add_subdirectory(gtest-1.7.0)
@@ -11,7 +11,7 @@ enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 #tests
-if(WIN32)
+if(MSVC)
 	add_definitions( /OPT:NOREF)
 endif()
 
