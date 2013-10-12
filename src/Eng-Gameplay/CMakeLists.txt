@@ -1,8 +1,12 @@
 set(GAMEPLAY_SOURCE 
-gptemp.cpp
+GameObject.cpp
+GameWorld.cpp
 )
 set(GAMEPLAY_HEADER 
-gptemp.h
+GameObject.h
+GameWorld.h
+IGameplayFoundation.h
+IComponent.h
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil
