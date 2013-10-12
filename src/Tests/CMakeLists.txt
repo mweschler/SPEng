@@ -1,5 +1,7 @@
 project(Eng-Tests CXX)
-set(TESTS mytest.cpp)
+set(TESTS mytest.cpp
+guitest.cpp
+)
 
 
 #setup Gtest

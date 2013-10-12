@@ -7,5 +7,7 @@ TEST(coretest, validtest){
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
+	int rv = RUN_ALL_TESTS();
+	std::getchar();
+	return rv;
 }

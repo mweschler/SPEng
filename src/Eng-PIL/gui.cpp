@@ -11,6 +11,7 @@ bool GUI::initialized = false;
 #ifdef _WIN32
 LPCSTR GUI::m_appname;
 HINSTANCE GUI::m_hinstance;
+#define GLEW_STATIC
 #endif
 
 GUI::GUI(){
