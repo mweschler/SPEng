@@ -1,9 +1,14 @@
-set(CORE_SOURCE 
-RenderManager.cpp
-)
-set(CORE_HEADER 
-Rendermanager.h
-)
+set(CORE_SOURCE core.cpp
+    IObserver.cpp
+    Subject.cpp
+	RenderManager.cpp
+	)
+set(CORE_HEADER core.h
+	IObserver.h
+    Subject.h
+	Rendermanager.h
+	)
+
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)
