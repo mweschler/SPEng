@@ -4,7 +4,8 @@
 
 class GameObject;
 
-class GameWorld : public IGameplayFoundation {
+template <typename T>
+class GameWorld : public IGameplayFoundation<T> {
 public:
 	void updateAll();
 	int createObject();
