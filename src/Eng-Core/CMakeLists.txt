@@ -1,9 +1,9 @@
 set(CORE_SOURCE core.cpp
-    CORE_SOURCE IObserver.cpp
-	CORE_SOURCE Subject.cpp)
+    IObserver.cpp
+    Subject.cpp)
 set(CORE_HEADER core.h
-	CORE_HEADER IObserver.h
-	CORE_HEADER Subject.h)
+	IObserver.h
+    Subject.h)
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)
