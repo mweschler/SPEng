@@ -1,18 +1,30 @@
-set(CORE_SOURCE core.cpp 
+
+set(CORE_SOURCE
     Logger.cpp
 	AssetManager.cpp
 	Asset.cpp 
-)
-set(CORE_HEADER core.h
-	Logger.h
+    IObserver.cpp
+    Subject.cpp
+	RenderManager.cpp
+	ConfigurationManager.cpp
+	VariableContainer.cpp)
+	
+set(CORE_HEADER
+    Logger.h
 	AssetManager.h
 	Asset.h
+	IObserver.h
+    Subject.h
+	IConfigurationFacade.h
+	ConfigurationManager.h
+	IAudioFacade.h
+	VariableContainer.h
+	Rendermanager.h)
 
-)
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)
 
-add_library (Eng-Core ${CORE_SOURCE} ${CORE_HEADER})
+add_library (Eng-Core STATIC ${CORE_SOURCE} ${CORE_HEADER})
 
 target_link_libraries(Eng-Core Eng-PIL)

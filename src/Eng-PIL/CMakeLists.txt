@@ -1,3 +1,16 @@
-set(PIL_SOURCE pil.cpp)
-set(PIL_HEADER pil.h)
-add_library (Eng-PIL ${PIL_SOURCE} ${PIL_HEADER})
+set(PIL_SOURCE 
+assertions.cpp
+window.cpp
+gui.cpp
+
+)
+set(PIL_HEADER 
+assertions.h
+window.h
+gui.h
+)
+
+
+add_library (Eng-PIL STATIC ${PIL_SOURCE} ${PIL_HEADER})
+
+target_link_libraries(Eng-PIL ${GLEW_LIBRARY})
