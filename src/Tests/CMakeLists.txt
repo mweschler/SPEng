@@ -2,6 +2,9 @@ project(Eng-Tests CXX)
 set(TESTS mytest.cpp
 guitest.cpp
 MessageSystemTest.cpp
+gameplay-world.cpp
+rendermgrtest.cpp
+LoggerTests.cpp
 )
 
 
