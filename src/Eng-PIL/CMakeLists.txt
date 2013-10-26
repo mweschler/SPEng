@@ -2,7 +2,8 @@ set(PIL_SOURCE
 assertions.cpp
 window.cpp
 gui.cpp
-
+rendercontext.cpp
+devicecontext.cpp
 )
 set(PIL_HEADER 
 assertions.h

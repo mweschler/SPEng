@@ -11,7 +11,6 @@ bool GUI::initialized = false;
 #ifdef _WIN32
 LPCSTR GUI::m_appname;
 HINSTANCE GUI::m_hinstance;
-#define GLEW_STATIC
 #endif
 
 GUI::GUI(){
@@ -45,6 +44,9 @@ void GUI::showMessageBox(std::string message, std::string title){
 
 //creates a window
 Window *GUI::createWindow(int width, int height, bool fullscreen){
+	if(width <1 || height < 1)
+		return NULL;
+
 	Window *window = new Window();
 	window->setDimensions(width, height);
 	window->setFullscreen(fullscreen);
@@ -55,7 +57,7 @@ Window *GUI::createWindow(int width, int height, bool fullscreen){
 }
 bool GUI::initialize(){
 	if(GUI::initialized){
-		return true;
+		return false;
 	}
 #ifdef _WIN32
 	//setup window class

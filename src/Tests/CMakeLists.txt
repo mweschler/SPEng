@@ -1,7 +1,10 @@
 project(Eng-Tests CXX)
 set(TESTS mytest.cpp
-	guitest.cpp
 	ConfigManagerTest.cpp
+	guitest.cpp
+	gameplay-world.cpp
+	rendermgrtest.cpp
+	LoggerTests.cpp
 	)
 
 #setup Gtest
