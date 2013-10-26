@@ -8,16 +8,16 @@ option(ENG_ASSERTIONS_ENABLED "Should the library block on assertion failures" O
 if(MSVC)
 	set(GLEW_LIBRARY_DIR ${CMAKE_SOURCE_DIR}/../3rdparty/glew-1.10.0/lib/Release/Win32)
 	set(GLEW_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/../3rdparty/glew-1.10.0/include)
-	set(GLEW_LIBRARY glew32s.lib)
+	set(GLEW_LIBRARY glew32s)
 endif(MSVC)
-
+add_definitions(-DGLEW_STATIC)
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
 link_directories(${GLEW_LIBRARY_DIR})
 
 
 if(MSVC)
-	add_definitions(/MTd)
+	add_definitions(/MDd)
 endif(MSVC)
 
 if(ENG_ASSERTIONS_ENABLED)

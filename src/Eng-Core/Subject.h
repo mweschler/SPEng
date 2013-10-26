@@ -1,12 +1,21 @@
+#pragma once
+#include <string>
 #include <vector>
+#include <list>
+
+//	
+
+template <typename T>
 class Subject
 {
 
 public:
-	std::vector<std::string> observerList;
+	//Vector filled with pointers to the observers
+	std::vector<T* > list;
 
-	virtual void attach();
-	virtual void unattach();
-	virtual void notifyObservers();
+	virtual void attach(T *concreteSubject);
+	virtual void unattach(T *concreteSubjecct);
+	//Not yet sure if i want message to be string
+	virtual void notifyObservers(T message);
 
 };
