@@ -9,14 +9,18 @@ using namespace std;
 
 Logger* Logger::instance = NULL;
 
-		//Basic constructor for Logger
-		Logger::Logger(){
+		//Constructor for Logger
+		Logger::Logger()
+		{
 			dataLogName = ".\\Data_Log.txt";
 			dataLogExists = false;
 		}
 
-		Logger* Logger::Instance(){
+		Logger* Logger::Instance()
+		{
+			cout << "inside instance\n";
 			if(instance == NULL){
+				cout << "inside instance is NULL\n";
 				instance = new Logger();
 			}
 			return instance;
@@ -25,6 +29,11 @@ Logger* Logger::instance = NULL;
 		string Logger::getDataLogName()
 		{
 			return dataLogName;
+		}
+
+		bool Logger::getDataLogExists()
+		{
+			return dataLogExists;
 		}
 
 		//default initialize method

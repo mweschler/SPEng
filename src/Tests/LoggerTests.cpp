@@ -4,6 +4,25 @@
 #include <stdio.h>  
 
 
+TEST(logger, test_initializeWhenFileNotPresent)
+{
+	Logger* logger = Logger::Instance();
+	bool b = logger->getDataLogExists();
+	logger->deleteLog();
+	EXPECT_EQ(b, false);
+}
+
+
+TEST(logger, test_initializeWhenFileIsPresent)
+{
+	Logger* logger = Logger::Instance();
+	logger->createLog();
+	logger->initialize();
+	bool b = logger -> getDataLogExists();
+	logger->deleteLog();
+	EXPECT_EQ(b, true);
+}
+
 
 TEST(logger, test_one_TryingToCreateLogWithoutItExisting)
 {
@@ -66,6 +85,8 @@ TEST(logger, test_six_TryingToDeleteALogAndItDoesExist)
 	int k = logger->deleteLog();
 	EXPECT_EQ(k, 1);
 }
+
+
 
 
 

@@ -13,6 +13,7 @@ class Logger{
 		int deleteLog();
 		void shutdown();
 		string getDataLogName();
+		bool getDataLogExists();
 
 	private:
 		//std::string dataLogLocation;
