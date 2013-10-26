@@ -1,6 +1,7 @@
 project(Eng-Tests CXX)
 set(TESTS mytest.cpp
 guitest.cpp
+MessageSystemTest.cpp
 )
 
 
