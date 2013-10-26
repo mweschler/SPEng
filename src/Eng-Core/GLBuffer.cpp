@@ -15,22 +15,23 @@ GLBuffer::GLBuffer(){
 }
 
 bool GLBuffer::bind() const{
-	if(glIsBuffer(m_buffer) == GL_TRUE){
-		//log error
-		std::cout<<"DEBUG: m_buffer is already bound"<<std::endl;
+	if(m_buffer == 0){
 		return false;
+	}
+
+	//see if already bound
+	if(glIsBuffer(m_buffer) == GL_TRUE){
+		return true;
 	}
 
 	glBindBuffer(m_type, m_buffer);
 	GLenum error = glGetError();
 	if(error == GL_INVALID_ENUM){
 		//log error
-		std::cout<<"DEBUG: bind buffer gave invalid enum"<<std::endl;
 		return false;
 	}
 	if(error == GL_INVALID_VALUE){
 		//log error
-		std::cout<<"DEBUG: bind buffer gave invalid value"<<std::endl;
 		return false;
 	}
 
@@ -38,7 +39,7 @@ bool GLBuffer::bind() const{
 }
 
 bool GLBuffer::create(){
-	if(glIsBuffer(m_buffer) == GL_TRUE){
+	if(m_buffer != 0  || glIsBuffer(m_buffer) == GL_TRUE){
 		//log error
 		return false;
 	}
