@@ -9,7 +9,7 @@ class Logger{
 		static Logger* Instance();	
 		bool initialize();
 		int writeToLog(std::string message);
-		int createLog();
+		
 		int deleteLog();
 		void shutdown();
 		string getDataLogName();
@@ -17,6 +17,7 @@ class Logger{
 
 	private:
 		//std::string dataLogLocation;
+		int createLog();
 		string dataLogName;
 		bool dataLogExists;
 		string dataMessage;
