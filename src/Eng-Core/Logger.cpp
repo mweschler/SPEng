@@ -39,10 +39,14 @@ Logger* Logger::instance = NULL;
 		//default initialize method
 	    bool Logger::initialize()
 		{
-			cout << "inside Initialize\n";
+	
 			ifstream infile(dataLogName);
-			if(infile.good())
+			if(!infile.good())
 			{
+				createLog();
+			}
+			dataLogExists = true;
+				/*{
 				cout << "inside initialize > infile is found\n";
 				dataLogExists = true;
 			}
@@ -50,7 +54,10 @@ Logger* Logger::instance = NULL;
 			{
 				cout << "inside initialize > infile is not found\n";
 				dataLogExists = false;
-			}
+				createLog();
+				cout << "log has been created inside initialize\n";
+			}*/
+			writeToLog("Log Started");
 				return true;
 		}
 		
@@ -72,8 +79,65 @@ Logger* Logger::instance = NULL;
 				int seconds = aTime-> tm_sec;
 				string amORpm = "";
 				string monthName = "";
+				string hoursString = "";
+				string minutesString = "";
+				string secondsString = "";
+				stringstream os;
+				os << hours;
+				cout << "THE Hours before everything " + hoursString + "\n";
+				os.str("");
+				
+				if(hours%12 < 10)
+				{
+					if(hours%12 == 0)
+					{
+						hours = 12;
+						os << hours;
+						hoursString = os.str();
+					}
+					else
+					{
+						os << "0" + hours;
+						hoursString = os.str();
+					}
+					
+				}
+				else
+				{
+					if(hours%12 == 0)
+					{
+						hours = 12;
+					}
+					os << hours;
+					hoursString = os.str();
+				}
+				os.str("");
 
-				if(hours/12 == 0)
+				if(minutes < 10)
+				{
+					os << "0" + minutes;
+					minutesString = os.str();
+				}
+				else
+				{
+					os << minutes;
+					minutesString = os.str();
+				}
+				os.str("");
+
+				if(seconds < 10)
+				{
+					os << "0" + seconds;
+					secondsString = os.str();
+				}
+				else
+				{
+					os << seconds;
+					secondsString = os.str();
+				}
+				os.str("");
+
+				if(hours/12 == 0 || hours == 12)
 				{
 					amORpm = "A.M.";
 				}
@@ -97,12 +161,17 @@ Logger* Logger::instance = NULL;
 					case 11: monthName  = "November";
 					case 12: monthName  = "December";
 				}
+				
+				cout << "THE Hours " + hoursString + "\n";
+				cout << "The minutes " + minutesString + "\n";
+				cout << "the seconds " + secondsString + "\n";
 
-				stringstream os;
-				os << "[" << monthName << " " << day << ", " << year << " - " << 12%hours << ":" <<  minutes << "::" << seconds << " " << amORpm  << "]  ";
-				string dateStats = os.str();
+				stringstream osa;
+				osa << "[" << monthName << " " << day << ", " << year << " - " << hoursString << ":" <<  minutesString << "::" << secondsString << " " << amORpm  << "]  ";
+				string dateStats = osa.str();
 				dataLog.open(dataLogName, ios_base::app);
 				dataLog << dateStats << message << endl;
+				cout << "Message has been written\n";
 				dataLog.close();
 
 				result = 1;
@@ -149,15 +218,18 @@ Logger* Logger::instance = NULL;
 			else
 			{		
 				cout << "Data Log successfully removed log";
-				remove(dataLogName.c_str());
+				remove(dataLogName.c_str());	
 				result = 1;
 			}
+			instance = NULL;
 
 			return result;
 		}
 
 		//default shutdown method.
 		void Logger::shutdown(){
+
+			writeToLog("Log End");
 
 			
 			
