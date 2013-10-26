@@ -5,8 +5,6 @@ set(CORE_SOURCE
     IObserver.cpp
     Subject.cpp
 	RenderManager.cpp
-	ConfigurationManager.cpp
-	VariableContainer.cpp
 	RenderInternal.cpp
 	Material.cpp
 	Model.cpp
@@ -19,9 +17,7 @@ set(CORE_HEADER
 	Asset.h
 	IObserver.h
     Subject.h
-	ConfigurationFacade.h
 	ConfigurationManager.h
-	AudioFacade.h
 	VariableContainer.h
 	Rendermanager.h
 	RenderInternal.h
