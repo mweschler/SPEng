@@ -1,4 +1,3 @@
-
 set(CORE_SOURCE
     Logger.cpp
 	AssetManager.cpp
@@ -22,7 +21,7 @@ set(CORE_HEADER
     Subject.h
 	ConfigurationFacade.h
 	ConfigurationManager.h
-	IAudioFacade.h
+	AudioFacade.h
 	VariableContainer.h
 	Rendermanager.h
 	RenderInternal.h
