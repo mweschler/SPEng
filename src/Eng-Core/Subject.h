@@ -16,7 +16,7 @@ public:
 
 	virtual void attach(Observer<T> &concreteSubject)
 	{
-		//std::cout << " in attach /n";
+		
 	list.push_back(&concreteSubject);
 	//list.insert(&concreteSubject);
 	
@@ -24,12 +24,12 @@ public:
 
 
 	
-	virtual void unattach(Observer<T> *concreteSubject)
+	virtual void unattach(Observer<T> &concreteSubject)
 
 	{
-		//std::string thing;
+		
 
-		list.erase(std::remove(list.begin(), list.end(), concreteSubject), list.end());
+		list.erase(std::remove(list.begin(), list.end(), &concreteSubject), list.end());
 
 		 /**
 		 for(it = list.begin() ; it !=list.end() ; it++) 
@@ -39,18 +39,13 @@ public:
 				 list.erase(it);
 				 return;
 
-
-
 			 }
-
-
 		 }
-	
 
 	**/
 
 	}
-	//Not yet sure if i want message to be string
+	
 	virtual void notifyObservers(T message)
 	{
 
