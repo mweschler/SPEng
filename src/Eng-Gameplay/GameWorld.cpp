@@ -1,6 +1,7 @@
+#include <string>
 #include "GameWorld.h"
 #include "GameObject.h"
-#include <string>
+#include "Logger.h"
 
 using namespace std;
 
@@ -13,14 +14,41 @@ GameWorld* GameWorld::Instance() {
 	return _instance;
 }
 
+// Removes all objects from the game world.
+void GameWorld::clearWorld() {
+	_instance->_objects.clear();
+}
+
 // Adds a new object to the world at the default location (0, 0, 0).
-void GameWorld::createObject(string name) {
-	_objects[name] = new GameObject(name);
+// Returns false if an object with that name already exists.
+bool GameWorld::createObject(string name) {
+	try {
+		_objects.at(name);
+		// Exception thrown if element does not exist.
+	} catch (const std::out_of_range& oor) {
+		_objects[name] = new GameObject(name);
+		return true;
+	}
+	Logger* logger = Logger::Instance();
+	logger->initialize();
+	logger->writeToLog("An object named " + name + " already exists and cannot be added.");
+	return false;
 }
 
 // Adds a new object to the world with specified name and location.
-void GameWorld::createObject(string name, int x, int y, int z) {
-	_objects[name] = new GameObject(name, x, y, z);
+// Returns false if an object with that name already exists.
+bool GameWorld::createObject(string name, int x, int y, int z) {
+	try {
+		_objects.at(name);
+		// Exception thrown if element does not exist.
+	} catch (const std::exception &exc) {
+		_objects[name] = new GameObject(name, x, y, z);
+		return true;
+	}
+	Logger* logger = Logger::Instance();
+	logger->initialize();
+	logger->writeToLog("An object named " + name + " already exists and cannot be added.");
+	return false;
 }
 
 // Removed an object from the world with the given name.
@@ -36,5 +64,7 @@ GameObject* GameWorld::getObject(string name) {
 
 // Updates the state of all objects.
 void GameWorld::update() {
-
+	map<string,GameObject*>::iterator it;
+	for (map<string,GameObject*>::iterator it= _objects.begin(); it !=_objects.end(); ++it) 
+		it->second->update();
 }

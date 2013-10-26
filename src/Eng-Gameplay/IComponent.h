@@ -15,6 +15,9 @@ public:
 
 	// Sets the parent of the component.
 	void setParent(GameObject* parent) { _parent = parent; };
+
+	// Updates the Component
+	virtual void update() {};
 private:
 	// Name of component.
 	string _name;

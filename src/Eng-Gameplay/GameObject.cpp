@@ -56,6 +56,8 @@ string GameObject::getName() {
 
 // Updates all internal components.
 void GameObject::update() {
-
+	std::map<string,IComponent*>::iterator it;
+	for (std::map<string,IComponent*>::iterator it= _components.begin(); it !=_components.end(); ++it) 
+		it->second->update();
 }
 
