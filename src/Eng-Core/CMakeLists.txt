@@ -3,7 +3,11 @@ set(CORE_SOURCE
     Subject.cpp
 	RenderManager.cpp
 	ConfigurationManager.cpp
-	VariableContainer.cpp)
+	VariableContainer.cpp
+	RenderInternal.cpp
+	Material.cpp
+	Model.cpp
+	)
 	
 set(CORE_HEADER
 	IObserver.h
@@ -12,7 +16,11 @@ set(CORE_HEADER
 	ConfigurationManager.h
 	IAudioFacade.h
 	VariableContainer.h
-	Rendermanager.h)
+	Rendermanager.h
+	RenderInternal.h
+	Material.h
+	Model.h
+	)
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)
