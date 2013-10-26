@@ -60,11 +60,30 @@ TEST(messageTest, test_one)
 
 	observer1.who = "WE IS TESTING STUFF/n";
 	Subject<std::string> subject;
-	subject.attach(((Observer<std::string>)observer1));
+
+	/* MIKE NOTE:
+	OLD: subject.attach(((Observer<std::string>)observer1));
+	This cast was the problem. Didn't need to cast it.
+	Parameter of attach is a reference(Observer &observer) so you
+	can safely give a child of observer and it will be cast as a reference
+	automaticly
+
+	subject.attach((Observer<std::string>&)observer1);
+	or
+	subject.attach(dynamic_cast<Observer<std::string>&>(observer1));
+	would be a correct cast in this case, but not really necessary
+	*/
+	
+	subject.attach(observer1);
 	
 	//subject.attach(&(Observer<std::string>)observer2);
 //	subject.attach(&(Observer<std::string>)observer3);
-	//std::cout <<(((Observer1<std::string>*)subject.list.at(0)) ->who);
+
+	/* MIKE NOTE:
+	This line was fine. You could use dynamic_cast to do a checked cast as well
+	std::cout << dynamic_cast<Observer1<std::string>*>(subject.list.at(0))->who;
+	*/
+	std::cout <<(((Observer1<std::string>*)subject.list.at(0)) ->who);
 
 //	std::cout << subject.list.at(1);
 	//std::cout << subject.list.at(2);
