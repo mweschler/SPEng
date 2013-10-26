@@ -4,7 +4,7 @@
 #include <stdio.h>  
 
 
-
+/*
 TEST(logger, test_one_TryingToCreateLogWithoutItExisting)
 {
 	Logger* logger = Logger::Instance();
@@ -69,3 +69,4 @@ TEST(logger, test_six_TryingToDeleteALogAndItDoesExist)
 
 
 
+*/

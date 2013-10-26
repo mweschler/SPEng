@@ -11,6 +11,7 @@ set(CORE_SOURCE
 	RenderInternal.cpp
 	Material.cpp
 	Model.cpp
+	GLBuffer.cpp
 	)
 	
 set(CORE_HEADER
@@ -27,6 +28,7 @@ set(CORE_HEADER
 	RenderInternal.h
 	Material.h
 	Model.h
+	GLBuffer.h
 	)
 
 

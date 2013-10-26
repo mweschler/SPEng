@@ -3,7 +3,7 @@
 class Model;
 class Material;
 
-static class RenderManager {
+class RenderManager {
 public:
 	static bool initialize();
 	static bool isInitialized();

@@ -18,7 +18,7 @@ void RenderManager::shutdown(){
 	render.shutdown();
 }
 
-void RenderManager::drawModel(Model model, Material material){
+void RenderManager::drawModel(const Model model,const Material material){
 	render.drawModel(model, material);
 }
 
