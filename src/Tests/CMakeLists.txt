@@ -1,10 +1,12 @@
 project(Eng-Tests CXX)
 set(TESTS mytest.cpp
-guitest.cpp
-rendermgrtest.cpp
-LoggerTests.cpp
-)
-
+	ConfigManagerTest.cpp
+	guitest.cpp
+	MessageSystemTest.cpp
+	gameplay-world.cpp
+	rendermgrtest.cpp
+	LoggerTests.cpp
+	)
 
 #setup Gtest
 if(MSVC)

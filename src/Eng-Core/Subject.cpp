@@ -1,15 +1,16 @@
 #include "Subject.h"
 #include <vector>
 #include <list>
-
+#include "IObserver.h"
+/**
 template <typename T>
-void Subject<T>::attach(T *concreteObserver)
+void Subject<T>::attach(Observer<T> *concreteObserver)
 {
 	list.push_back(concreteObserver);
 }
 
 template <typename T> 
-void Subject<T>::unattach(T *concreteObserver)
+void Subject<T>::unattach(Observer<T>  *concreteObserver)
 {
 	//This might not be correct
 	list.erase(std::remove(list.begin(), list.end(), concreteObserver), end());
@@ -21,16 +22,26 @@ void Subject<T>::unattach(T *concreteObserver)
 template <typename T> 
 void Subject<T>::notifyObservers(T message)
 {
-
-	//iterate through list of observers  and update info. 
+	/**
+		//iterate through list of observers  and update info. 
     for(vector<concreteObserver*>::const_iterator iter = list.begin(); iter != list.end(); ++iter)
     {
         if(*iter != 0)
         {
-            (*iter)->Update(message);
+            (*iter)->update(message);
         }
     }
-}
+
+	**/
+	//iterate through list of observers  and update info. 
+ //   for(vector<concreteObserver*>::const_iterator iter = list.begin(); iter != list.end(); ++iter)
+ //   {
+  //      if(*iter != 0)
+   //     {
+  //          (*iter)->update(message);
+   //     }
+  //  }
+//}
 /**
 
 A class that is implementing my code would look something like this

@@ -20,7 +20,7 @@ set(CORE_HEADER
 	Asset.h
 	IObserver.h
     Subject.h
-	IConfigurationFacade.h
+	ConfigurationFacade.h
 	ConfigurationManager.h
 	IAudioFacade.h
 	VariableContainer.h

@@ -1,10 +1,11 @@
 #pragma once
 
+
 template <typename T>
-class IObservers
+class Observer
 {
 public:
- virtual void notify(T message);
+	virtual void update(T *subject) {};
  //virtual void storeMessage();
 
 };
