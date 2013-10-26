@@ -1,8 +1,8 @@
 project(Eng-Tests CXX)
 set(TESTS mytest.cpp
-guitest.cpp
-)
-
+	guitest.cpp
+	ConfigManagerTest.cpp
+	)
 
 #setup Gtest
 if(MSVC)

@@ -1,19 +1,32 @@
 #pragma once
 #include <String>
 
-template <typename T>
 class VariableContainer
 {
-private:
-	std::string name;
-	T type;
-	std::string value;
 public:
-	std::string retrieveName(std::string);
-	T retrieveType(std::string);
-	std::string retrieveValue(std::string);
-
-	void modifyName(std::string, std::string);
-	void modifyType(std::string, T);
-	void modifyValue(std::string, std::string);
+	virtual ~VariableContainer() {}
+    template<typename T> T getValue();
+    template<typename T> void setValue(T newValue);
 };
+
+template <typename T>
+class Variable : public VariableContainer
+{
+public:
+	Variable(T initialValue) :value(initialValue) {} 
+	T getValue() {return value;}
+	void setValue(T newValue){value = newValue;}
+private:
+	T value;
+};
+
+//Here's the trick: dynamic_cast rather than virtual
+template<typename T> T VariableContainer::getValue()
+{ 
+	return dynamic_cast<Variable<T>&>(*this).getValue(); 
+}
+template<typename T> void VariableContainer::setValue(T newValue)
+{ 
+	return dynamic_cast<Variable<T>&>(*this).setValue(newValue); 
+}
+
