@@ -1,4 +1,8 @@
+
 set(CORE_SOURCE
+    Logger.cpp
+	AssetManager.cpp
+	Asset.cpp 
     IObserver.cpp
     Subject.cpp
 	RenderManager.cpp
@@ -10,6 +14,9 @@ set(CORE_SOURCE
 	)
 	
 set(CORE_HEADER
+    Logger.h
+	AssetManager.h
+	Asset.h
 	IObserver.h
     Subject.h
 	IConfigurationFacade.h
@@ -21,6 +28,7 @@ set(CORE_HEADER
 	Material.h
 	Model.h
 	)
+
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)

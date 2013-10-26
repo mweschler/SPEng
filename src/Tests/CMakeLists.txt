@@ -2,6 +2,7 @@ project(Eng-Tests CXX)
 set(TESTS mytest.cpp
 guitest.cpp
 rendermgrtest.cpp
+LoggerTests.cpp
 )
 
 
