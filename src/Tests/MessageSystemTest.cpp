@@ -200,10 +200,47 @@ TEST(messageTest, test_six)
 
 
 
-	EXPECT_EQ(5, ((int)((Observer1<int>*)subject.list.at(0)) ->theMessage));
-	EXPECT_EQ(5, ((int)((Observer1<int>*)subject.list.at(1)) ->theMessage));
+	EXPECT_EQ(5, (((Observer1<int>*)subject.list.at(0)) ->theMessage));
+	EXPECT_EQ(5, (((Observer1<int>*)subject.list.at(1)) ->theMessage));
 	
 }
 
 
+
+//This test combines all functions. We test to make sure the observers that are attached
+//are getting the new messages. Multible messages are sent this time. We are also making
+//Sure that observers that have been unattached are not reciving the new messages.
+TEST(messageTest, test_seven)
+{
+	std::string theMessage;
+	theMessage ="The shared message";
+	Observer1<std::string> observer1;
+	Observer2<std::string> observer2;
+	Observer3<std::string> observer3;
+
+	observer1.who = "Observer 1 is attached";
+	observer2.who = "Observer 2 is attached";
+	observer3.who = "Observer 3 is attached";
+	Subject<std::string> subject;
+
+	subject.attach(observer1);
+	
+	subject.attach(observer2);
+	subject.attach(observer3);
+	subject.notifyObservers(theMessage);
+
+
+	EXPECT_EQ("The shared message", (((Observer1<std::string>*)subject.list.at(0)) ->theMessage));
+	EXPECT_EQ("The shared message", (((Observer1<std::string>*)subject.list.at(1)) ->theMessage));
+	EXPECT_EQ("The shared message", (((Observer1<std::string>*)subject.list.at(2)) ->theMessage));
+	
+	theMessage ="The new message";
+	subject.unattach(observer2);
+	subject.notifyObservers(theMessage);
+
+	EXPECT_EQ("The new message", (((Observer1<std::string>*)subject.list.at(0)) ->theMessage));
+	EXPECT_EQ("The new message", (((Observer1<std::string>*)subject.list.at(1)) ->theMessage));
+	EXPECT_EQ("The shared message", observer2.theMessage);
+	
+}
 
