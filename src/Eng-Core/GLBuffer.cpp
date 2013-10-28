@@ -58,11 +58,11 @@ GLenum GLBuffer::getType() const{
 }
 
 bool GLBuffer::release(){
-	if(glIsBuffer(m_buffer) == GL_FALSE){
+	if(m_buffer == 0){
 		//log error
 		return false;
 	}
-
+	glGetError(); //clear errors
 	glDeleteBuffers(1, &m_buffer);
 	GLenum error = glGetError();
 	if(error == GL_INVALID_VALUE){
