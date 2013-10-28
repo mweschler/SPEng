@@ -2,11 +2,13 @@
 #include "gui.h"
 #include "window.h"
 
+bool keepWindow = false;
+
 namespace {
 class WindowTests : public ::testing::Test{
 protected:
 	WindowTests(){ 
-		
+
 	}
 
 	~WindowTests() {
@@ -64,10 +66,10 @@ TEST_F(WindowTests, windowShow){
 	Window *wnd = GUI::createWindow(800,600, false);
 	ASSERT_TRUE(wnd != NULL);
 	wnd->show();
-	/*
+	if(keepWindow)
 	while(!wnd->shouldQuit()){
 		wnd->pollEvents();
-	}*/
+	}
 	wnd->close();
 	delete wnd;
 }
