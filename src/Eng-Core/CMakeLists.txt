@@ -9,6 +9,7 @@ set(CORE_SOURCE
 	Material.cpp
 	Model.cpp
 	GLBuffer.cpp
+	ConfigurationManager.cpp
 	)
 	
 set(CORE_HEADER
