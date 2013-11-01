@@ -4,7 +4,7 @@
 #include "GL\glew.h"
 #include "Logger.h"
 
-inline void GLHelper::flushGLErrors(){
+void GLHelper::flushGLErrors(){
 	
 	GLenum rv = glGetError();
 	if(rv != GL_NO_ERROR)
