@@ -1,7 +1,7 @@
 #pragma once
 
-static class GLHelper
+class GLHelper
 {
 public:
-	static inline void flushGLErrors();
+	static void flushGLErrors();
 };
