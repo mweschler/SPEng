@@ -10,6 +10,7 @@ set(CORE_SOURCE
 	Model.cpp
 	GLBuffer.cpp
 	ConfigurationManager.cpp
+	GLHelper.cpp
 	)
 	
 set(CORE_HEADER
@@ -25,6 +26,7 @@ set(CORE_HEADER
 	Material.h
 	Model.h
 	GLBuffer.h
+	GLHelper.h
 	)
 
 

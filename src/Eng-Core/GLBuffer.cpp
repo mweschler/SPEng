@@ -1,6 +1,8 @@
 #include <GL/glew.h>
 #include "GLBuffer.h"
 #include "assertions.h"
+#include "Logger.h"
+#include "GLHelper.h"
 
 #include <iostream>
 
@@ -14,10 +16,13 @@ GLBuffer::GLBuffer(){
 	ASSERT(false); //should never get here
 }
 
+
 bool GLBuffer::bind() const{
 	if(m_buffer == 0){
 		return false;
 	}
+	
+	GLHelper::flushGLErrors();
 
 	//see if already bound
 	if(glIsBuffer(m_buffer) == GL_TRUE){
@@ -39,6 +44,8 @@ bool GLBuffer::bind() const{
 }
 
 bool GLBuffer::create(){
+	GLHelper::flushGLErrors();
+
 	if(m_buffer != 0  || glIsBuffer(m_buffer) == GL_TRUE){
 		//log error
 		return false;
@@ -62,7 +69,9 @@ bool GLBuffer::release(){
 		//log error
 		return false;
 	}
-	glGetError(); //clear errors
+
+	GLHelper::flushGLErrors();
+
 	glDeleteBuffers(1, &m_buffer);
 	GLenum error = glGetError();
 	if(error == GL_INVALID_VALUE){
