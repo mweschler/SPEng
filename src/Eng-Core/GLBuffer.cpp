@@ -6,6 +6,9 @@
 
 #include <iostream>
 
+/*! Represents an OpenGL buffer
+	\param type The type of buffer this object represents
+*/
 GLBuffer::GLBuffer(GLenum type):
 	m_type(type),
 	m_buffer(0)
@@ -17,6 +20,9 @@ GLBuffer::GLBuffer(){
 }
 
 
+/*! Binds the buffer to the current context
+	\return true if succesfully bound
+*/
 bool GLBuffer::bind() const{
 	if(m_buffer == 0){
 		return false;
@@ -43,6 +49,9 @@ bool GLBuffer::bind() const{
 	return true;
 }
 
+/*! Creates the buffer in the current context
+	\return true if succesful
+*/
 bool GLBuffer::create(){
 	GLHelper::flushGLErrors();
 
@@ -60,10 +69,16 @@ bool GLBuffer::create(){
 	return true;
 }
 
+/*! Gets the GLBuffer type
+	\return buffer type
+*/
 GLenum GLBuffer::getType() const{
 	return this->m_type;
 }
 
+/*! Releases the buffer from the current context
+	\return true on success
+*/
 bool GLBuffer::release(){
 	if(m_buffer == 0){
 		//log error
