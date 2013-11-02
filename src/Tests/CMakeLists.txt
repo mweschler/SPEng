@@ -7,8 +7,8 @@ set(TESTS mytest.cpp
 	rendermgrtest.cpp
 	LoggerTests.cpp
 	AudioManagerTest.cpp
+	ShaderTests.cpp
 	)
-
 #setup Gtest
 if(MSVC)
 	add_definitions(-D_VARIADIC_MAX=10)

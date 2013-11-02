@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 #include "GLBuffer.h"
 #include "assertions.h"
-#include "Logger.h"
 #include "GLHelper.h"
 
 #include <iostream>

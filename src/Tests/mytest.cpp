@@ -9,5 +9,4 @@ int main(int argc, char **argv)
 	int rv = RUN_ALL_TESTS();
 	std::getchar();
 	return rv;
-
 }
