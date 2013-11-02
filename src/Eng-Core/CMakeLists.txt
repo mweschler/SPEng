@@ -11,6 +11,7 @@ set(CORE_SOURCE
 	GLBuffer.cpp
 	ConfigurationManager.cpp
 	GLHelper.cpp
+	InputHandler.cpp
 	)
 	
 set(CORE_HEADER
