@@ -6,6 +6,7 @@ set(TESTS mytest.cpp
 	gameplay-world.cpp
 	rendermgrtest.cpp
 	LoggerTests.cpp
+	ShaderTests.cpp
 	)
 
 #setup Gtest
