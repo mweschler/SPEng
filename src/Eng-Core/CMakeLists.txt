@@ -11,6 +11,7 @@ set(CORE_SOURCE
 	GLBuffer.cpp
 	ConfigurationManager.cpp
 	GLHelper.cpp
+	AudioManager.cpp
 	)
 	
 set(CORE_HEADER
@@ -27,6 +28,7 @@ set(CORE_HEADER
 	Model.h
 	GLBuffer.h
 	GLHelper.h
+	AudioManager.h
 	)
 
 

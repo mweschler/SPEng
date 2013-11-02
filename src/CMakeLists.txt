@@ -5,6 +5,7 @@ option(ENG_BUILD_TESTS "Build the tests for the eninge" ON)
 option(ENG_ASSERTIONS_ENABLED "Should the library block on assertion failures" ON)
 option(ENG_BUILD_DOCUMENTATION "Builds doxygen documentation" OFF)
 
+include_directories(${CMAKE_SOURCE_DIR}/../3rdparty/portaudio/include)
 #setup 3rdparty libraries
 if(MSVC)
 	set(GLEW_LIBRARY_DIR ${CMAKE_SOURCE_DIR}/../3rdparty/glew-1.10.0/lib/Release/Win32)
@@ -40,7 +41,7 @@ if(DOXYGEN_FOUND)
 	add_custom_target(apidoc ALL DEPENDS ${DOXYGEN_OUTPUT})
 	
 endif(DOXYGEN_FOUND)
-endif(ENG_BUILD_DOCUMENTATION)
+endif(ENG_BUILD_DOCUMENTATION)	
 
 if(MSVC)
 	add_definitions(/MDd)

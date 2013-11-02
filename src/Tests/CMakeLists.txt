@@ -6,6 +6,7 @@ set(TESTS mytest.cpp
 	gameplay-world.cpp
 	rendermgrtest.cpp
 	LoggerTests.cpp
+	AudioManagerTest.cpp
 	)
 
 #setup Gtest
@@ -28,5 +29,14 @@ ${CMAKE_SOURCE_DIR}/Eng-Control
 )
 
 add_executable( runEngTests ${TESTS})
+
+if(WIN32)
+	add_custom_command(
+		TARGET runEngTests POST_BUILD        # Adds a post-build event to MyTest
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+		"${CMAKE_SOURCE_DIR}/../3rdparty/portaudio/lib/windows/portaudio_x86.dll"      # <--this is in-file
+		$<TARGET_FILE_DIR:runEngTests>)                 # <--this is out-file path
+endif(WIN32)
+
 target_link_libraries(runEngTests gtest Eng-Control)
 add_test( runEngTests runEngTests)
