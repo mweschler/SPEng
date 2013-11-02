@@ -13,6 +13,7 @@ set(CORE_SOURCE
 	GLHelper.cpp
 	Shader.cpp
 	ShaderProgram.cpp
+	InputHandler.cpp
 	)
 	
 set(CORE_HEADER
