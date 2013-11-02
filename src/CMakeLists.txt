@@ -3,6 +3,7 @@ project(Eng)
 
 option(ENG_BUILD_TESTS "Build the tests for the eninge" ON)
 option(ENG_ASSERTIONS_ENABLED "Should the library block on assertion failures" ON)
+option(ENG_BUILD_DOCUMENTATION "Builds doxygen documentation" OFF)
 
 #setup 3rdparty libraries
 if(MSVC)
@@ -15,6 +16,31 @@ find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
 link_directories(${GLEW_LIBRARY_DIR})
 
+if(ENG_BUILD_DOCUMENTATION)
+find_package(Doxygen)
+
+set(DOXYGEN_INPUT ${CMAKE_SOURCE_DIR}/spengdox)
+set(DOXYGEN_OUTPUT /Documentation)
+
+if(WIN32)
+	set(DOXYGEN_EXECUTABLE ${CMAKE_SOURCE_DIR}/../tools/doxygen/bin/windows/doxygen.exe)
+	#set(DOXYGEN_FOUND)
+endif(WIN32)
+
+if(DOXYGEN_FOUND)
+	add_custom_command(
+		OUTPUT ${DOXYGEN_OUTPUT}
+		COMMAND ${CMAKE_COMMAND} -E echo_append "Building documentation..."
+		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_INPUT}
+		COMMAND ${CMAKE_COMMAND} -E echo "Finished building documentation."
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+		DEPENDS ${DOXYGEN_INPUT}
+	)
+	
+	add_custom_target(apidoc ALL DEPENDS ${DOXYGEN_OUTPUT})
+	
+endif(DOXYGEN_FOUND)
+endif(ENG_BUILD_DOCUMENTATION)
 
 if(MSVC)
 	add_definitions(/MDd)
