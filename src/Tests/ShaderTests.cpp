@@ -4,6 +4,7 @@
 #include "RenderManager.h"
 #include "window.h"
 #include "Shader.h"
+#include "ShaderProgram.h"
 
 namespace{
 	void writeShaderFiles();
@@ -44,7 +45,7 @@ protected:
 		file.close();
 	}
 
-TEST_F(ShaderTests, loadShaderValid){
+TEST_F(ShaderTests, DISABLED_loadShaderValid){
 	Shader vertShader;
 	Shader fragShader;
 	
@@ -87,7 +88,7 @@ TEST_F(ShaderTests, loadShaderValid){
 	ASSERT_EQ(0, fragShader.getID());
 }
 
-TEST_F(ShaderTests, invalidUsage){
+TEST_F(ShaderTests, DISABLED_invalidUsage){
 	Shader shader;
 	ASSERT_FALSE(shader.isCompiled());
 	ASSERT_FALSE(shader.isLoaded());
@@ -118,6 +119,32 @@ TEST_F(ShaderTests, invalidUsage){
 
 	ASSERT_EQ(shader.getID(), 0);
 	ASSERT_EQ(shader.getType(), 0);
+}
+
+TEST_F(ShaderTests, DISABLED_programValid){
+	Shader vertShader;
+	Shader fragShader;
+	
+	ASSERT_TRUE(vertShader.load("vertTestShader.vert"));
+	ASSERT_TRUE(fragShader.load("fragTestShader.frag"));
+
+	vertShader.setType(GL_VERTEX_SHADER);
+	fragShader.setType(GL_FRAGMENT_SHADER);
+
+	ASSERT_TRUE(vertShader.compile());
+	ASSERT_TRUE(fragShader.compile());
+
+	ShaderProgram program;
+
+	ASSERT_FALSE(program.isLinked());
+	
+	ASSERT_TRUE(program.link(vertShader, fragShader));
+	ASSERT_TRUE(program.isLinked());
+
+	ASSERT_TRUE(program.use());
+
+	ASSERT_TRUE(program.release());
+	ASSERT_FALSE(program.isLinked());
 }
 
 }

@@ -57,11 +57,7 @@ bool Shader::compile(){
 	if(error != GL_NO_ERROR){
 		std::string msg = "Error with shader source: ";
 
-		switch(error){
-		case GL_INVALID_VALUE: msg = msg + "GL_INVALID_VALUE"; break;
-		case GL_INVALID_OPERATION: msg = msg + "GL_INVALID_OPERATION"; break;
-		default: msg = msg + "Other error";
-		}
+		msg = msg + GLHelper::errorEnumToString(error);
 
 		Logger &logger =  *Logger::Instance();
 		logger.writeToLog(msg);
@@ -74,11 +70,7 @@ bool Shader::compile(){
 	if(error != GL_NO_ERROR){
 		std::string msg = "Error compiling shader source: ";
 
-		switch(error){
-		case GL_INVALID_VALUE: msg = msg + "GL_INVALID_VALUE"; break;
-		case GL_INVALID_OPERATION: msg = msg + "GL_INVALID_OPERATION"; break;
-		default: msg = msg + "Other error";
-		}
+		msg = msg + GLHelper::errorEnumToString(error);
 
 		Logger &logger =  *Logger::Instance();
 		logger.writeToLog(msg);

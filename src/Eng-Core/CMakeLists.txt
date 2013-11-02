@@ -12,6 +12,7 @@ set(CORE_SOURCE
 	ConfigurationManager.cpp
 	GLHelper.cpp
 	Shader.cpp
+	ShaderProgram.cpp
 	)
 	
 set(CORE_HEADER
@@ -29,6 +30,7 @@ set(CORE_HEADER
 	GLBuffer.h
 	GLHelper.h
 	Shader.h
+	ShaderProgram.h
 	)
 
 
