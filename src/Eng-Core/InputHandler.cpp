@@ -1,41 +1,22 @@
-#include <windows.h>
-#include <stdio.h>
-#include<conio.h>
-#include<dos.h>
-
-class UserInput
+#include "InputHandler.h"
+//Returns true if a key is pressed.
+bool UserInput::isKeyPressed(enum sf::Keyboard::Key theKey)
 {
-public:
-	POINT getCursorPostion();
-	char getPressedKey();
-
+	
+	return	 (sf::Keyboard::isKeyPressed(theKey));
 
 };
-/**
- * returns a point object contains curso postion.
- */
 
-POINT UserInput::getCursorPostion()
+//Returns true if a mouse betton is pressed.
+bool UserInput::isMouseKeyPressed(enum sf::Mouse::Button theButton)
 {
-	
-	POINT cursor;
-GetCursorPos(&cursor);
-return cursor;
 
-}
+	return (sf::Mouse::isButtonPressed(theButton ));
+};
 
-char UserInput::getPressedKey()
-{
-	char keystroke= ')';
-	if (kbhit())
-{
-	
-    keystroke = getch();
-    return keystroke;
-}
-	return keystroke;
 
-}
+ sf::Vector2i UserInput::globalMousePostion =sf::Mouse::getPosition();
+
 
 /**
 Working with some testes here to figure some stuff out.

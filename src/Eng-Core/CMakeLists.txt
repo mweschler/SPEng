@@ -34,6 +34,7 @@ set(CORE_HEADER
 	AudioManager.h
 	Shader.h
 	ShaderProgram.h
+	InputHandler.h
 	)
 
 

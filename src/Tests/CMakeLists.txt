@@ -8,6 +8,7 @@ set(TESTS mytest.cpp
 	LoggerTests.cpp
 	AudioManagerTest.cpp
 	ShaderTests.cpp
+	InputHandlerTest.cpp
 	)
 #setup Gtest
 if(MSVC)
@@ -52,5 +53,5 @@ if(WIN32)
 		"${PROJECT_BINARY_DIR}")    # <--this is out-file path
 endif(WIN32)
 
-target_link_libraries(runEngTests gtest Eng-Control ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-audio-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-system-s-d.lib) #Links sfml libraries necessary for debug environment
+target_link_libraries(runEngTests gtest Eng-Control ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-audio-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-system-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-window-s-d.lib) #Links sfml libraries necessary for debug environment
 add_test( runEngTests runEngTests)
