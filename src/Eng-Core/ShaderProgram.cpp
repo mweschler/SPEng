@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 #include "ShaderProgram.h"
 #include "Shader.h"
 #include "GLHelper.h"
@@ -21,7 +22,7 @@ bool ShaderProgram::use(){
 
 	glUseProgram(m_program);
 	GLenum error = glGetError();
-	if(error == GL_NO_ERROR){
+	if(error != GL_NO_ERROR){
 		std::string msg = "Could not use shader program: " + GLHelper::errorEnumToString(error);
 		Logger &logger = *Logger::Instance();
 		logger.writeToLog(msg);
@@ -34,10 +35,16 @@ bool ShaderProgram::use(){
 
 bool ShaderProgram::link(Shader &vertexShader, Shader &fragmentShader){
 	if(vertexShader.isCompiled() == false || fragmentShader.isCompiled() == false)
+	{
+		std::cout<<"Shaders not compiled"<<std::endl;
 		return false;
+	}
 
-	if(vertexShader.getID() != GL_VERTEX_SHADER || fragmentShader.getID() != GL_FRAGMENT_SHADER)
+	if(vertexShader.getType() != GL_VERTEX_SHADER || fragmentShader.getType() != GL_FRAGMENT_SHADER)
+	{
+		std::cout<<"Shader of wrong type"<<std::endl;
 		return false;
+	}
 
 	GLHelper::flushGLErrors();
 
@@ -51,6 +58,7 @@ bool ShaderProgram::link(Shader &vertexShader, Shader &fragmentShader){
 		std::string msg = "Error adding vertex Shader: ";
 
 		msg = msg + GLHelper::errorEnumToString(error);
+		
 		Logger &logger = *Logger::Instance();
 		logger.writeToLog(msg);
 		return false;
@@ -62,6 +70,7 @@ bool ShaderProgram::link(Shader &vertexShader, Shader &fragmentShader){
 		std::string msg = "Error adding fragment Shader: ";
 
 		msg = msg + GLHelper::errorEnumToString(error);
+		std::cout<<msg<<std::endl;
 		Logger &logger = *Logger::Instance();
 		logger.writeToLog(msg);
 		return false;
@@ -73,6 +82,7 @@ bool ShaderProgram::link(Shader &vertexShader, Shader &fragmentShader){
 		std::string msg = "Error linking program: ";
 
 		msg = msg + GLHelper::errorEnumToString(error);
+		std::cout<<msg<<std::endl;
 		Logger &logger = *Logger::Instance();
 		logger.writeToLog(msg);
 
@@ -92,6 +102,7 @@ bool ShaderProgram::link(Shader &vertexShader, Shader &fragmentShader){
 		std::string msg = "Error getting link status: ";
 
 		msg = msg + GLHelper::errorEnumToString(error);
+		std::cout<<msg<<std::endl;
 		Logger &logger = *Logger::Instance();
 		logger.writeToLog(msg);
 
@@ -110,6 +121,7 @@ bool ShaderProgram::link(Shader &vertexShader, Shader &fragmentShader){
 
 		std::stringstream ss;
 		ss<<"Failed to link program"<<std::endl<<log;
+		std::cout<<ss.str()<<std::endl;
 		Logger &logger = *Logger::Instance();
 		logger.writeToLog(ss.str());
 

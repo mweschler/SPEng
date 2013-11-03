@@ -29,7 +29,7 @@ protected:
 		GUI::shutdown();
 	}
 };
-	std::string fragData = "#version 400\nvoid main(){\ngl_FragColor = vec4(1.0f, 0.0f, 1.0f, 1.0f);\n}";
+	std::string fragData = "#version 400\nvoid main(){\ngl_FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
 	std::string vertData = "#version 400\nattribute vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
 
 
@@ -145,6 +145,54 @@ TEST_F(ShaderTests, DISABLED_programValid){
 
 	ASSERT_TRUE(program.release());
 	ASSERT_FALSE(program.isLinked());
+}
+
+//Dirty visual test
+TEST_F(ShaderTests, DISABLED_visualTest){
+
+	const float triangle[] ={
+				0.75f, 0.75f, 0.0f, 1.0f,
+				0.75f, -0.75f, 0.0f, 1.0f,
+				-0.75f, -0.75f, 0.0f, 1.0f,
+	};
+	GLuint triangleBuff;
+
+	glGenBuffers(1, &triangleBuff);
+	glBindBuffer(GL_ARRAY_BUFFER, triangleBuff);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	Shader vert;
+	Shader frag;
+	ShaderProgram program;
+
+	ASSERT_TRUE(vert.load("vertTestShader.vert"));
+	ASSERT_TRUE(frag.load("fragTestShader.frag"));
+
+	vert.setType(GL_VERTEX_SHADER);
+	frag.setType(GL_FRAGMENT_SHADER);
+
+	ASSERT_TRUE(vert.compile());
+	ASSERT_TRUE(frag.compile());
+
+	ASSERT_TRUE(program.link(vert, frag));
+	
+
+	wnd->show();
+	while(!this->wnd->shouldQuit()){
+		wnd->pollEvents();
+
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		
+		program.use();
+		glBindBuffer(GL_ARRAY_BUFFER, triangleBuff);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		wnd->swapBuffers();		
+	}
 }
 
 }
