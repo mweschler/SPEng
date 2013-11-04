@@ -1,7 +1,9 @@
 set(GAMEPLAY_SOURCE 
 GameObject.cpp
 GameWorld.cpp
+Scripting.cpp
 )
+
 set(GAMEPLAY_HEADER 
 GameObject.h
 GameWorld.h
