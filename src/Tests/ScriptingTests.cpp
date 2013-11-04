@@ -8,7 +8,6 @@ extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 }
-
 void SetUp() {
 	lua_State *lua = luaL_newstate();
 	luaL_openlibs(lua);

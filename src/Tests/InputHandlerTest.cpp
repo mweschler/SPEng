@@ -43,10 +43,21 @@ TEST(userInputTest, DISABLED_test_three)
 	sound.setBuffer(buffer); 
 
 
-	//sf::SoundBuffer bufferJump;
-//	sf::Sound soundJump;
-	//bufferJump.loadFromFile("jump.wav");
-	//soundJump.setBuffer(bufferJump);
+	sf::SoundBuffer bufferJump;
+	sf::Sound soundJump;
+	bufferJump.loadFromFile("jump.wav");
+	soundJump.setBuffer(bufferJump);
+
+	sf::SoundBuffer bufferReload;
+	sf::Sound soundReload;
+	bufferReload.loadFromFile("reload.wav");
+	soundReload.setBuffer(bufferReload);
+
+	sf::SoundBuffer bufferHadoken;
+	sf::Sound soundHadoken;
+	bufferHadoken.loadFromFile("hadoken.wav");
+	soundHadoken.setBuffer(bufferHadoken);
+
 
 
 	bool flag = true;
@@ -54,7 +65,7 @@ TEST(userInputTest, DISABLED_test_three)
 	UserInput input;
 	while(flag)
 	{
-		_sleep(12);
+		_sleep(4);
 		if (input.isKeyPressed(sf::Keyboard::A))
 		{
 			printf("Move Character Left\n");
@@ -62,14 +73,14 @@ TEST(userInputTest, DISABLED_test_three)
 		}
 
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::Space))
 		{
 			printf("Make Character Jump\n");
-		//	soundJump.play();
+			soundJump.play();
 
 		}
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::W))
 		{
 
@@ -79,7 +90,7 @@ TEST(userInputTest, DISABLED_test_three)
 		}
 
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::D))
 		{
 
@@ -87,7 +98,7 @@ TEST(userInputTest, DISABLED_test_three)
 
 
 		}
-		_sleep(12);
+		_sleep(4);
 		if(input.isMouseKeyPressed(sf::Mouse::Left))
 		{
 			printf("GUN SHOT!!!!\n");
@@ -97,7 +108,7 @@ TEST(userInputTest, DISABLED_test_three)
 
 		}
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::S))
 		{
 
@@ -107,17 +118,27 @@ TEST(userInputTest, DISABLED_test_three)
 		}
 
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::R))
 		{
 
 			printf("Reload Weapon\n");
-
+			soundReload.play();
 
 		}
 
 
-		_sleep(12);
+		_sleep(4);
+		if(input.isKeyPressed(sf::Keyboard::H) && input.isKeyPressed(sf::Keyboard::J))
+		{
+
+			printf("Hadoken!!!\n");
+			soundHadoken.play();
+
+		}
+
+
+		_sleep(4);
 		if (input.isKeyPressed(sf::Keyboard::Escape))
 		{
 			flag = false;

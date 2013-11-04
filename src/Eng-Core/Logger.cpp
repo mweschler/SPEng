@@ -85,7 +85,7 @@ Logger* Logger::instance = NULL;
 				stringstream os;
 				os << hours;
 				cout << "THE Hours before everything " + hoursString + "\n";
-				os.str("");
+				//os.str("");
 				
 				if(hours%12 < 10)
 				{
