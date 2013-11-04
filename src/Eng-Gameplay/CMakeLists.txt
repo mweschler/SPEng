@@ -1,7 +1,9 @@
 set(GAMEPLAY_SOURCE 
 GameObject.cpp
 GameWorld.cpp
+Scripting.cpp
 )
+
 set(GAMEPLAY_HEADER 
 GameObject.h
 GameWorld.h
@@ -11,9 +13,9 @@ IComponent.h
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil
 ${CMAKE_SOURCE_DIR}/Eng-Core
+${CMAKE_SOURCE_DIR}/Lua
 )
-#link_directories(${ENG_BINARY_DIR}/Eng-Pil)
 
 add_library (Eng-Gameplay STATIC ${GAMEPLAY_SOURCE} ${GAMEPLAY_HEADER})
 
-target_link_libraries(Eng-Gameplay Eng-Core Eng-PIL)
+target_link_libraries(Eng-Gameplay Eng-Core Eng-PIL Lua)

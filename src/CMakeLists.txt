@@ -58,6 +58,7 @@ add_subdirectory(Eng-Pil)
 add_subdirectory(Eng-Core)
 add_subdirectory(Eng-Gameplay)
 add_subdirectory(Eng-Control)
+add_subdirectory(Lua)
 
 if(ENG_BUILD_TESTS)
 	add_subdirectory(Tests)
