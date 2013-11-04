@@ -1,7 +1,7 @@
 set(GAMEPLAY_SOURCE 
 GameObject.cpp
 GameWorld.cpp
-Scripting.cpp
+ScriptingManager.cpp
 )
 
 set(GAMEPLAY_HEADER 
@@ -9,6 +9,7 @@ GameObject.h
 GameWorld.h
 IGameplayFoundation.h
 IComponent.h
+ScriptingManager.h
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil
