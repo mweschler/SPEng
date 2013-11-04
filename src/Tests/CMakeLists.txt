@@ -6,6 +6,7 @@ set(TESTS mytest.cpp
 	gameplay-world.cpp
 	rendermgrtest.cpp
 	LoggerTests.cpp
+	AssetTest.cpp
 	)
 
 #setup Gtest
