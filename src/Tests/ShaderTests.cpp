@@ -166,8 +166,8 @@ TEST_F(ShaderTests, DISABLED_programValid){
 	ASSERT_FALSE(program.isLinked());
 }
 
-//Dirty visual test
-TEST_F(ShaderTests, visualTest){
+//simple visual test
+TEST_F(ShaderTests, DISABLED_visualTest){
 
 	const float triangle[] ={
 				0.75f, 0.75f, 0.0f, 1.0f,
