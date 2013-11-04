@@ -2,7 +2,6 @@
 
 #include <GL/glew.h>
 
-
 class Shader;
 
 class ShaderProgram{

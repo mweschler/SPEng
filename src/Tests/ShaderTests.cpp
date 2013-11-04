@@ -25,7 +25,7 @@ protected:
 		case 4: version = version +"400";break;
 		case 3: version = version + "300"; break;
 		case 2: version = version + "120"; break;
-		default: version = version + "400";break;
+		default: version = version + "120";break;
 		}
 
 		fragData = version + fragData;
