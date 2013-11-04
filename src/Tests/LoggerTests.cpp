@@ -29,6 +29,7 @@ TEST(logger, test_three_TryingToWriteToTheLogButItDoesNotExist)
 	logger->deleteLog();
 	EXPECT_EQ(k, 0);
 }
+<<<<<<< HEAD
 
 TEST(logger, test_four_TryingToWriteToTheLogAndItDoesExist)
 {
@@ -40,6 +41,19 @@ TEST(logger, test_four_TryingToWriteToTheLogAndItDoesExist)
 	EXPECT_EQ(k, 1);
 }
 
+=======
+
+TEST(logger, test_four_TryingToWriteToTheLogAndItDoesExist)
+{
+	Logger* logger = Logger::Instance();
+	logger->initialize();
+	int k = logger->writeToLog("This is a test for the log.");
+	logger->shutdown();
+	logger->deleteLog();
+	EXPECT_EQ(k, 1);
+}
+
+>>>>>>> 742a0bffcb2dcf057dd9786422c5d9fed6dad69b
 TEST(logger, test_five_TryingToDeleteALogButItDoesNotExist)
 {
 	Logger* logger = Logger::Instance();
@@ -58,8 +72,12 @@ TEST(logger, test_six_TryingToDeleteALogAndItDoesExist)
 	EXPECT_EQ(k, 1);
 }
 
+<<<<<<< HEAD
 
 */
+=======
+/*
+>>>>>>> 742a0bffcb2dcf057dd9786422c5d9fed6dad69b
 TEST(logger, personal_test_if_it_writes_corrrectly)
 {
 	Logger* logger = Logger::Instance();

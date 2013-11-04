@@ -67,7 +67,6 @@ Logger* Logger::instance = NULL;
 			int result;
 			if(dataLogExists)
 			{
-
 				time_t theTime = time(NULL);
 				struct tm *aTime = localtime(&theTime);
 
@@ -83,8 +82,13 @@ Logger* Logger::instance = NULL;
 				string minutesString = "";
 				string secondsString = "";
 				stringstream os;
+
 				os << hours;
 				cout << "THE Hours before everything " + hoursString + "\n";
+
+				//os << hours;
+				//cout << os.str();
+				//cout << "THE Hours before everything " + hoursString + "\n";
 				//os.str("");
 				
 				if(hours%12 < 10)
@@ -94,6 +98,7 @@ Logger* Logger::instance = NULL;
 						hours = 12;
 						os << hours;
 						hoursString = os.str();
+						
 					}
 					else
 					{
@@ -108,7 +113,10 @@ Logger* Logger::instance = NULL;
 					{
 						hours = 12;
 					}
-					os << hours;
+					hours = hours%12;
+					os << "\n new hours " + hours;
+					
+				   cout << os.str();
 					hoursString = os.str();
 				}
 				os.str("");
@@ -161,10 +169,10 @@ Logger* Logger::instance = NULL;
 					case 11: monthName  = "November";
 					case 12: monthName  = "December";
 				}
-				
+				/*
 				cout << "THE Hours " + hoursString + "\n";
 				cout << "The minutes " + minutesString + "\n";
-				cout << "the seconds " + secondsString + "\n";
+				cout << "the seconds " + secondsString + "\n";*/
 
 				stringstream osa;
 				osa << "[" << monthName << " " << day << ", " << year << " - " << hoursString << ":" <<  minutesString << "::" << secondsString << " " << amORpm  << "]  ";

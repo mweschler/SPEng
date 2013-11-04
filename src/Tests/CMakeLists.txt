@@ -6,10 +6,12 @@ set(TESTS mytest.cpp
 	gameplay-world.cpp
 	rendermgrtest.cpp
 	LoggerTests.cpp
+	AssetTest.cpp
 	ScriptingTests.cpp
 	AudioManagerTest.cpp
 	ShaderTests.cpp
 	InputHandlerTest.cpp
+
 	)
 #setup Gtest
 if(MSVC)

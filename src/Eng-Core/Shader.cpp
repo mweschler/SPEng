@@ -6,6 +6,8 @@
 #include "GLHelper.h"
 #include "assertions.h"
 
+/*! Initializes a shader object ready for data
+*/
 Shader::Shader():
 	m_shader(0),
 	m_type(0),
@@ -16,6 +18,9 @@ Shader::Shader():
 
 }
 
+/*! Sets the type of shader for this object
+	\param type Eiter GL_VERTEX_SHADER or GL_FRAGMENT_SHADER
+*/
 void Shader::setType(GLenum type){
 	if(type == GL_VERTEX_SHADER || type == GL_FRAGMENT_SHADER)
 		this->m_type = type;
@@ -26,10 +31,16 @@ void Shader::setType(GLenum type){
 	}
 }
 
+/*! Gets the type for this shader
+	\return the current type of GL Shader
+*/
 GLenum Shader::getType(){
 	return this->m_type;
 }
 
+/*! Compiles the shader for use in a shader program
+	\return true on success, false otherwise
+*/
 bool Shader::compile(){
 	GLHelper::flushGLErrors();
 
@@ -106,18 +117,32 @@ bool Shader::compile(){
 	return true;
 }
 
+/*! Gets the compilation status
+	\return ture if compiled, false otherwise
+*/
 bool Shader::isCompiled(){
 	return this->m_compiled;
 }
 
+
+/*! Tells if the data has been loaded or not
+	\return ture if loaded, false otherwise
+*/
 bool Shader::isLoaded(){
 	return this->m_loaded;
 }
 
+/*! Gets the OpenGL ID for this shader
+	\return the ID of the shader
+*/
 GLuint Shader::getID(){
 	return this->m_shader;
 }
 
+/*! Loads the shader data from a file
+	\param filename The location and name of the file to load
+	\return ture if succesfully loaded into local memory
+*/
 bool Shader::load(std::string filename){
 	ASSERT(filename.length() > 0)
 	std::ifstream file;
@@ -148,6 +173,9 @@ Shader::~Shader(){
 
 }
 
+/*! Releases the shader from OpenGL
+	\return true if the shader was released from memory
+*/
 bool Shader::release(){
 	if(!(m_loaded && m_compiled))
 		return false;
