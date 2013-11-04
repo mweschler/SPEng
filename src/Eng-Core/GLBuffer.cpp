@@ -1,9 +1,13 @@
 #include <GL/glew.h>
 #include "GLBuffer.h"
 #include "assertions.h"
+#include "GLHelper.h"
 
 #include <iostream>
 
+/*! Represents an OpenGL buffer
+	\param type The type of buffer this object represents
+*/
 GLBuffer::GLBuffer(GLenum type):
 	m_type(type),
 	m_buffer(0)
@@ -14,10 +18,16 @@ GLBuffer::GLBuffer(){
 	ASSERT(false); //should never get here
 }
 
+
+/*! Binds the buffer to the current context
+	\return true if succesfully bound
+*/
 bool GLBuffer::bind() const{
 	if(m_buffer == 0){
 		return false;
 	}
+	
+	GLHelper::flushGLErrors();
 
 	//see if already bound
 	if(glIsBuffer(m_buffer) == GL_TRUE){
@@ -38,7 +48,12 @@ bool GLBuffer::bind() const{
 	return true;
 }
 
+/*! Creates the buffer in the current context
+	\return true if succesful
+*/
 bool GLBuffer::create(){
+	GLHelper::flushGLErrors();
+
 	if(m_buffer != 0  || glIsBuffer(m_buffer) == GL_TRUE){
 		//log error
 		return false;
@@ -53,15 +68,23 @@ bool GLBuffer::create(){
 	return true;
 }
 
+/*! Gets the GLBuffer type
+	\return buffer type
+*/
 GLenum GLBuffer::getType() const{
 	return this->m_type;
 }
 
+/*! Releases the buffer from the current context
+	\return true on success
+*/
 bool GLBuffer::release(){
-	if(glIsBuffer(m_buffer) == GL_FALSE){
+	if(m_buffer == 0){
 		//log error
 		return false;
 	}
+
+	GLHelper::flushGLErrors();
 
 	glDeleteBuffers(1, &m_buffer);
 	GLenum error = glGetError();

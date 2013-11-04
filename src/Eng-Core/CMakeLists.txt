@@ -10,6 +10,11 @@ set(CORE_SOURCE
 	Model.cpp
 	GLBuffer.cpp
 	ConfigurationManager.cpp
+	GLHelper.cpp
+	AudioManager.cpp
+	Shader.cpp
+	ShaderProgram.cpp
+	InputHandler.cpp
 	)
 	
 set(CORE_HEADER
@@ -25,12 +30,17 @@ set(CORE_HEADER
 	Material.h
 	Model.h
 	GLBuffer.h
+	GLHelper.h
+	AudioManager.h
+	Shader.h
+	ShaderProgram.h
+	InputHandler.h
 	)
 
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)
 
-add_library (Eng-Core STATIC ${CORE_SOURCE} ${CORE_HEADER})
+add_library (Eng-Core STATIC ${CORE_SOURCE} ${CORE_HEADER} ) 
 
 target_link_libraries(Eng-Core Eng-PIL)
