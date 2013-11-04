@@ -5,6 +5,8 @@ option(ENG_BUILD_TESTS "Build the tests for the eninge" ON)
 option(ENG_ASSERTIONS_ENABLED "Should the library block on assertion failures" ON)
 option(ENG_BUILD_DOCUMENTATION "Builds doxygen documentation" OFF)
 
+#include sfml header files
+include_directories(${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/include)
 #setup 3rdparty libraries
 if(MSVC)
 	set(GLEW_LIBRARY_DIR ${CMAKE_SOURCE_DIR}/../3rdparty/glew-1.10.0/lib/Release/Win32)
@@ -12,6 +14,8 @@ if(MSVC)
 	set(GLEW_LIBRARY glew32s)
 endif(MSVC)
 add_definitions(-DGLEW_STATIC)
+#Add pre-processor definition for sfml audio library
+add_definitions(-DSFML_STATIC)
 find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIR})
 link_directories(${GLEW_LIBRARY_DIR})
@@ -40,7 +44,7 @@ if(DOXYGEN_FOUND)
 	add_custom_target(apidoc ALL DEPENDS ${DOXYGEN_OUTPUT})
 	
 endif(DOXYGEN_FOUND)
-endif(ENG_BUILD_DOCUMENTATION)
+endif(ENG_BUILD_DOCUMENTATION)	
 
 if(MSVC)
 	add_definitions(/MDd)

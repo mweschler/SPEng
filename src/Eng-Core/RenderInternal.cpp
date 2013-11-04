@@ -32,4 +32,6 @@ void RenderInternal::shutdown(){
 
 void RenderInternal::update(){}
 
-void RenderInternal::drawModel(const Model model, const Material material){}
+void RenderInternal::drawModel(const Model model, const Material material){
+
+}
