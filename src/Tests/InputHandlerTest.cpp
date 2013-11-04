@@ -42,7 +42,12 @@ TEST(userInputTest, DISABLED_test_three)
 		ASSERT_DEATH(NULL,NULL); // error
 	sound.setBuffer(buffer); 
 
-	
+
+	//sf::SoundBuffer bufferJump;
+//	sf::Sound soundJump;
+	//bufferJump.loadFromFile("jump.wav");
+	//soundJump.setBuffer(bufferJump);
+
 
 	bool flag = true;
 
@@ -61,7 +66,7 @@ TEST(userInputTest, DISABLED_test_three)
 		if(input.isKeyPressed(sf::Keyboard::Space))
 		{
 			printf("Make Character Jump\n");
-
+		//	soundJump.play();
 
 		}
 		_sleep(12);
