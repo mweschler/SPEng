@@ -6,6 +6,7 @@ set(TESTS mytest.cpp
 	gameplay-world.cpp
 	rendermgrtest.cpp
 	LoggerTests.cpp
+	ScriptingTests.cpp
 	)
 
 #setup Gtest
@@ -25,8 +26,9 @@ include_directories(${CMAKE_SOURCE_DIR}/Eng-PIL
 ${CMAKE_SOURCE_DIR}/Eng-Core
 ${CMAKE_SOURCE_DIR}/Eng-Gameplay
 ${CMAKE_SOURCE_DIR}/Eng-Control
+${CMAKE_SOURCE_DIR}/Lua
 )
 
 add_executable( runEngTests ${TESTS})
-target_link_libraries(runEngTests gtest Eng-Control)
+target_link_libraries(runEngTests gtest Eng-Control Lua)
 add_test( runEngTests runEngTests)
