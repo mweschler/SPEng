@@ -60,8 +60,13 @@ AssetManager* AssetManager::instance = NULL;
 		int addAsset(string name);
 	    int increaseRefcount(string name);
 		int decreaseRefCount(string name);
-		int getRefCount(string name);
+		*/
 
+		int AssetManager::getRefCount(string name)
+		{
+			return assetStorage.at(name) -> getRefCount();		
+		}
+		/*
 		static AssetManager* instance;
 		AssetManager();
 		AssetManager(AssetManager const&);

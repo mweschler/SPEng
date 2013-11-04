@@ -13,16 +13,24 @@ class AssetManager{
 		static AssetManager* Instance();	
 		bool checkForDuplicate(string name);
 		
-		template<class T, class B> struct Derived_from {
-			static void constraints(T* p) { B* pb = p; }
-			Derived_from() { void(*p)(T*) = constraints; }
-        };
+		template<class T, class B> struct Derived_from 
+		{
+			static void constraints(T* p) 
+			{ 
+				B* pb = p;
+			}
+			Derived_from() 
+			{ 
+				void(*p)(T*) = constraints; 
+			}
+		};
+      
 
 		/*
      	template <class T> T loadAsset(string assetName)
 		{
 			Derived_from<T, Asset>();
-			T* asset = new T();
+			T* asset = new T(assetName);
 			if(checkForDuplicate(assetName))
 			{
 				Asset temp=assetStorage.at(assetName);
@@ -37,6 +45,29 @@ class AssetManager{
 			}
 					
 		}*/
+
+		int getRefCount(string name);
+		
+     	template <class T> bool loadAsset(string assetName)
+		{
+			Derived_from<T, Asset>();
+			T* asset = new T(assetName);
+			if(checkForDuplicate(assetName))
+			{
+				
+				assetStorage.at(assetName)->increaseRefCount();
+				return true;
+			}
+			else
+			{
+			//asset.load();
+			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
+				cout << "inside asset catch\n";
+				//return assetStorage.at(assetName);
+				return true;
+			}
+					
+		}
 		
 		int releaseAsset(string name);
 		
@@ -51,7 +82,7 @@ class AssetManager{
 		int addAsset(string name);
 	    int increaseRefcount(string name);
 		int decreaseRefCount(string name);
-		int getRefCount(string name);
+		
 
 		static AssetManager* instance;
 		AssetManager();

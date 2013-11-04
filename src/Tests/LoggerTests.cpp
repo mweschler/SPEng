@@ -4,15 +4,6 @@
 #include <stdio.h>  
 
 
-
-TEST(logger, test_one_testsIfDataLogExistsWithoutCreatingIt)
-{
-	Logger* logger = Logger::Instance();
-	bool b = logger->getDataLogExists();
-	logger->deleteLog();
-	EXPECT_EQ(b, false);
-}
-
 TEST(logger, test_two_testsIfDataLogIsDetectedOnceItIsCreated)
 {
 	Logger* logger = Logger::Instance();

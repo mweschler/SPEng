@@ -165,10 +165,10 @@ Logger* Logger::instance = NULL;
 					case 11: monthName  = "November";
 					case 12: monthName  = "December";
 				}
-				
+				/*
 				cout << "THE Hours " + hoursString + "\n";
 				cout << "The minutes " + minutesString + "\n";
-				cout << "the seconds " + secondsString + "\n";
+				cout << "the seconds " + secondsString + "\n";*/
 
 				stringstream osa;
 				osa << "[" << monthName << " " << day << ", " << year << " - " << hoursString << ":" <<  minutesString << "::" << secondsString << " " << amORpm  << "]  ";
