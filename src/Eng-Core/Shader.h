@@ -2,6 +2,8 @@
 #include <string>
 #include "GLBuffer.h"
 
+/*! An OpenGL shader for use in rendering
+*/
 class Shader
 {
 public:
