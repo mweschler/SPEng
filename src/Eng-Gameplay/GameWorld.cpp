@@ -59,6 +59,7 @@ int GameWorld::deleteObject(string name) {
 
 ////Returns a reference to a specified game object.
 GameObject* GameWorld::getObject(string name) {
+	// TODO: Upgrade to use map at function.
 	return _objects[name];
 }
 
