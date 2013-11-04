@@ -6,9 +6,9 @@ class UserInput
 	
 public:
 		bool isMouseKeyPressed(enum sf::Mouse::Button theButton);
-		static  sf::Vector2i globalMousePostion;
-		bool isKeyPressed(enum sf::Keyboard::Key theKey);
-	//Calling this variable gets the current postion of the mouse.
+		sf::Vector2i getMousePosition();
+	 	bool isKeyPressed(enum sf::Keyboard::Key theKey);
+	    void setMousePostion(int x, int y);
  
 };
 	
