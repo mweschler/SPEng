@@ -184,3 +184,47 @@ ASSERT_EQ(true, true);
 
 
 }
+
+//This will be joystick test
+TEST(userInputTest, test_five)
+{
+	UserInput input;
+	sf::Joystick::update();
+
+	bool connected = sf::Joystick::isConnected(0);
+	unsigned int buttons = sf::Joystick::getButtonCount(0);
+	std::cout << buttons;
+
+
+	bool flag = true;
+
+	while(flag)
+	{
+		sf::Joystick::update();
+		_sleep(50);
+		if (sf::Joystick::isButtonPressed(0, 2))
+		{
+			printf("Make my ass Reload\n");
+
+		}
+
+
+
+
+
+		_sleep(4);
+		if (input.isKeyPressed(sf::Keyboard::Escape))
+		{
+			flag = false;
+
+		}
+
+	}
+
+
+	
+	ASSERT_EQ(true,	connected);
+//	ASSERT_EQ(200, mousePos.y);
+
+
+}

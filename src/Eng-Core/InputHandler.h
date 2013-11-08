@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Joystick.hpp>
 class UserInput
 {
 	
