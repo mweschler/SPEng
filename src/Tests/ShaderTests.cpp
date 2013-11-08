@@ -5,7 +5,7 @@
 #include "window.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
-/*
+
 namespace{
 	void writeShaderFiles();
 
@@ -214,4 +214,4 @@ TEST_F(ShaderTests, DISABLED_visualTest){
 	}
 }
 
-}*/
+}
