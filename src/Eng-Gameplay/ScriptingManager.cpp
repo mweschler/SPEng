@@ -16,6 +16,7 @@ ScriptingManager* ScriptingManager::Instance() {
 		_instance = new ScriptingManager();
 		_lua = luaL_newstate();
 		luaL_openlibs(_lua);
+		_instance->registerBingings();
 	}
 
 	return _instance;

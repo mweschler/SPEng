@@ -142,7 +142,7 @@ TEST(userInputTest, DISABLED_test_three)
 		if (input.isKeyPressed(sf::Keyboard::Escape))
 		{
 			flag = false;
-		}	
+		}
 	}
 
 
@@ -152,6 +152,35 @@ TEST(userInputTest, DISABLED_test_three)
 		
 	
 	ASSERT_EQ(true, true);
+
+
+}
+
+//This is a mouse postion test
+TEST(userInputTest, DISABLED_test_four)
+{
+	UserInput input;
+bool flag = true;
+
+while(flag)
+{
+sf::Vector2i mousePos = input.getMousePosition();
+_sleep(10);
+printf("X: %d Y: %d\n",mousePos.x,mousePos.y);
+if(input.isKeyPressed(sf::Keyboard::Escape))
+{
+	flag = false;
+
+}
+ASSERT_EQ(true, true);
+
+};
+	
+
+	
+	
+//	ASSERT_EQ(10,	mousePos.x);
+//	ASSERT_EQ(200, mousePos.y);
 
 
 }
