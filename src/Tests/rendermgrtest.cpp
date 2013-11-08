@@ -18,7 +18,7 @@ namespace{
 		}
 	};
 
-	TEST(RenderTests, DISABLED_renderInitValid){
+	TEST(RenderTests, renderInitValid){
 
 		Logger &logger = *Logger::Instance();
 		ASSERT_TRUE(logger.initialize());
@@ -32,7 +32,7 @@ namespace{
 		
 	}
 
-	TEST(RenderTests, DISABLED_renderInitInvalid){
+	TEST(RenderTests, renderInitInvalid){
 		Logger &logger = *Logger::Instance();
 		ASSERT_TRUE(logger.initialize());
 
@@ -49,7 +49,7 @@ namespace{
 		logger.shutdown();
 	}
 
-	TEST(RenderTests, DISABLED_renderUpdate){
+	TEST(RenderTests, renderUpdate){
 		Logger &logger = *Logger::Instance();
 		ASSERT_TRUE(logger.initialize());
 
@@ -86,7 +86,7 @@ namespace{
 		}
 	};
 
-	TEST_F(GLBufferTests, DISABLED_creationBindReleaseValid){
+	TEST_F(GLBufferTests, creationBindReleaseValid){
 		ASSERT_TRUE(GUI::isInitialized());
 		ASSERT_TRUE(RenderManager::isInitialized());
 		ASSERT_TRUE(wnd != NULL);
@@ -98,7 +98,7 @@ namespace{
 		ASSERT_TRUE(buffer.release());
 	}
 
-	TEST_F(GLBufferTests, DISABLED_creationBindReleaseInvalid){
+	TEST_F(GLBufferTests, creationBindReleaseInvalid){
 		ASSERT_TRUE(GUI::isInitialized());
 		ASSERT_TRUE(RenderManager::isInitialized());
 		ASSERT_TRUE(wnd != NULL);
@@ -124,8 +124,8 @@ namespace{
 	protected:
 		Window *wnd;
 		virtual void SetUp(){
-			//Logger *logger = Logger::Instance();
-			//logger->initialize();
+			Logger *logger = Logger::Instance();
+			logger->initialize();
 			GUI::initialize();
 			RenderManager::initialize();
 			wnd = GUI::createWindow(800, 600, false);
@@ -137,8 +137,8 @@ namespace{
 			wnd = NULL;
 			RenderManager::shutdown();
 			GUI::shutdown();
-			//Logger *logger = Logger::Instance();
-			//logger->shutdown();
+			Logger *logger = Logger::Instance();
+			logger->shutdown();
 		}
 	};
 
@@ -158,7 +158,7 @@ namespace{
 		0, 1, 2
 	};
 
-	TEST_F(ModelTests, DISABLED_creationVertValid){
+	TEST_F(ModelTests, creationVertValid){
 		Model model;
 		ASSERT_FALSE(model.isLoaded());
 		std::vector<GLfloat> vertData(std::begin(verts), std::end(verts));
@@ -174,7 +174,7 @@ namespace{
 		ASSERT_FALSE(model.hasVerts());
 	}
 
-	TEST_F(ModelTests, DISABLED_creationVertInvalid){
+	TEST_F(ModelTests, creationVertInvalid){
 		Model model;
 		ASSERT_FALSE(model.isLoaded());
 		ASSERT_FALSE(model.hasVerts());
@@ -201,7 +201,7 @@ namespace{
 		ASSERT_FALSE(model.release());
 	}
 
-	TEST_F(ModelTests, DISABLED_creationVertIndexValid){
+	TEST_F(ModelTests, creationVertIndexValid){
 		Model model;
 		ASSERT_FALSE(model.isLoaded());
 		std::vector<GLfloat> vertData(std::begin(verts), std::end(verts));
@@ -221,7 +221,7 @@ namespace{
 		ASSERT_FALSE(model.hasIndex());
 	}
 
-	TEST_F(ModelTests, DISABLED_creationVertNormIndexValid){
+	TEST_F(ModelTests, creationVertNormIndexValid){
 		Model model;
 		ASSERT_FALSE(model.isLoaded());
 		std::vector<GLfloat> vertData(std::begin(verts), std::end(verts));

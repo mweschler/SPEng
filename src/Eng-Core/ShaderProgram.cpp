@@ -160,6 +160,7 @@ bool ShaderProgram::release(){
 	}
 
 	m_program = 0;
+	m_linked = false;
 
 	return true;
 }

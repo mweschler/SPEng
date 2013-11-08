@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "GLHelper.h"
 #include "GL\glew.h"
 #include "Logger.h"
@@ -12,9 +13,12 @@ void GLHelper::flushGLErrors(){
 	if(rv != GL_NO_ERROR)
 	{
 		Logger &logger = *Logger::Instance();
-		std::string msg = "Unhandled GL ERROR found! Error number: " + rv;
-		logger.writeToLog(msg);
-		std::cout<<msg<<std::endl;
+		std::stringstream ss;
+		ss<<"Unhandled GL ERROR found! Error number: ";
+		ss<<rv;
+		ss<<" Name: "<<errorEnumToString(rv);
+		logger.writeToLog(ss.str());
+		std::cout<<ss.str()<<std::endl;
 	}
 }
 
