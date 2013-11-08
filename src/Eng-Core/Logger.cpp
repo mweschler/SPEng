@@ -82,6 +82,10 @@ Logger* Logger::instance = NULL;
 				string minutesString = "";
 				string secondsString = "";
 				stringstream os;
+
+				os << hours;
+				cout << "THE Hours before everything " + hoursString + "\n";
+
 				//os << hours;
 				//cout << os.str();
 				//cout << "THE Hours before everything " + hoursString + "\n";

@@ -43,10 +43,21 @@ TEST(userInputTest, DISABLED_test_three)
 	sound.setBuffer(buffer); 
 
 
-	//sf::SoundBuffer bufferJump;
-//	sf::Sound soundJump;
-	//bufferJump.loadFromFile("jump.wav");
-	//soundJump.setBuffer(bufferJump);
+	sf::SoundBuffer bufferJump;
+	sf::Sound soundJump;
+	bufferJump.loadFromFile("jump.wav");
+	soundJump.setBuffer(bufferJump);
+
+	sf::SoundBuffer bufferReload;
+	sf::Sound soundReload;
+	bufferReload.loadFromFile("reload.wav");
+	soundReload.setBuffer(bufferReload);
+
+	sf::SoundBuffer bufferHadoken;
+	sf::Sound soundHadoken;
+	bufferHadoken.loadFromFile("hadoken.wav");
+	soundHadoken.setBuffer(bufferHadoken);
+
 
 
 	bool flag = true;
@@ -54,7 +65,7 @@ TEST(userInputTest, DISABLED_test_three)
 	UserInput input;
 	while(flag)
 	{
-		_sleep(12);
+		_sleep(4);
 		if (input.isKeyPressed(sf::Keyboard::A))
 		{
 			printf("Move Character Left\n");
@@ -62,14 +73,14 @@ TEST(userInputTest, DISABLED_test_three)
 		}
 
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::Space))
 		{
 			printf("Make Character Jump\n");
-		//	soundJump.play();
+			soundJump.play();
 
 		}
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::W))
 		{
 
@@ -79,7 +90,7 @@ TEST(userInputTest, DISABLED_test_three)
 		}
 
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::D))
 		{
 
@@ -87,7 +98,7 @@ TEST(userInputTest, DISABLED_test_three)
 
 
 		}
-		_sleep(12);
+		_sleep(4);
 		if(input.isMouseKeyPressed(sf::Mouse::Left))
 		{
 			printf("GUN SHOT!!!!\n");
@@ -97,7 +108,7 @@ TEST(userInputTest, DISABLED_test_three)
 
 		}
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::S))
 		{
 
@@ -107,21 +118,31 @@ TEST(userInputTest, DISABLED_test_three)
 		}
 
 
-		_sleep(12);
+		_sleep(4);
 		if(input.isKeyPressed(sf::Keyboard::R))
 		{
 
 			printf("Reload Weapon\n");
-
+			soundReload.play();
 
 		}
 
 
-		_sleep(12);
+		_sleep(4);
+		if(input.isKeyPressed(sf::Keyboard::H) && input.isKeyPressed(sf::Keyboard::J))
+		{
+
+			printf("Hadoken!!!\n");
+			soundHadoken.play();
+
+		}
+
+
+		_sleep(4);
 		if (input.isKeyPressed(sf::Keyboard::Escape))
 		{
 			flag = false;
-		}	
+		}
 	}
 
 
@@ -131,6 +152,79 @@ TEST(userInputTest, DISABLED_test_three)
 		
 	
 	ASSERT_EQ(true, true);
+
+
+}
+
+//This is a mouse postion test
+TEST(userInputTest, DISABLED_test_four)
+{
+	UserInput input;
+bool flag = true;
+
+while(flag)
+{
+sf::Vector2i mousePos = input.getMousePosition();
+_sleep(10);
+printf("X: %d Y: %d\n",mousePos.x,mousePos.y);
+if(input.isKeyPressed(sf::Keyboard::Escape))
+{
+	flag = false;
+
+}
+ASSERT_EQ(true, true);
+
+};
+	
+
+	
+	
+//	ASSERT_EQ(10,	mousePos.x);
+//	ASSERT_EQ(200, mousePos.y);
+
+
+}
+
+//This will be joystick test
+TEST(userInputTest, test_five)
+{
+	UserInput input;
+	sf::Joystick::update();
+
+	bool connected = sf::Joystick::isConnected(0);
+	unsigned int buttons = sf::Joystick::getButtonCount(0);
+	std::cout << buttons;
+
+
+	bool flag = true;
+
+	while(flag)
+	{
+		sf::Joystick::update();
+		_sleep(50);
+		if (sf::Joystick::isButtonPressed(0, 2))
+		{
+			printf("Make my ass Reload\n");
+
+		}
+
+
+
+
+
+		_sleep(4);
+		if (input.isKeyPressed(sf::Keyboard::Escape))
+		{
+			flag = false;
+
+		}
+
+	}
+
+
+	
+	ASSERT_EQ(true,	connected);
+//	ASSERT_EQ(200, mousePos.y);
 
 
 }
