@@ -6,6 +6,10 @@
 #include <iterator>
 #include <iostream>
 #include <algorithm>
+
+
+
+
 template <typename T>
 class Subject
 {
@@ -14,16 +18,17 @@ public:
 	 std::vector<Observer<T> * > list;
 
 
+	 //Attach observer by pushing observer onto vector list
 	virtual void attach(Observer<T> &concreteSubject)
 	{
 		
 	list.push_back(&concreteSubject);
-	//list.insert(&concreteSubject);
+	
 	
     }
 
 
-	
+	//Unattach observer by removing it from list.
 	virtual void unattach(Observer<T> &concreteSubject)
 
 	{
@@ -31,18 +36,7 @@ public:
 
 		list.erase(std::remove(list.begin(), list.end(), &concreteSubject), list.end());
 
-		 /**
-		 for(it = list.begin() ; it !=list.end() ; it++) 
-		 {
-			 if(it.data == concreteSubject )
-			 {
-				 list.erase(it);
-				 return;
-
-			 }
-		 }
-
-	**/
+	
 
 	}
 	

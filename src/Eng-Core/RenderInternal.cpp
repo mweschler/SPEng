@@ -23,7 +23,8 @@ bool RenderInternal::initialize(){
 	return true;
 }
 
-bool RenderInternal::isInitialized(){
+bool RenderInternal::isInitialized()
+{
 	return m_initialized;
 }
 

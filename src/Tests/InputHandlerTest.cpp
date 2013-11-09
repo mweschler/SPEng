@@ -390,3 +390,218 @@ TEST(userInputTest, DISABLED_test_five)
 
 
 }
+
+//This will be joystick test
+TEST(userInputTest, DISABLED_test_six)
+{
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	if (!buffer.loadFromFile("gunshot.wav"))
+		ASSERT_DEATH(NULL,NULL); // error
+	sound.setBuffer(buffer); 
+
+
+	sf::SoundBuffer bufferJump;
+	sf::Sound soundJump;
+	bufferJump.loadFromFile("jump.wav");
+	soundJump.setBuffer(bufferJump);
+
+	sf::SoundBuffer bufferReload;
+	sf::Sound soundReload;
+	bufferReload.loadFromFile("reload.wav");
+	soundReload.setBuffer(bufferReload);
+
+
+	UserInput input;
+	sf::Joystick::update();
+
+	bool connected = sf::Joystick::isConnected(0);
+	unsigned int buttons = sf::Joystick::getButtonCount(0);
+	std::cout << buttons;
+
+
+	bool flag = true;
+
+	while(flag)
+	{
+		sf::Joystick::update();
+		
+
+		//Button 2 is X
+		if (input.isJoystickButtonPressed(0, 2))
+		{
+			printf("Make my ass Reload\n");
+			soundReload.play();
+			_sleep(100);
+
+		}
+
+		//Right Stick Pressed in
+		if (input.isJoystickButtonPressed(0, 9))
+		{
+			
+		}
+		//Button 1 is B
+		if(input.isJoystickButtonPressed(0,1))
+		{
+
+			printf("Player Crouchs\n");
+			
+			_sleep(100);
+
+
+		}
+
+		//Y button is 3
+		if(input.isJoystickButtonPressed(0,3))
+		{
+
+			printf("Change Weapon\n");
+			_sleep(100);
+
+
+		}
+
+
+		//Button 4 is Left Bumper
+		if(input.isJoystickButtonPressed(0,4))
+		{
+
+			printf("Melee\n");
+			_sleep(100);
+
+
+		}
+
+		//This is A button
+			if(input.isJoystickButtonPressed(0,0))
+		{
+
+			printf("Player Jumps\n");
+			soundJump.play();
+			_sleep(100);
+
+
+		}
+
+
+
+	
+
+
+
+
+
+		//POV IS D PAD
+		float posOfLeftY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+		float posOfLeftX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+		float posOfRightX = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
+		float posOfRightY = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
+		float Triggers = sf::Joystick::getAxisPosition(0, sf::Joystick::Z);
+		sf::Vector2i mousePos = input.getMousePosition();
+
+
+		if(posOfLeftY >=40 )
+		{
+
+
+			input.setMousePostion(mousePos.x,mousePos.y - 1);
+			_sleep(3);
+			
+		}
+
+		if(posOfLeftY <= -40 )
+		{
+
+			input.setMousePostion(mousePos.x,mousePos.y +1);
+			_sleep(3);
+		
+		}
+
+
+		if(posOfLeftX >=40 )
+		{
+
+
+			input.setMousePostion(mousePos.x -1,mousePos.y);
+				_sleep(3);
+		}
+
+		
+		if(posOfRightX <=-40 )
+		{
+
+
+		}
+
+
+
+
+		
+		if(posOfRightX <=-40 )
+		{
+
+
+			printf("Aim Up\n");
+			
+		}
+
+		if(posOfRightY <=-40 )
+		{
+
+
+			printf("Aim left\n");
+			
+		}
+
+		if(posOfRightY >=40 )
+		{
+
+
+			printf("Aim Right\n");
+			
+		}
+
+		if(posOfLeftX <= -40 )
+		{
+
+
+			input.setMousePostion(mousePos.x +1,mousePos.y);
+				_sleep(3);
+		
+		}
+
+			if(Triggers >= 40 )
+		{
+
+			_sleep(100);
+			printf("Zoom In\n");
+		
+		}
+
+		if(Triggers <=-40)
+		{
+
+		    
+			_sleep(150);
+
+
+		}
+
+		
+		if (input.isKeyPressed(sf::Keyboard::Escape))
+		{
+			flag = false;
+
+		}
+
+	}
+
+
+	
+	ASSERT_EQ(true,	connected);
+//	ASSERT_EQ(200, mousePos.y);
+
+
+}
