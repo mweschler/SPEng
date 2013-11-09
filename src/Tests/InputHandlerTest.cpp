@@ -186,8 +186,27 @@ ASSERT_EQ(true, true);
 }
 
 //This will be joystick test
-TEST(userInputTest, test_five)
+TEST(userInputTest, DISABLED_test_five)
 {
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	if (!buffer.loadFromFile("gunshot.wav"))
+		ASSERT_DEATH(NULL,NULL); // error
+	sound.setBuffer(buffer); 
+
+
+	sf::SoundBuffer bufferJump;
+	sf::Sound soundJump;
+	bufferJump.loadFromFile("jump.wav");
+	soundJump.setBuffer(bufferJump);
+
+	sf::SoundBuffer bufferReload;
+	sf::Sound soundReload;
+	bufferReload.loadFromFile("reload.wav");
+	soundReload.setBuffer(bufferReload);
+
+
 	UserInput input;
 	sf::Joystick::update();
 
@@ -201,18 +220,161 @@ TEST(userInputTest, test_five)
 	while(flag)
 	{
 		sf::Joystick::update();
-		_sleep(50);
-		if (sf::Joystick::isButtonPressed(0, 2))
+		
+
+		//Button 2 is X
+		if (input.isJoystickButtonPressed(0, 2))
 		{
 			printf("Make my ass Reload\n");
+			soundReload.play();
+			_sleep(100);
+
+		}
+
+		//Right Stick Pressed in
+		if (input.isJoystickButtonPressed(0, 9))
+		{
+			
+		}
+		//Button 1 is B
+		if(input.isJoystickButtonPressed(0,1))
+		{
+
+			printf("Player Crouchs\n");
+			
+			_sleep(100);
+
+
+		}
+		//Y button is 3
+		if(input.isJoystickButtonPressed(0,3))
+		{
+
+			printf("Change Weapon\n");
+			_sleep(100);
+
+
+		}
+
+
+		//Button 4 is Left Bumper
+		if(input.isJoystickButtonPressed(0,4))
+		{
+
+			printf("Melee\n");
+			_sleep(100);
+
+
+		}
+
+		//This is A button
+			if(input.isJoystickButtonPressed(0,0))
+		{
+
+			printf("Player Jumps\n");
+			soundJump.play();
+			_sleep(100);
+
 
 		}
 
 
 
+		//POV IS D PAD
+		float posOfLeftY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+		float posOfLeftX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+		float posOfRightX = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
+		float posOfRightY = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
+		float Triggers = sf::Joystick::getAxisPosition(0, sf::Joystick::Z);
 
 
-		_sleep(4);
+		if(posOfLeftY >=40 )
+		{
+
+
+			printf("Move Person Down\n");
+			
+		}
+
+		if(posOfLeftY <= -40 )
+		{
+
+
+			printf("Move Person UP\n");
+		
+		}
+
+
+		if(posOfLeftX >=40 )
+		{
+
+
+			printf("Move Person Right\n");
+			
+		}
+
+		
+		if(posOfRightX >=40 )
+		{
+
+
+			printf("Aim Down\n");
+			
+		}
+
+
+		
+		if(posOfRightX <=-40 )
+		{
+
+
+			printf("Aim Up\n");
+			
+		}
+
+		if(posOfRightY <=-40 )
+		{
+
+
+			printf("Aim left\n");
+			
+		}
+
+		if(posOfRightY >=40 )
+		{
+
+
+			printf("Aim Right\n");
+			
+		}
+
+		if(posOfLeftX <= -40 )
+		{
+
+
+			printf("Move Person Left\n");
+		
+		}
+
+			if(Triggers >= 40 )
+		{
+
+			_sleep(100);
+			printf("Zoom In\n");
+		
+		}
+
+		if(Triggers <=-40)
+		{
+
+			printf("Shoot Gun!\n");
+			sound.play();
+			_sleep(100);
+
+
+		}
+
+		
 		if (input.isKeyPressed(sf::Keyboard::Escape))
 		{
 			flag = false;
