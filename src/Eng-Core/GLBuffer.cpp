@@ -29,11 +29,6 @@ bool GLBuffer::bind() const{
 	
 	GLHelper::flushGLErrors();
 
-	//see if already bound
-	if(glIsBuffer(m_buffer) == GL_TRUE){
-		return true;
-	}
-
 	glBindBuffer(m_type, m_buffer);
 	GLenum error = glGetError();
 	if(error == GL_INVALID_ENUM){

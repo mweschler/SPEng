@@ -212,15 +212,15 @@ TEST(messageTest, test_six)
 //Sure that observers that have been unattached are not reciving the new messages.
 TEST(messageTest, test_seven)
 {
+	//CREATING MESSAGE AND OBSERVERS
 	std::string theMessage;
 	theMessage ="The shared message";
 	Observer1<std::string> observer1;
 	Observer2<std::string> observer2;
 	Observer3<std::string> observer3;
 
-	observer1.who = "Observer 1 is attached";
-	observer2.who = "Observer 2 is attached";
-	observer3.who = "Observer 3 is attached";
+	//Creating subjects and attaching observers
+	//Also notifys oberservs with the message.
 	Subject<std::string> subject;
 
 	subject.attach(observer1);
@@ -229,11 +229,14 @@ TEST(messageTest, test_seven)
 	subject.attach(observer3);
 	subject.notifyObservers(theMessage);
 
-
+	//Test that all observers are getting the message
 	EXPECT_EQ("The shared message", (((Observer1<std::string>*)subject.list.at(0)) ->theMessage));
 	EXPECT_EQ("The shared message", (((Observer1<std::string>*)subject.list.at(1)) ->theMessage));
 	EXPECT_EQ("The shared message", (((Observer1<std::string>*)subject.list.at(2)) ->theMessage));
 	
+
+	//Make a new message. Unattach observer 2
+	//Send new message
 	theMessage ="The new message";
 	subject.unattach(observer2);
 	subject.notifyObservers(theMessage);
