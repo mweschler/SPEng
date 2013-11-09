@@ -11,7 +11,7 @@ set(TESTS mytest.cpp
 	AudioManagerTest.cpp
 	ShaderTests.cpp
 	InputHandlerTest.cpp
-
+	MaterialTest.cpp
 	)
 #setup Gtest
 if(MSVC)
