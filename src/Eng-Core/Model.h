@@ -8,9 +8,9 @@ class Model{
 	
 public:
 	enum BufferType{
-		VERTEX,
-		NORMAL,
-		INDEX
+		VERTEX = 0,
+		NORMAL = 1,
+		INDEX = 2
 	};
 
 	Model();

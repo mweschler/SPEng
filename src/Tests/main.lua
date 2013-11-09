@@ -1,6 +1,3 @@
 --- Lua Test Code --
 
-print("hello world")
-print("hello world")
-print("hello world")
-print("hello world")
+createObject("scriptingTest")
