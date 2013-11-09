@@ -243,4 +243,5 @@ namespace{
 		ASSERT_FALSE(model.hasNormals());
 		ASSERT_FALSE(model.hasIndex());
 	}
+
 }
