@@ -1,4 +1,6 @@
 #include "Model.h"
+#include "GLHelper.h"
+#include <iostream>
 
 Model::Model():
 	m_vertBuffer(GL_ARRAY_BUFFER),
@@ -19,18 +21,25 @@ Model::~Model(){
 template <typename T>
 static bool loadBuffer(GLBuffer &buffer, std::vector<T> data){
 	if(!buffer.create())
+	{
+		std::cout<<"Failed to create buffe"<<std::endl;
 		return false;
+	}
 	if(!buffer.bind()){
+		std::cout<<"Failed to bind buffer"<<std::endl;
 		buffer.release();
 		return false;
 	}
 
 	glGetError(); //clear any uncaught errors. Report this?
+	if(buffer.getType() != GL_ARRAY_BUFFER)
+		std::cout<<"Not array buffer"<<std::endl;
 
 	glBufferData(buffer.getType(), sizeof(T) * data.size(), &data[0], GL_STATIC_DRAW);
 
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR){
+		std::cout<<"Error binding data "<<GLHelper::errorEnumToString(error)<<std::endl;
 		buffer.release();
 		return false;
 	}
@@ -48,10 +57,16 @@ bool Model::load(std::string filename){
 
 bool Model::load(std::vector<GLfloat> verts){
 	if(isLoaded())
+	{
+		std::cout<<"Already loaded"<<std::endl;
 		return false;
+	}
 
 	if(!loadBuffer(m_vertBuffer, verts))
+	{
+		std::cout<<"Failed to load buffer"<<std::endl;
 		return false;
+	}
 
 	m_hasVerts = true;
 	m_dataLoaded = true;
@@ -60,7 +75,10 @@ bool Model::load(std::vector<GLfloat> verts){
 
 bool Model::load(std::vector<GLfloat> verts, std::vector<GLushort> indicies){
 	if(isLoaded())
+	{
+		
 		return false;
+	}
 
 	if(!loadBuffer(m_vertBuffer, verts))
 		return false;	
