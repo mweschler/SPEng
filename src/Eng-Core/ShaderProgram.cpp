@@ -164,3 +164,7 @@ bool ShaderProgram::release(){
 
 	return true;
 }
+
+GLuint ShaderProgram::getID() const{
+	return m_program;
+}

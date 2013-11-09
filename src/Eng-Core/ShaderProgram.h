@@ -12,6 +12,7 @@ public:
 	bool link(Shader &vertexShader, Shader &fragmentShader);
 	bool isLinked() const;
 	bool release();
+	GLuint getID() const;
 private:
 	bool m_linked;
 	GLuint m_program;

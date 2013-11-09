@@ -5,6 +5,7 @@
 #include "Logger.h"
 #include "RenderManager.h"
 #include "Shader.h"
+#include "Model.h"
 
 namespace{
 	void writeShaderFiles();
@@ -100,4 +101,47 @@ namespace{
 		ASSERT_TRUE(frag.release());
 		ASSERT_TRUE(vert.release());
 	}
+
+	TEST_F(MaterialTest, DISABLED_visualTest){
+		const float triangle[] ={
+				0.75f, 0.75f, 0.0f, 1.0f,
+				0.75f, -0.75f, 0.0f, 1.0f,
+				-0.75f, -0.75f, 0.0f, 1.0f,
+	};
+	Model triangleModel;
+	std::vector<float> data( std::begin(triangle), std::end(triangle));
+	ASSERT_TRUE(triangleModel.load(data));
+
+
+	Shader vert;
+	Shader frag;
+	ShaderProgram program;
+
+	ASSERT_TRUE(vert.load("vertTestShader.vert"));
+	ASSERT_TRUE(frag.load("fragTestShader.frag"));
+
+	vert.setType(GL_VERTEX_SHADER);
+	frag.setType(GL_FRAGMENT_SHADER);
+
+	ASSERT_TRUE(vert.compile());
+	ASSERT_TRUE(frag.compile());
+
+	ASSERT_TRUE(program.link(vert, frag));
+	
+	Material mat;
+	ASSERT_TRUE(mat.setShader(&program));
+
+	mat.setVertAtrib("vertex");
+
+
+	wnd->show();
+	while(!this->wnd->shouldQuit()){
+		wnd->pollEvents();
+		
+		RenderManager::update();
+		RenderManager::drawModel(triangleModel, mat);
+
+		wnd->swapBuffers();		
+	}
+}
 }
