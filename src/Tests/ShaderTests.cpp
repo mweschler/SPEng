@@ -7,6 +7,7 @@
 #include "ShaderProgram.h"
 #include "Logger.h"
 
+
 namespace{
 	void writeShaderFiles();
 
