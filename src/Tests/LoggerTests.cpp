@@ -50,8 +50,8 @@ TEST(logger, test_six_TryingToDeleteALogAndItDoesExist)
 	EXPECT_EQ(k, 1);
 }
 
-/*
-TEST(logger, personal_test_if_it_writes_corrrectly)
+
+TEST(logger, DISABLED_personal_test_if_it_writes_corrrectly)
 {
 	Logger* logger = Logger::Instance();
 	logger->initialize();
@@ -61,4 +61,3 @@ TEST(logger, personal_test_if_it_writes_corrrectly)
 	logger->shutdown();
 	EXPECT_EQ(1, 1);
 }
-*/
