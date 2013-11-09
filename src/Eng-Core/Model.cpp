@@ -9,7 +9,9 @@ Model::Model():
 	m_dataLoaded(false),
 	m_hasVerts(false),
 	m_hasNormals(false),
-	m_hasIndicies(false)
+	m_hasIndicies(false),
+	m_vertCount(0),
+	m_indexCount(0)
 {
 
 }
@@ -122,7 +124,7 @@ bool Model::load(std::vector<GLfloat> verts, std::vector<GLfloat> normals, std::
 	return true;
 }
 
-bool Model::bind(BufferType type){
+bool Model::bind(BufferType type) const{
 	if(type == Model::VERTEX && m_hasVerts)
 		return m_vertBuffer.bind();
 	if(type == Model::NORMAL && m_hasNormals)
@@ -156,19 +158,26 @@ bool Model::release(){
 	return true;
 }
 
-bool Model::isLoaded(){
+bool Model::isLoaded() const{
 	return m_dataLoaded;
 }
 
-bool Model::hasVerts(){
+bool Model::hasVerts() const{
 	return m_hasVerts;
 }
 
-bool Model::hasNormals(){
+bool Model::hasNormals() const{
 	return m_hasNormals;
 }
 
-bool Model::hasIndex(){
+bool Model::hasIndex() const{
 	return m_hasIndicies;
 }
 
+int Model::getVertCount() const{
+	return m_vertCount;
+}
+
+int Model::getIndexCount() const{
+	return m_indexCount;
+}
