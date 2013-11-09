@@ -18,9 +18,9 @@ Logger* Logger::instance = NULL;
 
 		Logger* Logger::Instance()
 		{
-			cout << "inside instance\n";
+			//cout << "inside instance\n";
 			if(instance == NULL){
-				cout << "inside instance is NULL\n";
+				//cout << "inside instance is NULL\n";
 				instance = new Logger();
 			}
 			return instance;
@@ -89,10 +89,10 @@ Logger* Logger::instance = NULL;
 				string secondsString = "";
 				stringstream os;
 
-				os << hours;
-				cout << os.str();
-				cout << "THE Hours before everything " + hoursString + "\n";
-				os.str("");
+				//os << hours;
+				//cout << os.str();
+				//cout << "THE Hours before everything " + hoursString + "\n";
+				//os.str("");
 				//hours = 0;
 
 				
@@ -173,8 +173,8 @@ Logger* Logger::instance = NULL;
 				{
 					amORpm = "P.M.";
 				}
-				cout << "the month\n";
-				cout << month;
+				//cout << "the month\n";
+				//cout << month;
 			
 				switch(month)
 				{
@@ -191,19 +191,21 @@ Logger* Logger::instance = NULL;
 					case 11: monthName  = "November"; break;
 					case 12: monthName  = "December"; break;
 				}
-				
+
+				/*
 				cout << "\nThe Month " + monthName + "\n";
 				cout << "THE Hours " + hoursString + "\n";
 				cout << "The minutes " + minutesString + "\n";
 				cout << "the seconds " + secondsString + "\n";
-				
+				*/
+
 				stringstream osa;
 				osa << "[" << monthName << " " << day << ", " << year << " - " << hoursString << ":" <<  minutesString << "::" << secondsString << " " << amORpm  << "]  ";
 				string dateStats = osa.str();
 				dataLog.open(dataLogName, ios_base::app);
-				cout << message;
+				//cout << message;
 				dataLog << dateStats << message << endl;
-				cout << "Message has been written\n";
+				//cout << "Message has been written\n";
 				dataLog.close();
 
 				result = 1;
@@ -219,19 +221,19 @@ Logger* Logger::instance = NULL;
 
 		//Creates the file for the person.
 		int Logger::createLog(){
-			cout << "Inside createLog\n";
+			//cout << "Inside createLog\n";
 			int result;
 			if(!dataLogExists)
 			{	    
 				dataLog.open(dataLogName);
 				dataLog.close();
-				cout << "Log has been created.\n";
+				//cout << "Log has been created.\n";
 				dataLogExists = true;
 				result = 1;
 			}
 			else
 			{
-				cout << "Log is already created\n" ;
+				//cout << "Log is already created\n" ;
 				result = 0;
 			}
 			return result;
@@ -244,12 +246,12 @@ Logger* Logger::instance = NULL;
 
 			if(!dataLogExists)
 			{
-				cout << "Data Log does not exist, failed to delete";
+				//cout << "Data Log does not exist, failed to delete";
 				result = 0;
 			}
 			else
 			{		
-				cout << "Data Log successfully removed log";
+				//cout << "Data Log successfully removed log";
 				remove(dataLogName.c_str());	
 				result = 1;
 			}

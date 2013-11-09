@@ -5,10 +5,8 @@
 #include "window.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
-<<<<<<< HEAD
-=======
 #include "Logger.h"
->>>>>>> ea0cdfd0dee0fbeb84dd5f49cd7e43a7aa9b74ae
+
 
 namespace{
 	void writeShaderFiles();
