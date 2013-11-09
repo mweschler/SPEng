@@ -16,7 +16,7 @@ ShaderProgram::~ShaderProgram(){
 
 }
 
-bool ShaderProgram::use(){
+bool ShaderProgram::use() const{
 	if(m_program == 0  || m_linked == false)
 		return false;
 
@@ -137,7 +137,7 @@ bool ShaderProgram::link(Shader &vertexShader, Shader &fragmentShader){
 	return true;
 }
 
-bool ShaderProgram::isLinked(){
+bool ShaderProgram::isLinked() const{
 	return m_linked;
 }
 
@@ -160,6 +160,7 @@ bool ShaderProgram::release(){
 	}
 
 	m_program = 0;
+	m_linked = false;
 
 	return true;
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Joystick.hpp>
 class UserInput
 {
 	
@@ -9,6 +10,7 @@ public:
 		sf::Vector2i getMousePosition();
 	 	bool isKeyPressed(enum sf::Keyboard::Key theKey);
 	    void setMousePostion(int x, int y);
+		bool isJoystickButtonPressed(int joystick, int button);
  
 };
 	

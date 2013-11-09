@@ -5,24 +5,35 @@
 #include "window.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
+<<<<<<< HEAD
+=======
+#include "Logger.h"
+>>>>>>> ea0cdfd0dee0fbeb84dd5f49cd7e43a7aa9b74ae
 
 namespace{
 	void writeShaderFiles();
 
 	std::string fragData = "\nvoid main(){\ngl_FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
+	std::string fragData4 = "\nout vec4 color;\nvoid main(){\ncolor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
 	std::string vertData = "\nattribute vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
+	std::string vertData4 = "\nin vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
 
 	class ShaderTests: public ::testing::Test{
 protected:
 	Window *wnd;
 
 	ShaderTests(){
+		Logger &logger = *Logger::Instance();
+		logger.initialize();
 		GUI::initialize();
 		Window *tmp = GUI::createWindow(800, 600, false);
 		std::string version = "#version ";
 		switch(tmp->getMajorVersion())
 		{
-		case 4: version = version +"400";break;
+		case 4: version = version +"400"; 
+			vertData = vertData4; 
+			fragData = fragData4;
+			break;
 		case 3: version = version + "300"; break;
 		case 2: version = version + "120"; break;
 		default: version = version + "120";break;
@@ -35,6 +46,8 @@ protected:
 		GUI::shutdown();
 		writeShaderFiles();
 	}
+
+
 	virtual void SetUp(){
 		GUI::initialize();
 		RenderManager::initialize();
@@ -64,7 +77,7 @@ protected:
 		file.close();
 	}
 
-TEST_F(ShaderTests, DISABLED_loadShaderValid){
+TEST_F(ShaderTests, loadShaderValid){
 	Shader vertShader;
 	Shader fragShader;
 	
@@ -107,7 +120,7 @@ TEST_F(ShaderTests, DISABLED_loadShaderValid){
 	ASSERT_EQ(0, fragShader.getID());
 }
 
-TEST_F(ShaderTests, DISABLED_invalidUsage){
+TEST_F(ShaderTests, invalidUsage){
 	Shader shader;
 	ASSERT_FALSE(shader.isCompiled());
 	ASSERT_FALSE(shader.isLoaded());
@@ -140,7 +153,7 @@ TEST_F(ShaderTests, DISABLED_invalidUsage){
 	ASSERT_EQ(shader.getType(), 0);
 }
 
-TEST_F(ShaderTests, DISABLED_programValid){
+TEST_F(ShaderTests, programValid){
 	Shader vertShader;
 	Shader fragShader;
 	

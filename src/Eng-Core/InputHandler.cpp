@@ -25,6 +25,13 @@ bool UserInput::isMouseKeyPressed(enum sf::Mouse::Button theButton)
 	return (sf::Mouse::isButtonPressed(theButton ));
 };
 
+bool UserInput::isJoystickButtonPressed(int joystick, int button)
+{
+
+
+	return sf::Joystick::isButtonPressed(joystick,button);
+}
+
 
 void UserInput::setMousePostion(int x, int y)
 {

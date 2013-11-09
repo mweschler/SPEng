@@ -50,6 +50,8 @@ if(MSVC)
 	add_definitions(/MDd)
 endif(MSVC)
 
+include_directories(${CMAKE_SOURCE_DIR}/../3rdparty/glm)
+
 if(ENG_ASSERTIONS_ENABLED)
 	add_definitions(-DASSERTIONS_ENABLED)
 endif(ENG_ASSERTIONS_ENABLED)

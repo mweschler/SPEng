@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv)
 {
-	//::testing::GTEST_FLAG(filter) = "*Scripting*";
+	//::testing::GTEST_FLAG(filter) = "*userInputTest*";
 	::testing::InitGoogleTest(&argc, argv);
 	int rv = RUN_ALL_TESTS();
 	std::getchar();

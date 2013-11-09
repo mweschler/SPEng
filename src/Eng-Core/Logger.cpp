@@ -94,6 +94,14 @@ Logger* Logger::instance = NULL;
 				cout << "THE Hours before everything " + hoursString + "\n";
 				os.str("");
 				//hours = 0;
+
+				
+
+				//os << hours;
+				//cout << os.str();
+				//cout << "THE Hours before everything " + hoursString + "\n";
+				//os.str("");
+
 				
 				//if it's a digit from 1 - 9, add a 0 before them.
 				if(hours%12 < 10)
