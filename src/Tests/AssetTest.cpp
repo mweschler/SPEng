@@ -32,3 +32,28 @@ TEST(assetTests, test_three_testIfReferenceCountIncreases)
 	int b = manager -> getRefCount("C:\\Users\jnoda009\\Pictures\\tree");
 	EXPECT_EQ(b, 3);
 }
+
+
+TEST(assetTests, test_four_testIfAssetIsReleasedIfItIsThere)
+{
+	AssetManager* manager = AssetManager::Instance();
+	bool b = manager ->releaseAsset("C:\\Users\jnoda009\\Pictures\\dragon");
+	EXPECT_EQ(b, true);
+}
+
+
+TEST(assetTests, test_five_testIfNothingIsReleased)
+{
+	AssetManager* manager = AssetManager::Instance();
+	
+	bool b = manager ->releaseAsset("C:\\Users\jnoda009\\Pictures\\monster");
+	EXPECT_EQ(b, false);
+}
+
+TEST(assetTests, test_six_testIfAssetIsDecrementingRefCount)
+{
+	AssetManager* manager = AssetManager::Instance();
+	manager -> releaseAsset("C:\\Users\jnoda009\\Pictures\\tree");
+	int b = manager -> getRefCount("C:\\Users\jnoda009\\Pictures\\tree");
+	EXPECT_EQ(b, 2);
+}

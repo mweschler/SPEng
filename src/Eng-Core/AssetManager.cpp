@@ -29,11 +29,28 @@ AssetManager* AssetManager::instance = NULL;
 		}
 		
 
-		/*
-		int releaseAsset(Asset asset)
+		
+		bool AssetManager::releaseAsset(string assetName)
 		{
-			release(asset);
-		}*/
+			if(checkForDuplicate(assetName))
+			{
+				if(assetStorage.at(assetName)->getRefCount() > 1)
+				{
+					assetStorage.at(assetName)->decreaseRefCount();
+				}
+				else
+				{
+					assetStorage.erase(assetName);
+				}
+				return true;
+			}
+			else
+			{
+				cout << "failed to release asset. Asset never loaded.";
+				return false;
+			}
+			
+		}
 		
 
 	    

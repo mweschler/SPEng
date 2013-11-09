@@ -47,7 +47,7 @@ class AssetManager{
 			}				
 		}
 		
-		int releaseAsset(string name);
+		bool releaseAsset(string name);
 		
 
 	private:
