@@ -5,7 +5,8 @@
 
 static Logger *logger;
 RenderInternal::RenderInternal():
-	m_initialized(false)
+	m_initialized(false),
+	m_perspective()
 {
 	logger = Logger::Instance();
 
@@ -39,6 +40,8 @@ void RenderInternal::update(){
 
 void RenderInternal::drawModel(const Model model, const Material material){
 	const ShaderProgram &program = *material.getShader();
+	program.use();
+
 	if(model.hasVerts() && material.getVertAttrib().length() > 0)
 	{
 		model.bind(Model::VERTEX);
@@ -64,11 +67,15 @@ void RenderInternal::drawModel(const Model model, const Material material){
 	if(model.hasIndex())
 	{
 		model.bind(Model::INDEX);
-		glDrawElements(GL_TRIANGLES, model.getIndexCount(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, model.getIndexCount(), GL_UNSIGNED_SHORT, 0);
 	}
 	else{
 		glDrawArrays(GL_TRIANGLES, 0, model.getVertCount());
 	}
 
 	
+}
+
+void RenderInternal::set3DMode(float fov){
+
 }

@@ -34,8 +34,6 @@ static bool loadBuffer(GLBuffer &buffer, std::vector<T> data){
 	}
 
 	glGetError(); //clear any uncaught errors. Report this?
-	if(buffer.getType() != GL_ARRAY_BUFFER)
-		std::cout<<"Not array buffer"<<std::endl;
 
 	glBufferData(buffer.getType(), sizeof(T) * data.size(), &data[0], GL_STATIC_DRAW);
 
@@ -174,10 +172,18 @@ bool Model::hasIndex() const{
 	return m_hasIndicies;
 }
 
-int Model::getVertCount() const{
+unsigned int Model::getVertCount() const{
 	return m_vertCount;
 }
 
-int Model::getIndexCount() const{
+unsigned int Model::getIndexCount() const{
 	return m_indexCount;
+}
+
+void Model::setVertCount(unsigned int count){
+	m_vertCount = count;
+}
+
+void Model::setIndexCount(unsigned int count){
+	m_indexCount = count;
 }

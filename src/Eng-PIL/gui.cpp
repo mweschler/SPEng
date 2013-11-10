@@ -153,6 +153,8 @@ bool GUI::initialize(){
 	DestroyWindow(handle);
 #endif
 
+	//flush gl errors
+	glGetError();
 	initialized = true;
 	return true;
 }

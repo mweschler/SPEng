@@ -25,3 +25,7 @@ void RenderManager::drawModel(const Model model,const Material material){
 void RenderManager::update(){
 	render.update();
 }
+
+void RenderManager::set3DMode(float fov){
+	render.set3DMode(fov);
+}

@@ -25,9 +25,10 @@ public:
 	bool hasVerts() const;
 	bool hasNormals() const;
 	bool hasIndex() const;
-	int getVertCount() const;
-	int getIndexCount() const;
-
+	unsigned int getVertCount() const;
+	unsigned int getIndexCount() const;
+	void setVertCount(unsigned int count);
+	void setIndexCount(unsigned int count);
 	
 private:
 	GLBuffer m_vertBuffer;
@@ -37,6 +38,6 @@ private:
 	bool m_hasVerts;
 	bool m_hasNormals;
 	bool m_hasIndicies;
-	int m_vertCount;
-	int m_indexCount;
+	unsigned int m_vertCount;
+	unsigned int m_indexCount;
 };

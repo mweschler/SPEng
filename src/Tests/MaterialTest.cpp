@@ -18,30 +18,37 @@ namespace{
 	class MaterialTest:public ::testing::Test{
 	protected:
 		MaterialTest(){
-		Logger &logger = *Logger::Instance();
-		logger.initialize();
-		GUI::initialize();
-		Window *tmp = GUI::createWindow(800, 600, false);
-		std::string version = "#version ";
-		switch(tmp->getMajorVersion())
-		{
-		case 4: version = version +"400"; 
-			vertData = vertData4; 
-			fragData = fragData4;
-			break;
-		case 3: version = version + "300"; break;
-		case 2: version = version + "120"; break;
-		default: version = version + "120";break;
+			Logger &logger = *Logger::Instance();
+			logger.initialize();
+			GUI::initialize();
+			Window *tmp = GUI::createWindow(800, 600, false);
+
+			std::string version = "#version ";
+			switch(tmp->getMajorVersion())
+			{
+			case 4: version = version +"400"; 
+				vertData = vertData4; 
+				fragData = fragData4;
+				break;
+			case 3: version = version + "300"; break;
+			case 2: version = version + "120"; break;
+			default: version = version + "120";break;
+			}
+
+			fragData = version + fragData;
+			vertData = version + vertData;
+
+			tmp->close();
+
+			delete tmp;
+
+			GUI::shutdown();
+
+			writeShaderFiles();
 		}
 
-		fragData = version + fragData;
-		vertData = version + vertData;
-		tmp->close();
-		delete tmp;
-		GUI::shutdown();
-		writeShaderFiles();
-		}
 		Window *wnd;
+
 		void SetUp(){
 			GUI::initialize();
 			RenderManager::initialize();
@@ -107,41 +114,46 @@ namespace{
 				0.75f, 0.75f, 0.0f, 1.0f,
 				0.75f, -0.75f, 0.0f, 1.0f,
 				-0.75f, -0.75f, 0.0f, 1.0f,
-	};
-	Model triangleModel;
-	std::vector<float> data( std::begin(triangle), std::end(triangle));
-	ASSERT_TRUE(triangleModel.load(data));
+		};
+
+		const GLushort indicies[] = {0, 1, 2};
+
+		Model triangleModel;
+		std::vector<float> data( std::begin(triangle), std::end(triangle));
+		std::vector<GLushort> index(std::begin(indicies), std::end(indicies));
+		ASSERT_TRUE(triangleModel.load(data, index));
+		triangleModel.setVertCount(3);
+		triangleModel.setIndexCount(3);
+
+		Shader vert;
+		Shader frag;
+		ShaderProgram program;
+
+		ASSERT_TRUE(vert.load("vertTestShader.vert"));
+		ASSERT_TRUE(frag.load("fragTestShader.frag"));
+
+		vert.setType(GL_VERTEX_SHADER);
+		frag.setType(GL_FRAGMENT_SHADER);
+
+		ASSERT_TRUE(vert.compile());
+		ASSERT_TRUE(frag.compile());
+
+		ASSERT_TRUE(program.link(vert, frag));
+
+		Material mat;
+		ASSERT_TRUE(mat.setShader(&program));
+
+		mat.setVertAtrib("vertex");
 
 
-	Shader vert;
-	Shader frag;
-	ShaderProgram program;
+		wnd->show();
+		while(!this->wnd->shouldQuit()){
+			wnd->pollEvents();
 
-	ASSERT_TRUE(vert.load("vertTestShader.vert"));
-	ASSERT_TRUE(frag.load("fragTestShader.frag"));
+			RenderManager::update();
+			RenderManager::drawModel(triangleModel, mat);
 
-	vert.setType(GL_VERTEX_SHADER);
-	frag.setType(GL_FRAGMENT_SHADER);
-
-	ASSERT_TRUE(vert.compile());
-	ASSERT_TRUE(frag.compile());
-
-	ASSERT_TRUE(program.link(vert, frag));
-	
-	Material mat;
-	ASSERT_TRUE(mat.setShader(&program));
-
-	mat.setVertAtrib("vertex");
-
-
-	wnd->show();
-	while(!this->wnd->shouldQuit()){
-		wnd->pollEvents();
-		
-		RenderManager::update();
-		RenderManager::drawModel(triangleModel, mat);
-
-		wnd->swapBuffers();		
+			wnd->swapBuffers();		
+		}
 	}
-}
 }

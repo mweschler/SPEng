@@ -5,6 +5,7 @@
 #include "GLBuffer.h"
 #include "Model.h"
 #include "Logger.h"
+#include "GLHelper.h"
 
 namespace{
 	class RenderTests : public ::testing::Test{
@@ -66,6 +67,9 @@ namespace{
 	class GLBufferTests: public::testing::Test
 	{
 	protected:
+		GLBufferTests(){
+			GLHelper::flushGLErrors();
+		}
 		Window *wnd;
 		virtual void SetUp(){
 			Logger &logger = *Logger::Instance();
@@ -87,6 +91,7 @@ namespace{
 	};
 
 	TEST_F(GLBufferTests, creationBindReleaseValid){
+		GLHelper::flushGLErrors();
 		ASSERT_TRUE(GUI::isInitialized());
 		ASSERT_TRUE(RenderManager::isInitialized());
 		ASSERT_TRUE(wnd != NULL);
