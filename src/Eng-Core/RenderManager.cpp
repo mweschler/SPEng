@@ -29,3 +29,7 @@ void RenderManager::update(){
 void RenderManager::set3DMode(float fov){
 	render.set3DMode(fov);
 }
+
+void RenderManager::setViewport(int x, int y, int width, int height){
+	render.setViewPort(x,y,width,height);
+}

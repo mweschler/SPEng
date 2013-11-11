@@ -3,10 +3,7 @@
 
 Material::Material():
 	m_diffuseColor(1.0f),
-	m_program(NULL),
-	m_diffName(""),
-	m_normAttrib(""),
-	m_vertAttrib("")
+	m_program(NULL)
 {
 
 }
@@ -41,28 +38,4 @@ glm::vec3 Material::getDiffuseColor() const{
 
 const ShaderProgram *Material::getShader() const{
 	return m_program;
-}
-
-void Material::setDiffuseName(std::string name){
-	m_diffName = name;
-}
-
-std::string Material::getDiffuseName() const{
-	return m_diffName;
-}
-
-void Material::setVertAtrib(std::string name){
-	m_vertAttrib = name;
-}
-
-void Material::setNormAtrib(std::string name){
-	m_normAttrib = name;
-}
-
-std::string Material::getVertAttrib() const{
-	return m_vertAttrib;
-}
-
-std::string Material::getNormAttrib() const{
-	return m_normAttrib;
 }

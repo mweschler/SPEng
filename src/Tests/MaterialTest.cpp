@@ -140,10 +140,12 @@ namespace{
 
 		ASSERT_TRUE(program.link(vert, frag));
 
+		program.setVertAttrib("vertex");
+
 		Material mat;
 		ASSERT_TRUE(mat.setShader(&program));
 
-		mat.setVertAtrib("vertex");
+		
 
 
 		wnd->show();

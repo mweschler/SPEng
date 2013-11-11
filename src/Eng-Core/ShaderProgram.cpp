@@ -7,7 +7,11 @@
 
 ShaderProgram::ShaderProgram():
 	m_linked(false),
-	m_program(0)
+	m_program(0),
+	m_diffAttrib(""),
+	m_vertAttrib(""),
+	m_normAttrib(""),
+	m_MVPAttrib("")
 {
 
 }
@@ -167,4 +171,36 @@ bool ShaderProgram::release(){
 
 GLuint ShaderProgram::getID() const{
 	return m_program;
+}
+
+void ShaderProgram::setDiffuseAttrib(std::string name){
+	m_diffAttrib = name;
+}
+
+std::string ShaderProgram::getDiffuseAttrib() const{
+	return m_diffAttrib;
+}
+
+void ShaderProgram::setVertAttrib(std::string name){
+	m_vertAttrib = name;
+}
+
+std::string ShaderProgram::getVertAttrib() const{
+	return m_vertAttrib;
+}
+
+void ShaderProgram::setNormAttrib(std::string name){
+	m_normAttrib = name;
+}
+
+std::string ShaderProgram::getNormAttrib() const{
+	return m_normAttrib;
+}
+
+void ShaderProgram::setMVPAttrib(std::string name){
+	m_MVPAttrib = name;
+}
+
+std::string ShaderProgram::getMVPAttrib() const{
+	return m_MVPAttrib;
 }

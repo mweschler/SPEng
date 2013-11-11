@@ -1,12 +1,16 @@
+#include <sstream>
 #include "RenderInternal.h"
 #include "Model.h"
 #include "Material.h"
 #include "Logger.h"
+#include "glm/ext.hpp"
+#include "GLHelper.h"
 
 static Logger *logger;
 RenderInternal::RenderInternal():
 	m_initialized(false),
-	m_perspective()
+	m_perspective(),
+	m_renderMode(RenderInternal::MODE_2D)
 {
 	logger = Logger::Instance();
 
@@ -42,28 +46,38 @@ void RenderInternal::drawModel(const Model model, const Material material){
 	const ShaderProgram &program = *material.getShader();
 	program.use();
 
-	if(model.hasVerts() && material.getVertAttrib().length() > 0)
+	//setup verts
+	if(model.hasVerts() && program.getVertAttrib().length() > 0)
 	{
 		model.bind(Model::VERTEX);
-		GLuint vertLoc = glGetAttribLocation(program.getID(), material.getVertAttrib().c_str());
+		GLuint vertLoc = glGetAttribLocation(program.getID(), program.getVertAttrib().c_str());
 		glEnableVertexAttribArray(vertLoc);
 		glVertexAttribPointer(vertLoc, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	}
 	else
-		return;
+		return; //no verts? nothing to render
 
-	if(model.hasNormals() && material.getNormAttrib().length() > 0){
+	//setup normals
+	if(model.hasNormals() && program.getNormAttrib().length() > 0){
 		model.bind(Model::NORMAL);
-		GLuint normLoc = glGetAttribLocation(program.getID(), material.getNormAttrib().c_str());
+		GLuint normLoc = glGetAttribLocation(program.getID(), program.getNormAttrib().c_str());
 		glEnableVertexAttribArray(normLoc);
 		glVertexAttribPointer(normLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	}
 
-	if(material.getDiffuseName().length() > 0){
-		GLuint diffLoc = glGetUniformLocation(program.getID(), material.getDiffuseName().c_str());
+	//set global diffuse
+	if(program.getDiffuseAttrib().length() > 0){
+		GLuint diffLoc = glGetUniformLocation(program.getID(), program.getDiffuseAttrib().c_str());
 		glUniform3fv(diffLoc, 1, &(material.getDiffuseColor())[0]);
 	}
 
+	//set MVP matrix
+	if(program.getMVPAttrib().length() > 0){
+		GLuint mvpLoc = glGetUniformLocation(program.getID(), program.getMVPAttrib().c_str());
+		glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(m_perspective));
+	}
+
+	//draw in indexed or array mode
 	if(model.hasIndex())
 	{
 		model.bind(Model::INDEX);
@@ -77,5 +91,42 @@ void RenderInternal::drawModel(const Model model, const Material material){
 }
 
 void RenderInternal::set3DMode(float fov){
+	m_renderMode = RenderMode::MODE_3D;
+	int viewport[4];
+	GLHelper::flushGLErrors();
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	GLenum rv = glGetError();
+	if(rv != GL_NO_ERROR){
+		Logger &logger = *Logger::Instance();
+		std::stringstream ss;
+		ss<<"RenderManager: failed to get viewport, error ";
+		ss<<GLHelper::errorEnumToString(rv);
+		logger.writeToLog(ss.str());
+		return;
+	}
 
+	float ratio = static_cast<float>(viewport[2]) / static_cast<float>(viewport[3]);
+
+	m_perspective = glm::perspective(fov, ratio, 0.0f, 100.0f);
+}
+
+void RenderInternal::setViewPort(int x, int y, int width, int height){
+	if(x < 0 || y < 0 || width <0 || height < 0){
+		Logger &logger = *Logger::Instance();
+
+		logger.writeToLog("Render Manager: failed to set viewport, invalid value");
+		return;
+	}
+
+	GLHelper::flushGLErrors();
+
+	glViewport(x, y, width, height);
+	GLenum rv = glGetError();
+	if(rv != GL_NO_ERROR){
+		Logger &logger = *Logger::Instance();
+		std::stringstream ss;
+		ss<<"Call to glViewport failed, error ";
+		ss<<GLHelper::errorEnumToString(rv);
+		logger.writeToLog(ss.str());
+	}
 }

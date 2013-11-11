@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <string>
 
 class Shader;
 
@@ -13,7 +14,19 @@ public:
 	bool isLinked() const;
 	bool release();
 	GLuint getID() const;
+	void setDiffuseAttrib(std::string name);
+	std::string getDiffuseAttrib() const;
+	void setVertAttrib(std::string);
+	std::string getVertAttrib() const;
+	void setNormAttrib(std::string);
+	std::string getNormAttrib() const;
+	void setMVPAttrib(std::string);
+	std::string getMVPAttrib() const;
 private:
 	bool m_linked;
 	GLuint m_program;
+	std::string m_diffAttrib;
+	std::string m_vertAttrib;
+	std::string m_normAttrib;
+	std::string m_MVPAttrib;
 };

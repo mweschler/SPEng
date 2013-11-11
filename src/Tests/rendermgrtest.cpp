@@ -249,4 +249,75 @@ namespace{
 		ASSERT_FALSE(model.hasIndex());
 	}
 
+	void writeShaderFiles();
+
+	std::string fragData = "\nvoid main(){\ngl_FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
+	std::string fragData4 = "\nout vec4 color;\nvoid main(){\ncolor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
+	std::string vertData = "\nattribute vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
+	std::string vertData4 = "\nin vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
+
+	class Render3DTests: public ::testing::Test{
+	protected:
+		Render3DTests(){
+			Logger &logger = *Logger::Instance();
+			logger.initialize();
+			GUI::initialize();
+			Window *tmp = GUI::createWindow(800, 600, false);
+
+			std::string version = "#version ";
+			switch(tmp->getMajorVersion())
+			{
+			case 4: version = version +"400"; 
+				vertData = vertData4; 
+				fragData = fragData4;
+				break;
+			case 3: version = version + "300"; break;
+			case 2: version = version + "120"; break;
+			default: version = version + "120";break;
+			}
+
+			fragData = version + fragData;
+			vertData = version + vertData;
+
+			tmp->close();
+
+			delete tmp;
+
+			GUI::shutdown();
+
+			writeShaderFiles();}
+		~Render3DTests(){}
+
+		Window *wnd;
+
+		void SetUp(){
+			GUI::initialize();
+			RenderManager::initialize();
+			wnd = GUI::createWindow(800, 600, false);
+		}
+		void TearDown(){
+			wnd->close();
+			delete wnd;
+			wnd = NULL;
+			RenderManager::shutdown();
+			GUI::shutdown();
+		}
+	};
+
+	static void writeShaderFiles()
+	{
+		std::ofstream file;
+		file.open("vertTestShader.vert", std::ios::out);
+		file.write(vertData.c_str(),vertData.length());
+		file.close();
+
+		file.open("fragTestShader.frag", std::ios::out);
+		file.write(fragData.c_str(), fragData.length());
+		file.close();
+	}
+
+
+	TEST_F(Render3DTests, visualTest){
+
+	}
 }
