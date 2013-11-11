@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <glm/glm.hpp>
 #include "GLBuffer.h"
 
 class Model{
@@ -29,7 +30,8 @@ public:
 	unsigned int getIndexCount() const;
 	void setVertCount(unsigned int count);
 	void setIndexCount(unsigned int count);
-	
+	void setModelMatrix(glm::mat4 matrix);
+	glm::mat4 getModelMatrix() const;
 private:
 	GLBuffer m_vertBuffer;
 	GLBuffer m_normalBuffer;
@@ -40,4 +42,5 @@ private:
 	bool m_hasIndicies;
 	unsigned int m_vertCount;
 	unsigned int m_indexCount;
+	glm::mat4 m_matrix;
 };

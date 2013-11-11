@@ -15,6 +15,7 @@ set(CORE_SOURCE
 	Shader.cpp
 	ShaderProgram.cpp
 	InputHandler.cpp
+	Camera.cpp
 	)
 	
 set(CORE_HEADER
@@ -35,6 +36,7 @@ set(CORE_HEADER
 	Shader.h
 	ShaderProgram.h
 	InputHandler.h
+	Camera.h
 	)
 
 

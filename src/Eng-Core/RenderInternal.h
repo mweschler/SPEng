@@ -3,6 +3,7 @@
 #include "glm\glm.hpp"
 class Model;
 class Material;
+class Camera;
 
 class RenderInternal{
 	
@@ -11,7 +12,7 @@ public:
 	bool initialize();
 	bool isInitialized();
 	void shutdown();
-	void drawModel(const Model model, const Material material);
+	void drawModel(const Model model, const Material material, const Camera camera);
 	void update();
 	void set3DMode(float fov);
 	void setViewPort(int x, int y, int width, int height);

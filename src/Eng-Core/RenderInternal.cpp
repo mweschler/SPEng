@@ -5,6 +5,7 @@
 #include "Logger.h"
 #include "glm/ext.hpp"
 #include "GLHelper.h"
+#include "Camera.h"
 
 static Logger *logger;
 RenderInternal::RenderInternal():
@@ -20,7 +21,7 @@ bool RenderInternal::initialize(){
 	if(this->m_initialized == true)
 		return false;
 	
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	
 
 
 	this->m_initialized = true;
@@ -39,10 +40,11 @@ void RenderInternal::shutdown(){
 }
 
 void RenderInternal::update(){
+	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void RenderInternal::drawModel(const Model model, const Material material){
+void RenderInternal::drawModel(const Model model, const Material material, const Camera camera){
 	const ShaderProgram &program = *material.getShader();
 	program.use();
 
@@ -60,21 +62,23 @@ void RenderInternal::drawModel(const Model model, const Material material){
 	//setup normals
 	if(model.hasNormals() && program.getNormAttrib().length() > 0){
 		model.bind(Model::NORMAL);
-		GLuint normLoc = glGetAttribLocation(program.getID(), program.getNormAttrib().c_str());
+		GLint normLoc = glGetAttribLocation(program.getID(), program.getNormAttrib().c_str());
 		glEnableVertexAttribArray(normLoc);
 		glVertexAttribPointer(normLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	}
 
 	//set global diffuse
 	if(program.getDiffuseAttrib().length() > 0){
-		GLuint diffLoc = glGetUniformLocation(program.getID(), program.getDiffuseAttrib().c_str());
-		glUniform3fv(diffLoc, 1, &(material.getDiffuseColor())[0]);
+		GLint diffLoc = glGetUniformLocation(program.getID(), program.getDiffuseAttrib().c_str());
+		glUniform3fv(diffLoc, 1, glm::value_ptr(material.getDiffuseColor()));
 	}
 
 	//set MVP matrix
 	if(program.getMVPAttrib().length() > 0){
-		GLuint mvpLoc = glGetUniformLocation(program.getID(), program.getMVPAttrib().c_str());
-		glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(m_perspective));
+		GLint mvpLoc = glGetUniformLocation(program.getID(), program.getMVPAttrib().c_str());
+		glm::mat4 view = glm::lookAt(camera.getPosition(), camera.getTarget(), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 mvp = m_perspective * view * model.getModelMatrix();
+		glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
 	}
 
 	//draw in indexed or array mode
@@ -107,7 +111,7 @@ void RenderInternal::set3DMode(float fov){
 
 	float ratio = static_cast<float>(viewport[2]) / static_cast<float>(viewport[3]);
 
-	m_perspective = glm::perspective(fov, ratio, 0.0f, 100.0f);
+	m_perspective = glm::perspective(fov, ratio, 0.1f, 100.0f);
 }
 
 void RenderInternal::setViewPort(int x, int y, int width, int height){

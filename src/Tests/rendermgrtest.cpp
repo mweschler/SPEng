@@ -6,6 +6,15 @@
 #include "Model.h"
 #include "Logger.h"
 #include "GLHelper.h"
+#include "Shader.h"
+#include "ShaderProgram.h"
+#include "Material.h"
+#include "Camera.h"
+
+#define _USE_MATH_DEFINES
+
+#include <math.h>
+
 
 namespace{
 	class RenderTests : public ::testing::Test{
@@ -251,10 +260,10 @@ namespace{
 
 	void writeShaderFiles();
 
-	std::string fragData = "\nvoid main(){\ngl_FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
-	std::string fragData4 = "\nout vec4 color;\nvoid main(){\ncolor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
-	std::string vertData = "\nattribute vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
-	std::string vertData4 = "\nin vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
+	std::string fragData = "\nuniform vec3 diffuse;\nvoid main(){\ngl_FragColor = vec4(diffuse, 1.0f);\n}";
+	std::string fragData4 = "\nuniform vec3 diffuse;\nout vec4 color;\nvoid main(){\ncolor = vec4(diffuse, 1.0f);\n}";
+	std::string vertData = "\nuniform mat4 mvp;\nattribute vec4 vertex;\nvoid main(){\ngl_Position = mvp * vertex;\n}";
+	std::string vertData4 = "\nuniform mat4 mvp;\nin vec4 vertex;\nvoid main(){\ngl_Position = mvp * vertex;\n}";
 
 	class Render3DTests: public ::testing::Test{
 	protected:
@@ -262,9 +271,12 @@ namespace{
 			Logger &logger = *Logger::Instance();
 			logger.initialize();
 			GUI::initialize();
-			Window *tmp = GUI::createWindow(800, 600, false);
+			
 
+			Window *tmp = GUI::createWindow(800, 600, false);
+			
 			std::string version = "#version ";
+			
 			switch(tmp->getMajorVersion())
 			{
 			case 4: version = version +"400"; 
@@ -275,16 +287,17 @@ namespace{
 			case 2: version = version + "120"; break;
 			default: version = version + "120";break;
 			}
-
+			
 			fragData = version + fragData;
 			vertData = version + vertData;
 
+			
 			tmp->close();
 
 			delete tmp;
 
 			GUI::shutdown();
-
+			
 			writeShaderFiles();}
 		~Render3DTests(){}
 
@@ -317,7 +330,75 @@ namespace{
 	}
 
 
-	TEST_F(Render3DTests, visualTest){
+	TEST_F(Render3DTests, DISABLED_visualTest){
+
+		const float triangle[] ={
+				-0.75f, 0.75f, 0.0f, 1.0f,
+				-0.75f, -0.75f, 0.0f, 1.0f,
+				0.75f, -0.75f, 0.0f, 1.0f,
+		};
+
+		const GLushort indicies[] = {0, 1, 2};
+
+		Model triangleModel;
+		std::vector<float> data( std::begin(triangle), std::end(triangle));
+		std::vector<GLushort> index(std::begin(indicies), std::end(indicies));
+		ASSERT_TRUE(triangleModel.load(data, index));
+		triangleModel.setVertCount(3);
+		triangleModel.setIndexCount(3);
+
+		Shader frag;
+		Shader vert;
+		ShaderProgram program;
+		Material material;
+		Camera camera;
+
+		ASSERT_TRUE(vert.load("vertTestShader.vert"));
+		ASSERT_TRUE(frag.load("fragTestShader.frag"));
+
+		vert.setType(GL_VERTEX_SHADER);
+		frag.setType(GL_FRAGMENT_SHADER);
+
+		ASSERT_TRUE(vert.compile());
+		ASSERT_TRUE(frag.compile());
+
+		ASSERT_TRUE(program.link(vert, frag));
+		program.setVertAttrib("vertex");
+		program.setDiffuseAttrib("diffuse");
+		program.setMVPAttrib("mvp");
+
+		ASSERT_TRUE(material.setShader(&program));
+		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
+		
+		float camDeg = 0;
+		camera.setTarget(glm::vec3(0.0f, 0.0f, 0.0f));
+	
+		RenderManager::set3DMode(45);
+		wnd->show();
+		while(!wnd->shouldQuit()){
+			wnd->pollEvents();
+			RenderManager::update();
+
+			float camX = sin(camDeg * M_PI / 180) * 5;
+			float camZ = cos(camDeg * M_PI / 180) * 5;
+			camera.setPosition(glm::vec3(camX, 0.0f, camZ));
+			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
+			RenderManager::drawModel(triangleModel, material, camera);
+			wnd->swapBuffers();
+
+			camDeg = camDeg + 0.5;
+			if(camDeg >= 360)
+				camDeg = 0;
+		}
+		std::cout<<"end of loop\n";
+
+		triangleModel.release();
+
+		program.release();
+
+		frag.release();
+
+		vert.release();
 
 	}
 }

@@ -11,7 +11,8 @@ Model::Model():
 	m_hasNormals(false),
 	m_hasIndicies(false),
 	m_vertCount(0),
-	m_indexCount(0)
+	m_indexCount(0),
+	m_matrix(1.0f)
 {
 
 }
@@ -186,4 +187,12 @@ void Model::setVertCount(unsigned int count){
 
 void Model::setIndexCount(unsigned int count){
 	m_indexCount = count;
+}
+
+void Model::setModelMatrix(glm::mat4 matrix){
+	m_matrix = matrix;
+}
+
+glm::mat4 Model::getModelMatrix() const{
+	return m_matrix;
 }

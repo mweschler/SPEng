@@ -6,6 +6,7 @@
 #include "RenderManager.h"
 #include "Shader.h"
 #include "Model.h"
+#include "Camera.h"
 
 namespace{
 	void writeShaderFiles();
@@ -145,7 +146,7 @@ namespace{
 		Material mat;
 		ASSERT_TRUE(mat.setShader(&program));
 
-		
+		Camera camera;
 
 
 		wnd->show();
@@ -153,7 +154,7 @@ namespace{
 			wnd->pollEvents();
 
 			RenderManager::update();
-			RenderManager::drawModel(triangleModel, mat);
+			RenderManager::drawModel(triangleModel, mat, camera);
 
 			wnd->swapBuffers();		
 		}
