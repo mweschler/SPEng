@@ -4,15 +4,19 @@
 #include "AudioContainer.h"
 #include <SFML/Audio.hpp>
 #include <Windows.h>
+#include "logger.h"
+#include <sstream>
 using namespace std;
-
+		
 		string fileName;
 		sf::Music music;
 		float duration;
+		Logger* logger = Logger::Instance();
 
 		AudioContainer::AudioContainer(string nameOfAudioFile)
 		{
 			fileName = nameOfAudioFile;
+			logger->initialize();		
 			load();
 		}
 
@@ -23,6 +27,8 @@ using namespace std;
 
 		float AudioContainer::getDuration()
 		{
+			std::ostringstream buff;
+			buff<<duration;
 			return duration;
 		}
 
@@ -30,9 +36,9 @@ using namespace std;
 		{
 			bool success = true;
 			if (!music.openFromFile(fileName)){
-				// Log the error here
+				logger->writeToLog("Failed to open audio file");
 				success = false;
-			}
+			}			
 			//Initialize length of audio file
 			sf::Time length = music.getDuration();
 			duration = length.asSeconds();
@@ -44,21 +50,11 @@ using namespace std;
 		}
 
 		void AudioContainer::pause(){
-			if(music.Playing){
-				music.pause();
-			}
-			else{
-				//Audio file is not currently playing
-			}
+			music.pause();
 		}
 
 		void AudioContainer::stop(){
-			if(music.Playing){
-				music.stop();
-			}
-			else{
-				//Audio file is not currently playing
-			}
+			music.stop();
 		}
 
 		void AudioContainer::loop(){
@@ -68,17 +64,16 @@ using namespace std;
 
 		void AudioContainer::fade(float numberOfSeconds)
 		{
-			float sleepTime = numberOfSeconds * 15;
-			for (int i = 99; i>=0; i--)
-			{					
-				music.setVolume(i);
-				Sleep(sleepTime);
+			if(music.getStatus() == music.Playing){
+				float sleepTime = numberOfSeconds * 15;
+				for (int i = 99; i>=0; i--)
+				{					
+					music.setVolume(i);
+					Sleep(sleepTime);
+				}
+				music.stop();	
 			}
-			music.stop();		
-		}
-
-		bool AudioContainer::release(AudioContainer asset)
-		{
-			cout << "Release it\n";
-			return true;
+			else{
+				logger->writeToLog("Cannot fade audio file because it is not currently playing");
+			}
 		}

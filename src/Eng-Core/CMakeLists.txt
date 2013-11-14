@@ -37,11 +37,8 @@ set(CORE_HEADER
 	Shader.h
 	ShaderProgram.h
 	InputHandler.h
-<<<<<<< HEAD
 	AudioContainer.h
-=======
 	Camera.h
->>>>>>> acea804af83a8be74e49f9465100b440fe3e9581
 	)
 
 

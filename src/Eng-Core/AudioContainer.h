@@ -7,6 +7,7 @@ class AudioContainer : public Asset{
 
 	public:
 		std::string getFileName();
+		//Returns audio file length in seconds
 		float getDuration();
 		AudioContainer(std::string name);
 		bool virtual load();
@@ -17,9 +18,9 @@ class AudioContainer : public Asset{
 		void virtual loop();
 		//Assumes audio file is playing already and fades it in a designated amount of seconds
 		void virtual fade(float numberOfSeconds); 
-		bool virtual release(AudioContainer container);
 		
 	private:
 		std::string fileName;	
 		sf::Music music;
+		float duration;
 };
