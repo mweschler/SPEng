@@ -2,34 +2,62 @@
 #include "gtest/gtest.h"
 #include "AudioManager.h"
 #include <SFML/Audio.hpp>
+#include "AudioContainer.h"
 #include <Windows.h>
 
 TEST(AudioSuite, DISABLED_playingSoundTest){
-	int result = 4;
+	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
+	audioContainer->play();
+}
+
+TEST(AudioSuite, DISABLED_playingMusicTest){
+	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
+	audioContainer->play();
+}
+
+TEST(AudioSuite, DISABLED_loopingSoundTest){
+	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
+	audioContainer->loop();
+}
+
+TEST(AudioSuite, DISABLED_loopingMusicTest){
+	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
+	audioContainer->loop();
+}
+
+TEST(AudioSuite, DISABLED_fadingSoundTest){
+	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
+	audioContainer->play();
+	audioContainer->fade(1);
+}
+
+TEST(AudioSuite, DISABLED_fadingMusicTest){
+	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
+	audioContainer->play();
+	audioContainer->fade(4);
+}
+
+TEST(AudioSuite, DISABLED_fadingSoundLibraryTest){
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	if (!buffer.loadFromFile("gunshot.wav"))
 		ASSERT_DEATH(NULL,NULL); // error
 	sound.setBuffer(buffer); 
-	std::cout<<"Press enter to proceed";
+	std::cout<<"Press enter to continue";
 	sound.play();
 	std::cin.ignore();
-	EXPECT_EQ(4,result);
 }
 
-TEST(AudioSuite, DISABLED_playingMusicTest){
-	int result = 4;
+TEST(AudioSuite, DISABLED_playingMusicLibraryTest){
 	sf::Music music;
 	if (!music.openFromFile("throughthefireandtheflames.ogg"))
 		ASSERT_DEATH(NULL,NULL); // error
 	std::cout<<"Press enter to stop music and proceed";
 	music.play();
 	std::cin.ignore();
-	EXPECT_EQ(4,result);
 }
 
-TEST(AudioSuite, DISABLED_loopingSound){
-	int result = 4;
+TEST(AudioSuite, DISABLED_loopingSoundLibraryTest){
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	if (!buffer.loadFromFile("gunshot.wav"))
@@ -39,11 +67,9 @@ TEST(AudioSuite, DISABLED_loopingSound){
 	sound.play();
 	sound.setLoop(true);
 	std::cin.ignore();
-	EXPECT_EQ(4,result);
 }
 
-TEST(AudioSuite, DISABLED_fadingMusicTest){
-	int result = 4;
+TEST(AudioSuite, DISABLED_fadingMusicTestLibraryTest){
 	sf::Music music;
 	if (!music.openFromFile("throughthefireandtheflames.ogg"))
 		ASSERT_DEATH(NULL,NULL); // error
@@ -56,6 +82,5 @@ TEST(AudioSuite, DISABLED_fadingMusicTest){
 		music.setVolume(i);
 	}
 	std::cin.ignore();
-	EXPECT_EQ(4,result);
 }
 

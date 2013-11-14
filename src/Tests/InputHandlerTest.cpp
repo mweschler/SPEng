@@ -186,7 +186,7 @@ ASSERT_EQ(true, true);
 }
 
 //This will be joystick test
-TEST(userInputTest, test_five)
+TEST(userInputTest, DISABLED_test_five)
 {
 	UserInput input;
 	sf::Joystick::update();

@@ -6,7 +6,6 @@
 //h file for logger class
 class Asset{
 
-
 	public:
 		std::string getName();
 		bool virtual load(std::string name);
@@ -18,7 +17,6 @@ class Asset{
 		int getRefCount();
 		void createAsset();
 		
-
 	private:
 		int dataRefCount;
 		std::string dataName;
