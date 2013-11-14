@@ -1,4 +1,6 @@
 #include "Model.h"
+#include "GLHelper.h"
+#include <iostream>
 
 Model::Model():
 	m_vertBuffer(GL_ARRAY_BUFFER),
@@ -7,7 +9,10 @@ Model::Model():
 	m_dataLoaded(false),
 	m_hasVerts(false),
 	m_hasNormals(false),
-	m_hasIndicies(false)
+	m_hasIndicies(false),
+	m_vertCount(0),
+	m_indexCount(0),
+	m_matrix(1.0f)
 {
 
 }
@@ -19,8 +24,12 @@ Model::~Model(){
 template <typename T>
 static bool loadBuffer(GLBuffer &buffer, std::vector<T> data){
 	if(!buffer.create())
+	{
+		std::cout<<"Failed to create buffe"<<std::endl;
 		return false;
+	}
 	if(!buffer.bind()){
+		std::cout<<"Failed to bind buffer"<<std::endl;
 		buffer.release();
 		return false;
 	}
@@ -31,6 +40,7 @@ static bool loadBuffer(GLBuffer &buffer, std::vector<T> data){
 
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR){
+		std::cout<<"Error binding data "<<GLHelper::errorEnumToString(error)<<std::endl;
 		buffer.release();
 		return false;
 	}
@@ -48,10 +58,16 @@ bool Model::load(std::string filename){
 
 bool Model::load(std::vector<GLfloat> verts){
 	if(isLoaded())
+	{
+		std::cout<<"Already loaded"<<std::endl;
 		return false;
+	}
 
 	if(!loadBuffer(m_vertBuffer, verts))
+	{
+		std::cout<<"Failed to load buffer"<<std::endl;
 		return false;
+	}
 
 	m_hasVerts = true;
 	m_dataLoaded = true;
@@ -60,7 +76,10 @@ bool Model::load(std::vector<GLfloat> verts){
 
 bool Model::load(std::vector<GLfloat> verts, std::vector<GLushort> indicies){
 	if(isLoaded())
+	{
+		
 		return false;
+	}
 
 	if(!loadBuffer(m_vertBuffer, verts))
 		return false;	
@@ -104,7 +123,7 @@ bool Model::load(std::vector<GLfloat> verts, std::vector<GLfloat> normals, std::
 	return true;
 }
 
-bool Model::bind(BufferType type){
+bool Model::bind(BufferType type) const{
 	if(type == Model::VERTEX && m_hasVerts)
 		return m_vertBuffer.bind();
 	if(type == Model::NORMAL && m_hasNormals)
@@ -138,19 +157,42 @@ bool Model::release(){
 	return true;
 }
 
-bool Model::isLoaded(){
+bool Model::isLoaded() const{
 	return m_dataLoaded;
 }
 
-bool Model::hasVerts(){
+bool Model::hasVerts() const{
 	return m_hasVerts;
 }
 
-bool Model::hasNormals(){
+bool Model::hasNormals() const{
 	return m_hasNormals;
 }
 
-bool Model::hasIndex(){
+bool Model::hasIndex() const{
 	return m_hasIndicies;
 }
 
+unsigned int Model::getVertCount() const{
+	return m_vertCount;
+}
+
+unsigned int Model::getIndexCount() const{
+	return m_indexCount;
+}
+
+void Model::setVertCount(unsigned int count){
+	m_vertCount = count;
+}
+
+void Model::setIndexCount(unsigned int count){
+	m_indexCount = count;
+}
+
+void Model::setModelMatrix(glm::mat4 matrix){
+	m_matrix = matrix;
+}
+
+glm::mat4 Model::getModelMatrix() const{
+	return m_matrix;
+}

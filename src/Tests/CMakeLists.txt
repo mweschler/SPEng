@@ -11,7 +11,7 @@ set(TESTS mytest.cpp
 	AudioManagerTest.cpp
 	ShaderTests.cpp
 	InputHandlerTest.cpp
-
+	MaterialTest.cpp
 	)
 #setup Gtest
 if(MSVC)
@@ -56,6 +56,14 @@ if(WIN32)
 		"${CMAKE_SOURCE_DIR}/../resources"      # <--this is in-directory
 		"${PROJECT_BINARY_DIR}")    # <--this is out-file path
 endif(WIN32)
+
+#Copies Lua files for tests
+add_custom_command(
+	TARGET runEngTests POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	"${CMAKE_CURRENT_SOURCE_DIR}/main.lua"
+	${PROJECT_BINARY_DIR}
+)
 
 target_link_libraries(runEngTests gtest Eng-Control Lua ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-audio-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-system-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-window-s-d.lib) #Links sfml libraries necessary for debug environment
 add_test( runEngTests runEngTests)

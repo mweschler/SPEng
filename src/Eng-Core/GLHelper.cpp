@@ -18,7 +18,7 @@ void GLHelper::flushGLErrors(){
 		ss<<rv;
 		ss<<" Name: "<<errorEnumToString(rv);
 		logger.writeToLog(ss.str());
-		std::cout<<ss.str()<<std::endl;
+		//std::cout<<ss.str()<<std::endl;
 	}
 }
 
@@ -28,6 +28,11 @@ std::string GLHelper::errorEnumToString(GLenum error){
 	switch(error){
 		case GL_INVALID_VALUE: msg = "GL_INVALID_VALUE"; break;
 		case GL_INVALID_OPERATION: msg = "GL_INVALID_OPERATION"; break;
+		case GL_INVALID_ENUM: msg = "GL_INVALID_ENUM"; break;
+		case GL_INVALID_FRAMEBUFFER_OPERATION: msg = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
+		case GL_OUT_OF_MEMORY: msg = "GL_OUT_OF_MEMORY"; break;
+		case GL_STACK_UNDERFLOW: msg = "GL_STACK_UNDERFLOW"; break;
+		case GL_STACK_OVERFLOW: msg = "GL_STACK_OVERFLOW"; break;
 		default: msg = "Other error";
 		}
 

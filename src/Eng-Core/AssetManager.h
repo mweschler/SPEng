@@ -24,27 +24,6 @@ class AssetManager{
 				void(*p)(T*) = constraints; 
 			}
 		};
-      
-
-		/*
-     	template <class T> T loadAsset(string assetName)
-		{
-			Derived_from<T, Asset>();
-			T* asset = new T(assetName);
-			if(checkForDuplicate(assetName))
-			{
-				Asset temp=assetStorage.at(assetName);
-				assetStorage.at(assetName).increaseRefCount();
-				return assetStorage.at(assetName);
-			}
-			else{
-			//asset.load();
-			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
-				cout << "inside asset catch\n";
-				return assetStorage.at(assetName);
-			}
-					
-		}*/
 
 		int getRefCount(string name);
 		
@@ -63,13 +42,12 @@ class AssetManager{
 			//asset.load();
 			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
 				cout << "inside asset catch\n";
-				//return assetStorage.at(assetName);
+				
 				return true;
-			}
-					
+			}				
 		}
 		
-		int releaseAsset(string name);
+		bool releaseAsset(string name);
 		
 
 	private:

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "gui.h"
-#include "window.h"
+#include "window.h"s
 
 bool keepWindow = false;
 
@@ -12,7 +12,7 @@ protected:
 	}
 
 	~WindowTests() {
-		
+
 	}
 	virtual void SetUp(){
 		GUI::initialize();

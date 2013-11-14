@@ -55,6 +55,7 @@ void Window::setFullscreen(bool fullscreen){
 bool Window::create(){
 	ASSERT(GUI::isInitialized());
 #ifdef _WIN32
+
 	this->m_hinstance = GUI::getHInstance();
 	this->m_appname = GUI::getAppName();
 
@@ -123,6 +124,7 @@ bool Window::create(){
 		std::cout<<"Could not set pixel format"<<std::endl;
 		return false;
 	}
+
 	HGLRC rc;
 	if(!WGLEW_ARB_create_context_profile){
 		rc = wglCreateContext(dc);
@@ -174,6 +176,8 @@ bool Window::create(){
 	if(error != GLEW_OK)
 		return false;
 
+
+
 	return true;
 #endif
 
@@ -196,6 +200,7 @@ void Window::swapBuffers(){
 
 void Window::close(){
 #ifdef _WIN32
+
 	if(m_renderContext.getHandle()){
 		wglMakeCurrent(NULL, NULL);
 		wglDeleteContext(m_renderContext.getHandle());
