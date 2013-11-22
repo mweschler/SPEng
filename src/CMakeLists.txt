@@ -4,6 +4,7 @@ project(Eng)
 option(ENG_BUILD_TESTS "Build the tests for the eninge" ON)
 option(ENG_ASSERTIONS_ENABLED "Should the library block on assertion failures" ON)
 option(ENG_BUILD_DOCUMENTATION "Builds doxygen documentation" OFF)
+option(ENG_BUILD_RENDER_DEMO "Builds the render demo" OFF)
 
 #include sfml header files
 include_directories(${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/include)
@@ -65,3 +66,7 @@ add_subdirectory(Lua)
 if(ENG_BUILD_TESTS)
 	add_subdirectory(Tests)
 endif(ENG_BUILD_TESTS)
+
+if(ENG_BUILD_RENDER_DEMO)
+	add_subdirectory(RenderDemo)
+endif(ENG_BUILD_RENDER_DEMO)

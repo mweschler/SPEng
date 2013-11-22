@@ -6,6 +6,7 @@
 #include "glm/ext.hpp"
 #include "GLHelper.h"
 #include "Camera.h"
+#include "ConfigurationManager.h"
 
 static Logger *logger;
 RenderInternal::RenderInternal():
@@ -20,9 +21,12 @@ RenderInternal::RenderInternal():
 bool RenderInternal::initialize(){
 	if(this->m_initialized == true)
 		return false;
+	//set default resolution
 	
-	
-
+	ConfigurationManager &config = *ConfigurationManager::Instance();
+	config.setVariable<int> ("w_width", 800);
+	config.setVariable<int> ("w_height", 600);
+	config.setVariable<bool> ("w_fullscreen", false);
 
 	this->m_initialized = true;
 	logger->writeToLog("Render System initialized");

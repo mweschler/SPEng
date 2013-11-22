@@ -18,7 +18,7 @@ CoreGameApp::CoreGameApp():
 
 }
 
-int CoreGameApp::run(int argc, char** argv){
+int CoreGameApp::run(int argc,char *argv[]){
 	if(!coreInitialize()){
 		coreShutdown();
 		return -1;
