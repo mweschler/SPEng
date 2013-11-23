@@ -22,6 +22,11 @@ public:
 	std::string getNormAttrib() const;
 	void setMVPAttrib(std::string);
 	std::string getMVPAttrib() const;
+	void setLightAttribs(std::string dir, std::string color);
+	std::string getLightDirAttrib() const;
+	std::string getLightColorAttrib() const;
+	void setAmbientAttrib(std::string);
+	std::string getAmbientAttrib() const;
 private:
 	bool m_linked;
 	GLuint m_program;
@@ -29,4 +34,7 @@ private:
 	std::string m_vertAttrib;
 	std::string m_normAttrib;
 	std::string m_MVPAttrib;
+	std::string m_lightDir;
+	std::string m_lightColor;
+	std::string m_ambient;
 };

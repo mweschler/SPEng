@@ -12,10 +12,12 @@ static Logger *logger;
 RenderInternal::RenderInternal():
 	m_initialized(false),
 	m_perspective(),
-	m_renderMode(RenderInternal::MODE_2D)
+	m_renderMode(RenderInternal::MODE_2D),
+	m_lightDir(glm::vec3(1.0f, 1.0f, 1.0f)),
+	m_lightColor(1.0f),
+	m_ambient(0.2f)
 {
 	logger = Logger::Instance();
-
 }
 
 bool RenderInternal::initialize(){
@@ -85,6 +87,21 @@ void RenderInternal::drawModel(const Model model, const Material material, const
 		glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
 	}
 
+	//setup global lighting
+	if(program.getLightDirAttrib().length() > 0 && program.getLightColorAttrib().length() > 0){
+		GLint lightDirLoc = glGetUniformLocation(program.getID(), program.getLightDirAttrib().c_str());
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(m_lightDir));
+
+		GLint lightColorLoc = glGetUniformLocation(program.getID(), program.getLightColorAttrib().c_str());
+		glUniform4fv(lightColorLoc, 1, glm::value_ptr(m_lightColor));
+	}
+
+	//set ambient intensity
+	if(program.getAmbientAttrib().length() > 0){
+		GLint ambLoc = glGetUniformLocation(program.getID(), program.getAmbientAttrib().c_str());
+		glUniform4fv(ambLoc, 1, glm::value_ptr(m_ambient));
+	}
+
 	//draw in indexed or array mode
 	if(model.hasIndex())
 	{
@@ -137,4 +154,13 @@ void RenderInternal::setViewPort(int x, int y, int width, int height){
 		ss<<GLHelper::errorEnumToString(rv);
 		logger.writeToLog(ss.str());
 	}
+}
+
+void RenderInternal::setGlobalLight(glm::vec3 direction, glm::vec4 color){
+	m_lightDir = direction;
+	m_lightColor = color;
+}
+
+void RenderInternal::setAmbient(glm::vec4 intensity){
+	m_ambient = intensity;
 }
