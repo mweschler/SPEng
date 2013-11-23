@@ -1,5 +1,4 @@
 #pragma once
-#include <String>
 #include <map>
 #include "VariableContainer.h"
 #include "Logger.h"
@@ -13,7 +12,7 @@ private:
 	ConfigurationManager();
 	ConfigurationManager(ConfigurationManager const&);
 	ConfigurationManager& operator=(ConfigurationManager const&);	
-	std::map <std::string, VariableContainer*> configurationVariables;
+	std::map <string, VariableContainer*> configurationVariables;
 	Logger* logger;
 public:
 	static ConfigurationManager* Instance();
