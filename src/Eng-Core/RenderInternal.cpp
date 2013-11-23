@@ -115,7 +115,7 @@ void RenderInternal::set3DMode(float fov){
 
 	float ratio = static_cast<float>(viewport[2]) / static_cast<float>(viewport[3]);
 
-	m_perspective = glm::perspective(fov, ratio, 0.1f, 100.0f);
+	m_perspective = glm::perspective(fov, ratio, 0.1f, 1000.0f);
 }
 
 void RenderInternal::setViewPort(int x, int y, int width, int height){
