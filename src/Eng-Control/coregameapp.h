@@ -5,7 +5,7 @@ class Window;
 class CoreGameApp{
 public:
 	CoreGameApp();
-	int run(int argc, char** argv);
+	int run(int argc, char *argv[]);
 	void quit();
 	Window *getWindow();
 protected:

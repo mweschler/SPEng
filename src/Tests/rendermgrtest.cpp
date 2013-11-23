@@ -260,10 +260,10 @@ namespace{
 
 	void writeShaderFiles();
 
-	std::string fragData = "\nuniform vec3 diffuse;\nvoid main(){\ngl_FragColor = vec4(diffuse, 1.0f);\n}";
-	std::string fragData4 = "\nuniform vec3 diffuse;\nout vec4 color;\nvoid main(){\ncolor = vec4(diffuse, 1.0f);\n}";
-	std::string vertData = "\nuniform mat4 mvp;\nattribute vec4 vertex;\nvoid main(){\ngl_Position = mvp * vertex;\n}";
-	std::string vertData4 = "\nuniform mat4 mvp;\nin vec4 vertex;\nvoid main(){\ngl_Position = mvp * vertex;\n}";
+	std::string fragData = "\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ngl_FragColor = (vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient)\n}";
+	std::string fragData4 = "\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ncolor = (vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient);\n}";
+	std::string vertData = "\nuniform mat4 mvp;\nattribute vec4 vertex;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvoid main(){\ngl_Position = mvp * vertex;\nvertexNormal = normal;\n}";
+	std::string vertData4 = "\nuniform mat4 mvp;\nin vec4 vertex;\nout vec4 position;\out vec3 vertexNormal;\nin vec3 normal;\nvoid main(){\nposition = mvp * vertex;\nvertexNormal = normal;\n}";
 
 	class Render3DTests: public ::testing::Test{
 	protected:
@@ -365,7 +365,7 @@ namespace{
 		ASSERT_TRUE(program.link(vert, frag));
 		program.setVertAttrib("vertex");
 		program.setDiffuseAttrib("diffuse");
-		program.setMVPAttrib("mvp");
+		//program.setMVPAttrib("mvp");
 
 		ASSERT_TRUE(material.setShader(&program));
 		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
@@ -379,8 +379,8 @@ namespace{
 			wnd->pollEvents();
 			RenderManager::update();
 
-			float camX = sin(camDeg * M_PI / 180) * 5;
-			float camZ = cos(camDeg * M_PI / 180) * 5;
+			float camX = sin(camDeg * M_PI / 180) * 1;
+			float camZ = cos(camDeg * M_PI / 180) * 1;
 			camera.setPosition(glm::vec3(camX, 0.0f, camZ));
 			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
 			RenderManager::drawModel(triangleModel, material, camera);
@@ -393,6 +393,73 @@ namespace{
 		std::cout<<"end of loop\n";
 
 		triangleModel.release();
+
+		program.release();
+
+		frag.release();
+
+		vert.release();
+
+	}
+
+	TEST_F(Render3DTests, DISABLED_modelVisualTest){
+
+		const GLushort indicies[] = {0, 1, 2};
+
+		Model deco;
+
+		ASSERT_TRUE(deco.load("decocube.obj"));
+		
+		Shader frag;
+		Shader vert;
+		ShaderProgram program;
+		Material material;
+		Camera camera;
+
+		ASSERT_TRUE(vert.load("vertTestShader.vert"));
+		ASSERT_TRUE(frag.load("fragTestShader.frag"));
+
+		vert.setType(GL_VERTEX_SHADER);
+		frag.setType(GL_FRAGMENT_SHADER);
+
+		ASSERT_TRUE(vert.compile());
+		ASSERT_TRUE(frag.compile());
+
+		ASSERT_TRUE(program.link(vert, frag));
+		program.setVertAttrib("vertex");
+		program.setDiffuseAttrib("diffuse");
+		program.setMVPAttrib("mvp");
+		program.setAmbientAttrib("ambient");
+		program.setLightAttribs("lightDir", "lightColor");
+		program.setNormAttrib("normal");
+		
+
+		ASSERT_TRUE(material.setShader(&program));
+		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
+		
+		float camDeg = 0;
+		camera.setTarget(glm::vec3(0.0f, 1.0f, 0.0f));
+	
+		RenderManager::set3DMode(45);
+		wnd->show();
+		while(!wnd->shouldQuit()){
+			wnd->pollEvents();
+			RenderManager::update();
+
+			float camX = sin(camDeg * M_PI / 180) * 3;
+			float camZ = cos(camDeg * M_PI / 180) * 3;
+			camera.setPosition(glm::vec3(camX, 3.0f, camZ));
+			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
+			RenderManager::drawModel(deco, material, camera);
+			wnd->swapBuffers();
+
+			camDeg = camDeg + 0.5;
+			if(camDeg >= 360)
+				camDeg = 0;
+		}
+		std::cout<<"end of loop\n";
+
+		deco.release();
 
 		program.release();
 

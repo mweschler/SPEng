@@ -12,6 +12,7 @@ set(TESTS mytest.cpp
 	ShaderTests.cpp
 	InputHandlerTest.cpp
 	MaterialTest.cpp
+	CoreAppTests.cpp
 	)
 #setup Gtest
 if(MSVC)
