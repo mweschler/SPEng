@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "ShaderProgram.h"
 #include "Logger.h"
+#include "AssetManager.h"
 
 
 namespace{
@@ -175,6 +176,13 @@ TEST_F(ShaderTests, programValid){
 
 	ASSERT_TRUE(program.release());
 	ASSERT_FALSE(program.isLinked());
+}
+
+TEST_F(ShaderTests, assetMgrTest){
+	AssetManager &mgr = *AssetManager::Instance();
+
+	//Shader vertShader = mgr.loadAsset<Shader>("vertTestShader.vert"));
+	
 }
 
 //simple visual test

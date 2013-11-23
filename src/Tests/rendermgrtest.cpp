@@ -401,4 +401,67 @@ namespace{
 		vert.release();
 
 	}
+
+	TEST_F(Render3DTests, DISABLED_modelVisualTest){
+
+		const GLushort indicies[] = {0, 1, 2};
+
+		Model deco;
+
+		ASSERT_TRUE(deco.load("decocube.obj"));
+		
+		Shader frag;
+		Shader vert;
+		ShaderProgram program;
+		Material material;
+		Camera camera;
+
+		ASSERT_TRUE(vert.load("vertTestShader.vert"));
+		ASSERT_TRUE(frag.load("fragTestShader.frag"));
+
+		vert.setType(GL_VERTEX_SHADER);
+		frag.setType(GL_FRAGMENT_SHADER);
+
+		ASSERT_TRUE(vert.compile());
+		ASSERT_TRUE(frag.compile());
+
+		ASSERT_TRUE(program.link(vert, frag));
+		program.setVertAttrib("vertex");
+		program.setDiffuseAttrib("diffuse");
+		program.setMVPAttrib("mvp");
+
+		ASSERT_TRUE(material.setShader(&program));
+		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
+		
+		float camDeg = 0;
+		camera.setTarget(glm::vec3(0.0f, 0.0f, 0.0f));
+	
+		RenderManager::set3DMode(45);
+		wnd->show();
+		while(!wnd->shouldQuit()){
+			wnd->pollEvents();
+			RenderManager::update();
+
+			float camX = sin(camDeg * M_PI / 180) * 1;
+			float camZ = cos(camDeg * M_PI / 180) * 1;
+			camera.setPosition(glm::vec3(camX, 0.0f, camZ));
+			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
+			RenderManager::drawModel(deco, material, camera);
+			wnd->swapBuffers();
+
+			camDeg = camDeg + 0.5;
+			if(camDeg >= 360)
+				camDeg = 0;
+		}
+		std::cout<<"end of loop\n";
+
+		deco.release();
+
+		program.release();
+
+		frag.release();
+
+		vert.release();
+
+	}
 }

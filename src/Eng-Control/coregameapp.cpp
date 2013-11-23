@@ -141,9 +141,13 @@ void CoreGameApp::coreRender(){
 void CoreGameApp::coreShutdown(){
 	Logger &logger = *Logger::Instance();
 
-	m_wnd->close();
-	delete m_wnd;
-	logger.writeToLog("Window closed and deleted");
+	if(m_wnd != NULL)
+	{
+		m_wnd->close();
+		delete m_wnd;
+
+		logger.writeToLog("Window closed and deleted");
+	}
 
 	RenderManager::shutdown();
 	GUI::shutdown();

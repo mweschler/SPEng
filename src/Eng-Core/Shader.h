@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
 #include "GLBuffer.h"
+#include "Asset.h"
 
 /*! An OpenGL shader for use in rendering
 */
-class Shader
+class Shader : public Asset
 {
 public:
 	Shader();
