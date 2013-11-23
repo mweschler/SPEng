@@ -365,7 +365,7 @@ namespace{
 		ASSERT_TRUE(program.link(vert, frag));
 		program.setVertAttrib("vertex");
 		program.setDiffuseAttrib("diffuse");
-		program.setMVPAttrib("mvp");
+		//program.setMVPAttrib("mvp");
 
 		ASSERT_TRUE(material.setShader(&program));
 		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
@@ -379,8 +379,8 @@ namespace{
 			wnd->pollEvents();
 			RenderManager::update();
 
-			float camX = sin(camDeg * M_PI / 180) * 5;
-			float camZ = cos(camDeg * M_PI / 180) * 5;
+			float camX = sin(camDeg * M_PI / 180) * 1;
+			float camZ = cos(camDeg * M_PI / 180) * 1;
 			camera.setPosition(glm::vec3(camX, 0.0f, camZ));
 			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
 			RenderManager::drawModel(triangleModel, material, camera);

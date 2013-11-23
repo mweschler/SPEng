@@ -23,7 +23,8 @@ ShaderProgram::~ShaderProgram(){
 bool ShaderProgram::use() const{
 	if(m_program == 0  || m_linked == false)
 		return false;
-
+	
+	GLHelper::flushGLErrors();
 	glUseProgram(m_program);
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR){

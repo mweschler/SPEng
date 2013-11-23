@@ -11,7 +11,7 @@
 namespace{
 	void writeShaderFiles();
 
-	std::string fragData = "\nvoid main(){\ngl_FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
+	std::string fragData = "\nvoid main(){\ngl_FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n}";
 	std::string fragData4 = "\nout vec4 color;\nvoid main(){\ncolor = vec4(1.0f, 0.0f, 0.0f, 1.0f);\n}";
 	std::string vertData = "\nattribute vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
 	std::string vertData4 = "\nin vec4 vertex;\nvoid main(){\ngl_Position = vertex;\n}";
@@ -207,21 +207,22 @@ TEST_F(ShaderTests, DISABLED_visualTest){
 
 	ASSERT_TRUE(program.link(vert, frag));
 	
-
+	glDisable(GL_CULL_FACE);
 	wnd->show();
 	while(!this->wnd->shouldQuit()){
 		wnd->pollEvents();
-
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		//wnd->makeContextCurrent();
+		glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-		program.use();
+		ASSERT_TRUE(program.use());
 		glBindBuffer(GL_ARRAY_BUFFER, triangleBuff);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		wnd->swapBuffers();		
+		glUseProgram(0);
 	}
 }
 
