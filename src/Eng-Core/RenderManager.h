@@ -1,4 +1,5 @@
 #pragma once
+#include "glm\glm.hpp"
 
 class Model;
 class Material;
@@ -13,5 +14,7 @@ public:
 	static void shutdown();
 	static void set3DMode(float fov);
 	static void setViewport(int x, int y, int width, int height);
+	static void setGlobalLight(glm::vec3 direction, glm::vec4 color);
+	static void setAmbient(glm::vec4 intensity);
 };
 

@@ -34,3 +34,11 @@ void RenderManager::set3DMode(float fov){
 void RenderManager::setViewport(int x, int y, int width, int height){
 	render.setViewPort(x,y,width,height);
 }
+
+void RenderManager::setGlobalLight(glm::vec3 direction, glm::vec4 color){
+	render.setGlobalLight(direction, color);
+}
+
+void RenderManager::setAmbient(glm::vec4 intensity){
+	render.setAmbient(intensity);
+}
