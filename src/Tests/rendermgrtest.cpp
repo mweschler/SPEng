@@ -434,7 +434,7 @@ namespace{
 		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
 		
 		float camDeg = 0;
-		camera.setTarget(glm::vec3(0.0f, 0.0f, 0.0f));
+		camera.setTarget(glm::vec3(0.0f, 1.0f, 0.0f));
 	
 		RenderManager::set3DMode(45);
 		wnd->show();
@@ -442,9 +442,9 @@ namespace{
 			wnd->pollEvents();
 			RenderManager::update();
 
-			float camX = sin(camDeg * M_PI / 180) * 1;
-			float camZ = cos(camDeg * M_PI / 180) * 1;
-			camera.setPosition(glm::vec3(camX, 0.0f, camZ));
+			float camX = sin(camDeg * M_PI / 180) * 3;
+			float camZ = cos(camDeg * M_PI / 180) * 3;
+			camera.setPosition(glm::vec3(camX, 3.0f, camZ));
 			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
 			RenderManager::drawModel(deco, material, camera);
 			wnd->swapBuffers();
