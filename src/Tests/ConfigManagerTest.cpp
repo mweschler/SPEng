@@ -3,34 +3,46 @@
 #include "ConfigurationManager.h"
 #include "VariableContainer.h"
 
+using namespace std;
+
 ConfigurationManager* configurationManager = ConfigurationManager::Instance();
 
-TEST(ConfigSuite, storingAndRetrievingIntVariableTest){
+TEST(ConfigSuite, retrievingUnSetIntVariableUnitTest){
+	int result = configurationManager->getVariable<int>("Variable1");
+	EXPECT_EQ(NULL,result);
+}
+
+TEST(ConfigSuite, retrievingUnSetStringVariableUnitTest){
+	string result = configurationManager->getVariable<string>("Variable1");
+	EXPECT_EQ("",result);
+}
+
+TEST(ConfigSuite, storingAndRetrievingIntVariableUnitTest){
 	configurationManager->setVariable("Variable1",4);
 	int result = configurationManager->getVariable<int>("Variable1");
 	EXPECT_EQ(4,result);
 }
 
-TEST(ConfigSuite, storingAndRetrievingDoubleVariableTest){
+TEST(ConfigSuite, storingAndRetrievingDoubleVariableUnitTest){
 	configurationManager->setVariable("Variable2",4.0);
 	double result = configurationManager->getVariable<double>("Variable2");
 	EXPECT_EQ(4.0,result);
 }
 
-TEST(ConfigSuite, storingAndRetrievingFloatVariableTest){
+TEST(ConfigSuite, storingAndRetrievingFloatVariableUnitTest){
 	configurationManager->setVariable("Variable3",4.0f);
 	float result = configurationManager->getVariable<float>("Variable3");
 	EXPECT_EQ(4.0f,result);
 }
 
-TEST(ConfigSuite, storingAndRetrievingStringVariableTest){
+TEST(ConfigSuite, storingAndRetrievingStringVariableUnitTest){
 	std::string temp = "4.0";
 	configurationManager->setVariable("Variable4",temp);
 	std::string result = configurationManager->getVariable<std::string>("Variable4");
 	EXPECT_EQ("4.0",result);
 }
 
-TEST(ConfigSuite, storingAndRetrievingCharVariableTest){
+TEST(ConfigSuite, storingAndRetrievingCharVariableUnitTest){
 	configurationManager->setVariable("Variable5",'4');
 	char result = configurationManager->getVariable<char>("Variable5");
 	EXPECT_EQ('4',result);
