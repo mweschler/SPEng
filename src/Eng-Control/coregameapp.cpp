@@ -46,14 +46,14 @@ int CoreGameApp::run(int argc,char *argv[]){
 
 	m_wnd = GUI::createWindow(width, height, fullscreen);
 
-	//glEnable(GL_DEPTH_TEST); // enable depth-testing
-	//glDepthMask(GL_TRUE); // turn back on
-	//glDepthFunc(GL_LEQUAL);
-	//glDepthRange(0.0f, 1.0f);
-
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
-	//glFrontFace(GL_CCW);
+	glEnable(GL_DEPTH_TEST); // enable depth-testing
+	glDepthMask(GL_TRUE); // turn back on
+	glDepthFunc(GL_LEQUAL);
+	glDepthRange(0.0f, 1.0f);
+	
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
 	
 	if(m_wnd == NULL){
 		logger.writeToLog("Failed to create window, shutting down");

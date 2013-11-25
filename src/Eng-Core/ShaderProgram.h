@@ -27,6 +27,8 @@ public:
 	std::string getLightColorAttrib() const;
 	void setAmbientAttrib(std::string);
 	std::string getAmbientAttrib() const;
+	void setNormMatrixAttrib(std::string);
+	std::string getNormMatrixAttrib() const;
 private:
 	bool m_linked;
 	GLuint m_program;
@@ -37,4 +39,5 @@ private:
 	std::string m_lightDir;
 	std::string m_lightColor;
 	std::string m_ambient;
+	std::string m_normMatrix;
 };
