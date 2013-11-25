@@ -14,15 +14,16 @@ private:
 	std::string fileName;	
 	sf::Music music;
 	float duration;
+	void virtual load();
+	//Helper method to write to logger
+	void writeToLogger (string message);
 
 public:
 	std::string getFileName();
 	//Returns audio file length in seconds
 	float getDuration();
 	AudioContainer(std::string name);
-	//Helper method to write to logger
-	void writeToLogger (string message);
-	bool virtual load();
+	bool virtual isPlaying();
 	void virtual play();
 	void virtual stop();
 	void virtual pause();

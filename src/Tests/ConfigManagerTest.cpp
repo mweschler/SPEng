@@ -7,14 +7,23 @@ using namespace std;
 
 ConfigurationManager* configurationManager = ConfigurationManager::Instance();
 
-TEST(ConfigSuite, retrievingUnSetIntVariableUnitTest){
+TEST(ConfigSuite, retrievingUnSetIntVariableSubsystemTest){
 	int result = configurationManager->getVariable<int>("Variable1");
 	EXPECT_EQ(NULL,result);
 }
 
-TEST(ConfigSuite, retrievingUnSetStringVariableUnitTest){
+TEST(ConfigSuite, retrievingUnSetStringVariableSubsystemTest){
 	string result = configurationManager->getVariable<string>("Variable1");
 	EXPECT_EQ("",result);
+}
+
+TEST(ConfigSuite, removingAnExistingStringVariableSubsystemTest){
+	configurationManager->setVariable("Variable0","DummyStringVariable");
+	configurationManager->removeVariable<string>("Variable0");
+}
+
+TEST(ConfigSuite, removingNonExistingStringVariableSubsystemTest){
+	configurationManager->removeVariable<string>("Variable10");
 }
 
 TEST(ConfigSuite, storingAndRetrievingIntVariableUnitTest){

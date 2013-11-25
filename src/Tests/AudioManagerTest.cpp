@@ -6,47 +6,47 @@
 
 AudioManager* audioManager = new AudioManager();
 
-TEST(AudioSuite, DISABLED_playingFunctionalitySubsytemTest){
+TEST(AudioSuite, playingFunctionalitySubsytemTest){
 	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
 	audioManager->setAudioFile(audioContainer);
 	audioManager->getAudioFile("gunshot.wav")->play();
 }
 
-TEST(AudioSuite, DISABLED_loopingFunctionalitySubsytemTest){
+TEST(AudioSuite, loopingFunctionalitySubsytemTest){
 	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
 	audioManager->setAudioFile(audioContainer);
 	audioManager->getAudioFile("gunshot.wav")->loop();
 }
 
-TEST(AudioSuite, DISABLED_fadingFunctionalitySubsytemTest){
+TEST(AudioSuite, fadingFunctionalitySubsytemTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
 	audioManager->setAudioFile(audioContainer);
 	audioManager->getAudioFile("throughthefireandtheflames.ogg")->play();
 	audioManager->getAudioFile("throughthefireandtheflames.ogg")->fade(4);
 }
 
-TEST(AudioSuite, DISABLED_gettingAudioFileDurationUnitTest){
+TEST(AudioSuite, gettingAudioFileDurationUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
 	audioContainer->getDuration();
 }
 
-TEST(AudioSuite, DISABLED_playingFunctionalityUnitTest){
+TEST(AudioSuite, playingFunctionalityUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
 	audioContainer->play();
 }
 
-TEST(AudioSuite, DISABLED_loopingFunctionalityUnitTest){
+TEST(AudioSuite, loopingFunctionalityUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
 	audioContainer->loop();
 }
 
-TEST(AudioSuite, DISABLED_fadingFunctionalityUnitTest){
+TEST(AudioSuite, fadingFunctionalityUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
 	audioContainer->play();
 	audioContainer->fade(4);
 }
 
-TEST(AudioSuite, DISABLED_fadingWhileNotPlayingUnitTest){
+TEST(AudioSuite, fadingWhileNotPlayingUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
 	audioContainer->fade(4);
 }
