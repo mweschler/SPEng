@@ -72,6 +72,19 @@ void parseStringPart(std::string data,GLshort &vertexIndex, GLshort &normalIndex
 	}
 }
 
+void setNormal(std::vector<glm::vec3> &normals, std::vector<GLushort> &elements, glm::vec3 normal, int eleIndex,
+		std::vector<glm::vec4> &verticies){
+		
+		if(normals[elements[eleIndex]] == glm::vec3(0.0f)){
+			normals[elements[eleIndex]] = normal;
+		} else if(normals[elements[eleIndex]] != normal)
+		{
+			glm::vec3 norm2 = normals[elements[eleIndex]];
+			normal = glm::normalize(normal + norm2);
+			normals[elements[eleIndex]] = normal;
+		}
+	}
+
 void calculateNormals(std::vector<glm::vec4> verticies, std::vector<glm::vec3> &normals, std::vector<GLushort> elements)
 	{
 		//initialize the normals withe one for every vertex
@@ -84,7 +97,10 @@ void calculateNormals(std::vector<glm::vec4> verticies, std::vector<glm::vec3> &
 			glm::vec3 vert3 = glm::vec3(verticies[elements[i + 2]]);
 
 			//calculate normal for this face
-			glm::vec3 normal = glm::normalize(glm::cross(vert3 - vert1, vert2 - vert1));	
+			glm::vec3 normal = glm::normalize(glm::cross(vert2 - vert1, vert3 - vert1));
+			setNormal(normals, elements, normal, i, verticies);
+			setNormal(normals, elements, normal, i + 1, verticies);
+			setNormal(normals, elements, normal, i + 2, verticies);
 			//apply normal for each vert index;
 			
 		}

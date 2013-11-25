@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv)
 {
-	//::testing::GTEST_FLAG(filter) = "*Material*";
+	//::testing::GTEST_FLAG(filter) = "*modelVisual*";
 	::testing::InitGoogleTest(&argc, argv);
 	int rv = RUN_ALL_TESTS();
 	std::getchar();

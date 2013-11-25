@@ -15,7 +15,7 @@ RenderInternal::RenderInternal():
 	m_renderMode(RenderInternal::MODE_2D),
 	m_lightDir(glm::vec3(1.0f, 1.0f, 1.0f)),
 	m_lightColor(1.0f),
-	m_ambient(0.2f)
+	m_ambient(0.3f)
 {
 	logger = Logger::Instance();
 }
@@ -47,7 +47,7 @@ void RenderInternal::shutdown(){
 
 void RenderInternal::update(){
 	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void RenderInternal::drawModel(const Model model, const Material material, const Camera camera){
@@ -132,7 +132,7 @@ void RenderInternal::set3DMode(float fov){
 
 	float ratio = static_cast<float>(viewport[2]) / static_cast<float>(viewport[3]);
 
-	m_perspective = glm::perspective(fov, ratio, 0.1f, 1000.0f);
+	m_perspective = glm::perspective(fov, ratio, 1.0f, 100.0f);
 }
 
 void RenderInternal::setViewPort(int x, int y, int width, int height){

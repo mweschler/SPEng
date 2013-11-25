@@ -260,10 +260,10 @@ namespace{
 
 	void writeShaderFiles();
 
-	std::string fragData = "\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ngl_FragColor = (vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient)\n}";
+	std::string fragData = "\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ngl_FragColor = ((vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient));\n}";
 	std::string fragData4 = "\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ncolor = (vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient);\n}";
-	std::string vertData = "\nuniform mat4 mvp;\nattribute vec4 vertex;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvoid main(){\ngl_Position = mvp * vertex;\nvertexNormal = normal;\n}";
-	std::string vertData4 = "\nuniform mat4 mvp;\nin vec4 vertex;\nout vec4 position;\out vec3 vertexNormal;\nin vec3 normal;\nvoid main(){\nposition = mvp * vertex;\nvertexNormal = normal;\n}";
+	std::string vertData = "\nuniform mat4 mvp;\nattribute vec4 vertex;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvoid main(){\nvertexNormal = normal ;\ngl_Position = mvp * vertex;\n}";
+	std::string vertData4 = "\nuniform mat4 mvp;\nin vec4 vertex;\nout vec4 position;\out vec3 vertexNormal;\nin vec3 normal;\nvoid main(){\nvertexNormal = normal ;\nposition = mvp * vertex;\n}";
 
 	class Render3DTests: public ::testing::Test{
 	protected:
@@ -402,13 +402,13 @@ namespace{
 
 	}
 
-	TEST_F(Render3DTests, modelVisualTest){
+	TEST_F(Render3DTests, DISABLED_modelVisualTest){
 
 		const GLushort indicies[] = {0, 1, 2};
 
 		Model deco;
 
-		ASSERT_TRUE(deco.load("talia.obj"));
+		ASSERT_TRUE(deco.load("decocube.obj"));
 		
 		Shader frag;
 		Shader vert;
@@ -433,12 +433,12 @@ namespace{
 		program.setLightAttribs("lightDir", "lightColor");
 		program.setNormAttrib("normal");
 		
-
+		//RenderManager::setAmbient(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		ASSERT_TRUE(material.setShader(&program));
 		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
 		
 		float camDeg = 0;
-		camera.setTarget(glm::vec3(0.0f, 100.0f, 0.0f));
+		camera.setTarget(glm::vec3(0.0f, 1.0f, 0.0f));
 	
 		RenderManager::set3DMode(45);
 		wnd->show();
@@ -446,9 +446,9 @@ namespace{
 			wnd->pollEvents();
 			RenderManager::update();
 
-			float camX = sin(camDeg * M_PI / 180) * 200;
-			float camZ = cos(camDeg * M_PI / 180) * 200;
-			camera.setPosition(glm::vec3(camX, 100.0f, camZ));
+			float camX = sin(camDeg * M_PI / 180) * 5;
+			float camZ = cos(camDeg * M_PI / 180) * 5;
+			camera.setPosition(glm::vec3(camX, 1.0f, camZ));
 			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
 			RenderManager::drawModel(deco, material, camera);
 			wnd->swapBuffers();
