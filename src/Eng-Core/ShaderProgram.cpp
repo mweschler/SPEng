@@ -14,7 +14,8 @@ ShaderProgram::ShaderProgram():
 	m_MVPAttrib(""),
 	m_lightDir(""),
 	m_lightColor(""),
-	m_ambient("")
+	m_ambient(""),
+	m_normMatrix("")
 {
 
 }
@@ -228,4 +229,12 @@ void ShaderProgram::setAmbientAttrib(std::string name){
 
 std::string ShaderProgram::getAmbientAttrib() const{
 	return m_ambient;
+}
+
+void ShaderProgram::setNormMatrixAttrib(std::string name){
+	m_normMatrix = name;
+}
+
+std::string ShaderProgram::getNormMatrixAttrib() const {
+	return m_normMatrix;
 }
