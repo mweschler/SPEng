@@ -188,7 +188,7 @@ ASSERT_EQ(true, true);
 //This will be joystick test
 TEST(userInputTest, DISABLED_test_five)
 {
-
+ 
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	if (!buffer.loadFromFile("gunshot.wav"))
@@ -392,7 +392,7 @@ TEST(userInputTest, DISABLED_test_five)
 }
 
 //This will be joystick test
-TEST(userInputTest, DISABLED_test_six)
+TEST(userInputTest, test_six)
 {
 
 	sf::SoundBuffer buffer;
@@ -431,7 +431,7 @@ TEST(userInputTest, DISABLED_test_six)
 		//Button 2 is X
 		if (input.isJoystickButtonPressed(0, 2))
 		{
-			printf("Make my ass Reload\n");
+			printf("X button is Pressed\n");
 			soundReload.play();
 			_sleep(100);
 
@@ -446,7 +446,7 @@ TEST(userInputTest, DISABLED_test_six)
 		if(input.isJoystickButtonPressed(0,1))
 		{
 
-			printf("Player Crouchs\n");
+			printf("B Button is Pressed\n");
 			
 			_sleep(100);
 
@@ -457,7 +457,7 @@ TEST(userInputTest, DISABLED_test_six)
 		if(input.isJoystickButtonPressed(0,3))
 		{
 
-			printf("Change Weapon\n");
+			printf("Y button is pressed\n");
 			_sleep(100);
 
 
@@ -468,7 +468,7 @@ TEST(userInputTest, DISABLED_test_six)
 		if(input.isJoystickButtonPressed(0,4))
 		{
 
-			printf("Melee\n");
+			printf("Left Bumper Is Pressed\n");
 			_sleep(100);
 
 
@@ -478,7 +478,7 @@ TEST(userInputTest, DISABLED_test_six)
 			if(input.isJoystickButtonPressed(0,0))
 		{
 
-			printf("Player Jumps\n");
+			printf("A Button is Pressed\n");
 			soundJump.play();
 			_sleep(100);
 
@@ -506,16 +506,17 @@ TEST(userInputTest, DISABLED_test_six)
 		{
 
 
-			input.setMousePostion(mousePos.x,mousePos.y - 1);
-			_sleep(3);
+		//	input.setMousePostion(mousePos.x,mousePos.y - 1);
+			printf("Left Stick moved up");
+			_sleep(100);
 			
 		}
 
 		if(posOfLeftY <= -40 )
 		{
 
-			input.setMousePostion(mousePos.x,mousePos.y +1);
-			_sleep(3);
+		//	input.setMousePostion(mousePos.x,mousePos.y +1);
+			_sleep(100);
 		
 		}
 
@@ -524,18 +525,11 @@ TEST(userInputTest, DISABLED_test_six)
 		{
 
 
-			input.setMousePostion(mousePos.x -1,mousePos.y);
-				_sleep(3);
+			//input.setMousePostion(mousePos.x -1,mousePos.y);
+				_sleep(100);
 		}
 
 		
-		if(posOfRightX <=-40 )
-		{
-
-
-		}
-
-
 
 
 		
@@ -543,7 +537,7 @@ TEST(userInputTest, DISABLED_test_six)
 		{
 
 
-			printf("Aim Up\n");
+			printf("Right Stick Moved Up\n");
 			
 		}
 
@@ -551,7 +545,7 @@ TEST(userInputTest, DISABLED_test_six)
 		{
 
 
-			printf("Aim left\n");
+			printf("Right Stick Moved Left\n");
 			
 		}
 
@@ -559,7 +553,7 @@ TEST(userInputTest, DISABLED_test_six)
 		{
 
 
-			printf("Aim Right\n");
+			printf("Right Stick Moved Right\n");
 			
 		}
 
@@ -576,18 +570,22 @@ TEST(userInputTest, DISABLED_test_six)
 		{
 
 			_sleep(100);
-			printf("Zoom In\n");
+			printf("Left Trigger Pressed\n");
 		
 		}
 
 		if(Triggers <=-40)
 		{
+				printf("Right Trigger Pressed\n");
+			sound.play();
+			_sleep(100);
 
 		    
 			_sleep(150);
 
 
 		}
+
 
 		
 		if (input.isKeyPressed(sf::Keyboard::Escape))

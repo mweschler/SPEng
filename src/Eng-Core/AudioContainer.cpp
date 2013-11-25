@@ -1,79 +1,79 @@
-#include <string>
-#include <fstream>
-#include <iostream>
 #include "AudioContainer.h"
-#include <SFML/Audio.hpp>
-#include <Windows.h>
-#include "logger.h"
-#include <sstream>
+
 using namespace std;
-		
-		string fileName;
-		sf::Music music;
-		float duration;
-		Logger* logger = Logger::Instance();
 
-		AudioContainer::AudioContainer(string nameOfAudioFile)
-		{
-			fileName = nameOfAudioFile;
-			logger->initialize();		
-			load();
-		}
+string fileName;
+sf::Music music;
+float duration;
 
-		string AudioContainer::getFileName()
-		{
-			return fileName;
-		}
+AudioContainer::AudioContainer(string nameOfAudioFile)
+{
+	fileName = nameOfAudioFile;		
+	load();
+}
 
-		float AudioContainer::getDuration()
-		{
-			std::ostringstream buff;
-			buff<<duration;
-			return duration;
-		}
+string AudioContainer::getFileName()
+{
+	return fileName;
+}
 
-		bool AudioContainer::load()
-		{
-			bool success = true;
-			if (!music.openFromFile(fileName)){
-				logger->writeToLog("Failed to open audio file");
-				success = false;
-			}			
-			//Initialize length of audio file
-			sf::Time length = music.getDuration();
-			duration = length.asSeconds();
-			return success;
-		}
+float AudioContainer::getDuration()
+{
+	std::ostringstream buff;
+	buff<<duration;
+	return duration;
+}
 
-		void AudioContainer::play(){
-			music.play();
-		}
+bool AudioContainer::load()
+{
+	bool success = true;
+	if (!music.openFromFile(fileName)){
+		writeToLogger("Failed to open audio file");
+		success = false;
+	}			
+	//Initialize length of audio file
+	sf::Time length = music.getDuration();
+	duration = length.asSeconds();
+	return success;
+}
 
-		void AudioContainer::pause(){
-			music.pause();
-		}
+void AudioContainer::play(){
+	music.play();
+}
 
-		void AudioContainer::stop(){
-			music.stop();
-		}
+void AudioContainer::pause(){
+	music.pause();
+}
 
-		void AudioContainer::loop(){
-			music.setLoop(true);
-			music.play();
-		}
+void AudioContainer::stop(){
+	music.stop();
+}
 
-		void AudioContainer::fade(float numberOfSeconds)
-		{
-			if(music.getStatus() == music.Playing){
-				float sleepTime = numberOfSeconds * 15;
-				for (int i = 99; i>=0; i--)
-				{					
-					music.setVolume(i);
-					Sleep(sleepTime);
-				}
-				music.stop();	
-			}
-			else{
-				logger->writeToLog("Cannot fade audio file because it is not currently playing");
-			}
+void AudioContainer::loop(){
+	music.setLoop(true);
+	music.play();
+}
+
+void AudioContainer::fade(float numberOfSeconds)
+{
+	if(music.getStatus() == music.Playing){
+		float sleepTime = numberOfSeconds * 15;
+		for (int i = 99; i>=0; i--)
+		{					
+			music.setVolume(i);
+			Sleep(sleepTime);
 		}
+		music.stop();	
+	}
+	else{
+		writeToLogger("Cannot fade audio file because it is not currently playing");
+	}
+}
+
+//Helper method to write to logger
+void AudioContainer::writeToLogger (string message){
+	Logger* logger;
+	logger = Logger::Instance();
+	logger->initialize();
+	logger->writeToLog(message);
+}
