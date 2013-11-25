@@ -1,10 +1,18 @@
 #include "AudioContainer.h"
+#include <Windows.h>
 
 using namespace std;
 
 string fileName;
 sf::Music music;
-float duration;
+float durationOfAudioFile;
+
+struct threadData
+{
+	float threadNumberOfSeconds;
+	sf::Music &threadMusic;
+	threadData(float numberOfSecondsParam, sf::Music &musicParam) : threadNumberOfSeconds(numberOfSecondsParam), threadMusic(musicParam) {}
+};
 
 AudioContainer::AudioContainer(string nameOfAudioFile)
 {
@@ -20,8 +28,8 @@ string AudioContainer::getFileName()
 float AudioContainer::getDuration()
 {
 	std::ostringstream buff;
-	buff<<duration;
-	return duration;
+	buff<<durationOfAudioFile;
+	return durationOfAudioFile;
 }
 
 bool AudioContainer::isPlaying(){
@@ -35,7 +43,7 @@ void AudioContainer::load()
 	}			
 	//Initialize length of audio file
 	sf::Time length = music.getDuration();
-	duration = length.asSeconds();
+	durationOfAudioFile = length.asSeconds();
 }
 
 void AudioContainer::play(){
@@ -55,16 +63,23 @@ void AudioContainer::loop(){
 	music.play();
 }
 
+DWORD WINAPI threadFade(LPVOID lpParameter)
+{
+	threadData *td = (threadData*)lpParameter;
+	float sleepTime = td->threadNumberOfSeconds * 15;
+		for (int i = 99; i>=0; i--)
+		{					
+			td->threadMusic.setVolume(i);
+			Sleep(sleepTime);
+		}
+	td->threadMusic.stop();
+	return 0;
+}
+
 void AudioContainer::fade(float numberOfSeconds)
 {
 	if(isPlaying()){
-		float sleepTime = numberOfSeconds * 15;
-		for (int i = 99; i>=0; i--)
-		{					
-			music.setVolume(i);
-			Sleep(sleepTime);
-		}
-		music.stop();	
+		CreateThread(NULL, 0, threadFade, new threadData(numberOfSeconds,music) , 0, 0);			
 	}
 	else{
 		writeToLogger("Cannot fade audio file because it is not currently playing");
