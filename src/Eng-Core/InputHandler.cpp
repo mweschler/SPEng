@@ -18,6 +18,22 @@ bool UserInput::isKeyPressed(enum sf::Keyboard::Key theKey)
 
 };
 
+//Is joystick connected
+bool UserInput::isJoystickConnected()
+{
+
+	return sf::Joystick::isConnected;
+
+
+}
+
+void UserInput::updateStateOfJoystick()
+{
+	sf::Joystick::update;
+
+
+}
+
 //Returns true if a mouse betton is pressed.
 bool UserInput::isMouseKeyPressed(enum sf::Mouse::Button theButton)
 {

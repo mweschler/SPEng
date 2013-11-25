@@ -11,7 +11,11 @@ ShaderProgram::ShaderProgram():
 	m_diffAttrib(""),
 	m_vertAttrib(""),
 	m_normAttrib(""),
-	m_MVPAttrib("")
+	m_MVPAttrib(""),
+	m_lightDir(""),
+	m_lightColor(""),
+	m_ambient(""),
+	m_normMatrix("")
 {
 
 }
@@ -23,7 +27,8 @@ ShaderProgram::~ShaderProgram(){
 bool ShaderProgram::use() const{
 	if(m_program == 0  || m_linked == false)
 		return false;
-
+	
+	GLHelper::flushGLErrors();
 	glUseProgram(m_program);
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR){
@@ -203,4 +208,33 @@ void ShaderProgram::setMVPAttrib(std::string name){
 
 std::string ShaderProgram::getMVPAttrib() const{
 	return m_MVPAttrib;
+}
+
+void ShaderProgram::setLightAttribs(std::string dir, std::string color){
+	m_lightDir = dir;
+	m_lightColor = color;
+}
+
+std::string ShaderProgram::getLightDirAttrib() const{
+	return m_lightDir;
+}
+
+std::string ShaderProgram::getLightColorAttrib() const{
+	return m_lightColor;
+}
+
+void ShaderProgram::setAmbientAttrib(std::string name){
+	m_ambient = name;
+}
+
+std::string ShaderProgram::getAmbientAttrib() const{
+	return m_ambient;
+}
+
+void ShaderProgram::setNormMatrixAttrib(std::string name){
+	m_normMatrix = name;
+}
+
+std::string ShaderProgram::getNormMatrixAttrib() const {
+	return m_normMatrix;
 }

@@ -1,6 +1,8 @@
 #include "Model.h"
 #include "GLHelper.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 Model::Model():
 	m_vertBuffer(GL_ARRAY_BUFFER),
@@ -48,11 +50,186 @@ static bool loadBuffer(GLBuffer &buffer, std::vector<T> data){
 	return true;
 }
 
+void parseStringPart(std::string data,GLshort &vertexIndex, GLshort &normalIndex){
+	//find vertex index section
+	int position = data.find("/");
+	if(position == std::string::npos){
+		std::istringstream vertstream(data);
+		vertstream >> vertexIndex;
+		normalIndex = 0;
+		return;
+	} else {
+		std::string sub = data.substr(0, position);
+		std::istringstream vertstream(sub);
+		int vert;
+		vertstream >> vert;
+		vertexIndex = vert;
+		position = data.find("/", position);
+		//ignore texture index
+
+		//rest is normal index;
+		position = data.find("/", position + 1);
+		sub = data.substr(position + 1);
+		std::istringstream normstream(data.substr(position + 1));
+		int norm;
+		normstream >> norm;
+		normalIndex = norm;
+	}
+}
+
+void setNormal(std::vector<glm::vec3> &normals, std::vector<GLushort> &elements, glm::vec3 normal, int eleIndex,
+		std::vector<glm::vec4> &verticies){
+		
+		if(normals[elements[eleIndex]] == glm::vec3(0.0f)){
+			normals[elements[eleIndex]] = normal;
+		} else if(normals[elements[eleIndex]] != normal)
+		{
+			glm::vec3 norm2 = normals[elements[eleIndex]];
+			normal = glm::normalize(normal + norm2);
+			normals[elements[eleIndex]] = normal;
+		}
+	}
+
+void calculateNormals(std::vector<glm::vec4> verticies, std::vector<glm::vec3> &normals, std::vector<GLushort> elements)
+{
+	std::cout<<"Caclculating normals\n";
+	//initialize the normals withe one for every vertex
+	normals.resize(verticies.size(), glm::vec3(0.0, 0.0, 0.0));
+
+	//iterate through each face and calculate normals
+	for(int i = 0; i < elements.size(); i+=3){
+		glm::vec3 vert1 = glm::vec3(verticies[elements[i]]);
+		glm::vec3 vert2 = glm::vec3(verticies[elements[i + 1]]);
+		glm::vec3 vert3 = glm::vec3(verticies[elements[i + 2]]);
+
+		//calculate normal for this face
+		glm::vec3 normal = glm::normalize(glm::cross(vert2 - vert1, vert3 - vert1));
+		setNormal(normals, elements, normal, i, verticies);
+		setNormal(normals, elements, normal, i + 1, verticies);
+		setNormal(normals, elements, normal, i + 2, verticies);
+		//apply normal for each vert index;
+	}
+}
 
 bool Model::load(std::string filename){
-	if(isLoaded())
+	std::ifstream file;
+		file.open(filename, std::ifstream::in);
+
+		if(!file.is_open()){
+			std::cout<<"Could not open OBJ file "<<filename<<std::endl;
+			return NULL;
+		}
+		std::vector<glm::vec4> verticies;
+		std::vector<GLushort> elements;
+		std::vector<glm::vec3> normals;
+		std::vector<glm::vec3> normalTemp;
+		std::vector<GLushort> normalIndexs;
+		bool normalsIncluded = false;
+
+		//parse file
+		std::string line;
+		while(std::getline(file, line)){
+			if(line.substr(0,2) == "v "){
+				//found a verticies
+				std::istringstream stream(line.substr(2));
+				glm::vec4 vertex;
+				stream >> vertex.x;
+				stream >> vertex.y;
+				stream >> vertex.z;
+				vertex.w = 1.0f;
+
+				verticies.push_back(vertex);
+			} else if(line.substr(0,3) == "vn "){
+				normalsIncluded = true;
+				std::istringstream stream(line.substr(3));
+				glm::vec3 normal;
+				stream >> normal.x;
+				stream >> normal.y;
+				stream >> normal.z;
+				normal = glm::normalize(normal); //obj does not gurantee unit length
+				normalTemp.push_back(normal);
+			} else if (line.substr(0,2) == "f "){
+				//found a face
+				
+				GLshort vert1, vert2, vert3, norm1, norm2, norm3;
+				int start = 2; //line.find(" ", 3);
+				while(start < line.size()){
+					if(line[start] == ' ') {
+						start++;
+					} else
+						break;
+				}
+				int position = line.find(" ", start);
+				std::string sub = line.substr(start, position - start);
+				parseStringPart(sub, vert1, norm1);
+				int nextSpace = line.find(" ", position + 1);
+				
+				parseStringPart(line.substr(position + 1, nextSpace - position - 1), vert2, norm2);
+				parseStringPart(line.substr(nextSpace + 1), vert3, norm3);
+
+				//offset indicies to start at 0, not 1
+				vert1--;
+				vert2--;
+				vert3--;
+				norm1--;
+				norm2--;
+				norm3--;
+				if(norm1 >0)
+					normalsIncluded = true;
+				
+				elements.push_back(vert1);
+				elements.push_back(vert2);
+				elements.push_back(vert3);
+				normalIndexs.push_back(norm1);
+				normalIndexs.push_back(norm2);
+				normalIndexs.push_back(norm3);
+			} else { 
+				//Only verticies and faces will be processed
+			}
+		}
+
+		file.close();
+		if(!normalsIncluded)
+			calculateNormals(verticies, normals, elements);
+		else{
+			
+			normals.resize(verticies.size(), glm::vec3(0.0f, 0.0f, 0.0f));
+
+			for(int i = 0; i < elements.size(); ++i){
+				glm::vec3 normal = normalTemp[normalIndexs[i]];
+				glm::vec4 vert = verticies[elements[i]];
+				if(normals[elements[i]] == glm::vec3(0.0f)){
+					normals[elements[i]] = normal;
+				}else if(normals[elements[i]] != normal){
+					verticies.push_back(vert);
+					normals.push_back(normal);
+					elements[i] = verticies.size() - 1;
+				}
+			}
+		}
+
+
+
+	if(!loadBuffer(m_vertBuffer, verticies))
 		return false;
-	//NYI
+
+	m_hasVerts = true;
+	m_vertCount = verticies.size() * 4;
+
+	
+	if(!loadBuffer(m_indexBuffer, elements))
+		return false;
+
+	m_hasIndicies = true;
+	m_indexCount = elements.size();
+
+	if(!loadBuffer(m_normalBuffer, normals))
+		return false;
+
+	m_hasNormals = true;
+
+	m_dataLoaded = true;
+
 	return true;
 }
 

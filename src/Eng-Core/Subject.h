@@ -33,10 +33,8 @@ public:
 
 	{
 		
-
 		list.erase(std::remove(list.begin(), list.end(), &concreteSubject), list.end());
 
-	
 
 	}
 	

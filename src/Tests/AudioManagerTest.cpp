@@ -1,9 +1,29 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "AudioManager.h"
 #include <SFML/Audio.hpp>
-#include "AudioContainer.h"
-#include <Windows.h>
+#include <window.h>
+#include "AudioManager.h"
+
+AudioManager* audioManager = new AudioManager();
+
+TEST(AudioSuite, DISABLED_playingFunctionalitySubsytemTest){
+	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
+	audioManager->setAudioFile(audioContainer);
+	audioManager->getAudioFile("gunshot.wav")->play();
+}
+
+TEST(AudioSuite, DISABLED_loopingFunctionalitySubsytemTest){
+	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
+	audioManager->setAudioFile(audioContainer);
+	audioManager->getAudioFile("gunshot.wav")->loop();
+}
+
+TEST(AudioSuite, DISABLED_fadingFunctionalitySubsytemTest){
+	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
+	audioManager->setAudioFile(audioContainer);
+	audioManager->getAudioFile("throughthefireandtheflames.ogg")->play();
+	audioManager->getAudioFile("throughthefireandtheflames.ogg")->fade(4);
+}
 
 TEST(AudioSuite, DISABLED_gettingAudioFileDurationUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
@@ -26,12 +46,12 @@ TEST(AudioSuite, DISABLED_fadingFunctionalityUnitTest){
 	audioContainer->fade(4);
 }
 
-TEST(AudioSuite, fadingWhileNotPlayingUnitTest){
+TEST(AudioSuite, DISABLED_fadingWhileNotPlayingUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
 	audioContainer->fade(4);
 }
 
-// The tests below are essentially testing the SFML library 
+// The tests below are testing the SFML library 
 TEST(AudioSuite, DISABLED_playingSoundLibraryTest){
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
