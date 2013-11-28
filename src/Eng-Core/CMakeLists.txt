@@ -44,9 +44,11 @@ set(CORE_HEADER
 	)
 
 
-include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil)
+set(TINYOBJ_DIR ${CMAKE_SOURCE_DIR}/../3rdparty/tinyobj)
+
+include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil ${TINYOBJ_DIR})
 #link_directories(${ENG_BINARY_DIR}/Eng-Pil)
 
-add_library (Eng-Core STATIC ${CORE_SOURCE} ${CORE_HEADER} ) 
+add_library (Eng-Core STATIC ${CORE_SOURCE} ${CORE_HEADER} ${TINYOBJ_DIR}/tiny_obj_loader.cc) 
 
 target_link_libraries(Eng-Core Eng-PIL)
