@@ -17,6 +17,7 @@ set(CORE_SOURCE
 	InputHandler.cpp
 	AudioContainer.cpp
 	Camera.cpp
+	Texture.cpp
 	)
 	
 set(CORE_HEADER
@@ -39,6 +40,7 @@ set(CORE_HEADER
 	InputHandler.h
 	AudioContainer.h
 	Camera.h
+	Texture.h
 	)
 
 

@@ -8,10 +8,12 @@ Model::Model():
 	m_vertBuffer(GL_ARRAY_BUFFER),
 	m_normalBuffer(GL_ARRAY_BUFFER),
 	m_indexBuffer(GL_ELEMENT_ARRAY_BUFFER),
+	m_texCordsBuffer(GL_ARRAY_BUFFER),
 	m_dataLoaded(false),
 	m_hasVerts(false),
 	m_hasNormals(false),
 	m_hasIndicies(false),
+	m_hasTexture(false),
 	m_vertCount(0),
 	m_indexCount(0),
 	m_matrix(1.0f)

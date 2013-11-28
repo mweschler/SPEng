@@ -36,10 +36,12 @@ private:
 	GLBuffer m_vertBuffer;
 	GLBuffer m_normalBuffer;
 	GLBuffer m_indexBuffer;
+	GLBuffer m_texCordsBuffer;
 	bool m_dataLoaded;
 	bool m_hasVerts;
 	bool m_hasNormals;
 	bool m_hasIndicies;
+	bool m_hasTexture;
 	unsigned int m_vertCount;
 	unsigned int m_indexCount;
 	glm::mat4 m_matrix;
