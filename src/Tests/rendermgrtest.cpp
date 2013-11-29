@@ -408,7 +408,6 @@ namespace{
 	TEST_F(Render3DTests, modelVisualTest){
 
 		const GLushort indicies[] = {0, 1, 2};
-		sf::RenderWindow();
 		
 		Model deco;
 		
