@@ -263,10 +263,10 @@ namespace{
 
 	void writeShaderFiles();
 
-	std::string fragData = "\nuniform sampler2D tex;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvarying vec2 uv;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\nvec4 texColor = texture2D(tex, uv); texColor.a = 1.0f;\ngl_FragColor = (texColor * lightColor * cosAngIncidence) + (texColor * ambient);\n}";
-	std::string fragData4 = "\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ncolor = ((vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f * ambient);\n}";
+	std::string fragData = "\nuniform sampler2D tex;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvarying vec2 uv;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\nvec4 texColor = texture2D(tex, uv);\ngl_FragColor = (texColor * lightColor * cosAngIncidence) + (texColor * ambient);\n}";
+	std::string fragData4 = "\nuniform sampler2D tex;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nvoid main()\nin vec2 uv;{\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\nvec4 texColor = texture2D(tex, uv);\ncolor = (texColor * lightColor * cosAngIncidence) + (texColor * ambient);\n}";
 	std::string vertData = "\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nattribute vec4 vertex;\nattribute vec2 texCords;\nvarying vec2 uv;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\nuv = texCords; uv.y = 1.0f - uv.y;\ngl_Position = mvp * vertex;\n}";
-	std::string vertData4 = "\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nin vec4 vertex;\nout vec3 vertexNormal;\nin vec3 normal;\n\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\ngl_Position = mvp * vertex;\n}";
+	std::string vertData4 = "\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nin vec4 vertex;\nin vec2 texCords;\nout vec2 uv;out vec3 vertexNormal;\nin vec3 normal;\n\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\nuv = texCords; uv.y = 1.0f - uv.y;\ngl_Position = mvp * vertex;\n}";
 
 	class Render3DTests: public ::testing::Test{
 	protected:
