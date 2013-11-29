@@ -123,7 +123,7 @@ void RenderInternal::drawModel(const Model model, const Material material, const
 
 	//use texcords
 	if(program.getUVAttrib().length() > 0 && model.hasTexCords()){
-		GLint uvLoc = glGetUniformLocation(program.getID(), program.getUVAttrib().c_str());
+		GLint uvLoc = glGetAttribLocation(program.getID(), program.getUVAttrib().c_str());
 		model.bind(Model::TEXTURE);
 		glEnableVertexAttribArray(uvLoc);
 		glVertexAttribPointer(uvLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);

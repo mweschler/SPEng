@@ -5,20 +5,20 @@
 #include <iostream>
 
 Texture::Texture():
-	m_texture(NULL),
+	//m_texture(NULL),
 	m_texID(0)
 {
 }
 
 bool Texture::load(std::string filename){
-	m_texture = new sf::Texture();
-	/*sf::Image img;
+	//m_texture = new sf::Texture();
+	sf::Image img;
 	if(!img.loadFromFile(filename))
-		return false;*/
-	if(!m_texture->loadFromFile(filename))
 		return false;
+	//if(!m_texture->loadFromFile(filename))
+	//	return false;
 
-	/*sf::Vector2u size = img.getSize();
+	sf::Vector2u size = img.getSize();
 
 	unsigned int tex = 0;
 	GLHelper::flushGLErrors();
@@ -34,10 +34,10 @@ bool Texture::load(std::string filename){
 
 		return false;
 	}
+	//glBindTexture(GL_TEXTURE_2D, tex);
+	//glActiveTexture (GL_TEXTURE0);
 
-	glActiveTexture (GL_TEXTURE0);
-
-	error = glGetError();
+	/*error = glGetError();
 	if(error != GL_NO_ERROR)
 	{
 		std::stringstream ss;
@@ -45,7 +45,7 @@ bool Texture::load(std::string filename){
 		std::cout<<ss.str()<<std::endl;
 
 		return false;
-	}
+	}*/
 
 	glBindTexture (GL_TEXTURE_2D, tex);
 
@@ -54,6 +54,27 @@ bool Texture::load(std::string filename){
 	{
 		std::stringstream ss;
 		ss << "Error in texture load, bind texture: "<< GLHelper::errorEnumToString(error);
+		std::cout<<ss.str()<<std::endl;
+
+		return false;
+	}
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	
+	error = glGetError();
+	if(error != GL_NO_ERROR)
+	{
+		std::stringstream ss;
+		ss << "Error in texture load: "<< GLHelper::errorEnumToString(error);
+		std::cout<<ss.str()<<std::endl;
+
+		return false;
+	}
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	error = glGetError();
+	if(error != GL_NO_ERROR)
+	{
+		std::stringstream ss;
+		ss << "Error in texture load: "<< GLHelper::errorEnumToString(error);
 		std::cout<<ss.str()<<std::endl;
 
 		return false;
@@ -81,28 +102,9 @@ bool Texture::load(std::string filename){
 		return false;
 	}
 
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	error = glGetError();
-	if(error != GL_NO_ERROR)
-	{
-		std::stringstream ss;
-		ss << "Error in texture load: "<< GLHelper::errorEnumToString(error);
-		std::cout<<ss.str()<<std::endl;
+	
 
-		return false;
-	}
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	error = glGetError();
-	if(error != GL_NO_ERROR)
-	{
-		std::stringstream ss;
-		ss << "Error in texture load: "<< GLHelper::errorEnumToString(error);
-		std::cout<<ss.str()<<std::endl;
-
-		return false;
-	}
-
-	this->m_texID = tex;*/
+	this->m_texID = tex;
 	return true;
 }
 
@@ -115,10 +117,14 @@ bool Texture::bind() const{
 	//if(m_texture == NULL)
 	//	return false;
 
-	m_texture->bind(m_texture);
-
-	//glBindTexture(GL_TEXTURE_2D, m_texID);
-
+	//m_texture->bind(m_texture);
+	GLHelper::flushGLErrors();
+	glBindTexture(GL_TEXTURE_2D, m_texID);
+	GLenum erro = glGetError();
+	if(erro != GL_NO_ERROR){
+		std::cout<<"Error binding texture! "<<GLHelper::errorEnumToString(erro)<<std::endl;
+		return false;
+	}
 	return true;
 }
 
