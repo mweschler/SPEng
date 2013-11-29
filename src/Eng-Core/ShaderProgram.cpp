@@ -15,7 +15,9 @@ ShaderProgram::ShaderProgram():
 	m_lightDir(""),
 	m_lightColor(""),
 	m_ambient(""),
-	m_normMatrix("")
+	m_normMatrix(""),
+	m_uvAttrib(""),
+	m_samplerAttrib("")
 {
 
 }
@@ -237,4 +239,20 @@ void ShaderProgram::setNormMatrixAttrib(std::string name){
 
 std::string ShaderProgram::getNormMatrixAttrib() const {
 	return m_normMatrix;
+}
+
+void ShaderProgram::setUVAttrib(std::string name){
+	m_uvAttrib = name;
+}
+
+std::string ShaderProgram::getUVAttrib() const{
+	return m_uvAttrib;
+}
+
+void ShaderProgram::setSamplerAttrib(std::string name){
+	m_samplerAttrib = name;
+}
+
+std::string ShaderProgram::getSamplerAttrib() const{
+	return m_samplerAttrib;
 }

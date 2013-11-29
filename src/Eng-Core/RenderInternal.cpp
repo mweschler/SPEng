@@ -113,6 +113,22 @@ void RenderInternal::drawModel(const Model model, const Material material, const
 		glUniform4fv(ambLoc, 1, glm::value_ptr(m_ambient));
 	}
 
+	//use texture sampler
+	if(program.getSamplerAttrib().length() > 0 && material.hasTexture()){
+		GLint samplerLoc = glGetUniformLocation(program.getID(), program.getSamplerAttrib().c_str());
+		glActiveTexture(GL_TEXTURE0);
+		material.getTexture()->bind();
+		glUniform1i(samplerLoc, 0);
+	}
+
+	//use texcords
+	if(program.getUVAttrib().length() > 0 && model.hasTexCords()){
+		GLint uvLoc = glGetUniformLocation(program.getID(), program.getUVAttrib().c_str());
+		model.bind(Model::TEXTURE);
+		glEnableVertexAttribArray(uvLoc);
+		glVertexAttribPointer(uvLoc, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	}
+
 	//draw in indexed or array mode
 	if(model.hasIndex())
 	{
