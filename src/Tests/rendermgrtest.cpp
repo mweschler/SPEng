@@ -263,10 +263,10 @@ namespace{
 
 	void writeShaderFiles();
 
-	std::string fragData = "\nuniform sampler2D texSamp;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvarying vec2 texPos;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ngl_FragColor = ((vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient));\n}";
-	std::string fragData4 = "\nuniform sampler2D texSamp;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nin vec2 texPos;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ncolor = (vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient);\n}";
-	std::string vertData = "\nattribute vec2 texCords;\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nattribute vec4 vertex;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvarying vec2 texPos;\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\ngl_Position = mvp * vertex;\ntexPos = texCords;\n}";
-	std::string vertData4 = "\nin vec2 texCords;\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nin vec4 vertex;\nout vec3 vertexNormal;\nin vec3 normal;\nout vec2 texPos;\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\ngl_Position = mvp * vertex;\ntexPos = texCords;\n}";
+	std::string fragData = "\nuniform sampler2D tex;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvarying vec2 uv;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\nvec4 texColor = texture2D(tex, uv); texColor.a = 1.0f;\ngl_FragColor = (texColor * lightColor * cosAngIncidence) + (texColor * ambient);\n}";
+	std::string fragData4 = "\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ncolor = ((vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f * ambient);\n}";
+	std::string vertData = "\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nattribute vec4 vertex;\nattribute vec2 texCords;\nvarying vec2 uv;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\nuv = texCords; uv.y = 1.0f - uv.y;\ngl_Position = mvp * vertex;\n}";
+	std::string vertData4 = "\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nin vec4 vertex;\nout vec3 vertexNormal;\nin vec3 normal;\n\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\ngl_Position = mvp * vertex;\n}";
 
 	class Render3DTests: public ::testing::Test{
 	protected:
@@ -443,11 +443,11 @@ namespace{
 		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
 
 		//wnd->makeContextCurrent();
-		glEnable(GL_TEXTURE_2D);
+		//glEnable(GL_TEXTURE_2D);
 		ASSERT_TRUE(texture.load("cat_diff.tga"));
 		material.setTexture(&texture);
 		program.setUVAttrib("texCords");
-		program.setSamplerAttrib("texSamp");
+		program.setSamplerAttrib("tex");
 		//wnd->makeContextCurrent();
 		float camDeg = 0;
 		camera.setTarget(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -472,7 +472,7 @@ namespace{
 			float camZ = cos(camDeg * M_PI / 180) * 2;
 			camera.setPosition(glm::vec3(camX, 1.0f, camZ));
 			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
-			wnd->makeContextCurrent();
+			//wnd->makeContextCurrent();
 			RenderManager::drawModel(deco, material, camera);
 			wnd->swapBuffers();
 
