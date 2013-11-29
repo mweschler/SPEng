@@ -22,6 +22,6 @@ public:
 	bool isRepeated() const;
 private:
 	GLuint m_texID;
-	sf::Texture *m_texture;
+	//sf::Texture *m_texture;
 	
 };

@@ -264,7 +264,7 @@ namespace{
 	void writeShaderFiles();
 
 	std::string fragData = "\nuniform sampler2D texSamp;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvarying vec2 texPos;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ngl_FragColor = ((vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient));\n}";
-	std::string fragData4 = "\nuniform sampler2D texSamp;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nin vec2 texPos;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ncolor = (texture2D(texSamp, texPos) * lightColor * cosAngIncidence) + (texture2D(texSamp, texPos) * ambient);\n}";
+	std::string fragData4 = "\nuniform sampler2D texSamp;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nin vec2 texPos;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\ncolor = (vec4(diffuse, 1.0f) * lightColor * cosAngIncidence) + (vec4(diffuse, 1.0f) * ambient);\n}";
 	std::string vertData = "\nattribute vec2 texCords;\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nattribute vec4 vertex;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvarying vec2 texPos;\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\ngl_Position = mvp * vertex;\ntexPos = texCords;\n}";
 	std::string vertData4 = "\nin vec2 texCords;\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nin vec4 vertex;\nout vec3 vertexNormal;\nin vec3 normal;\nout vec2 texPos;\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\ngl_Position = mvp * vertex;\ntexPos = texCords;\n}";
 
@@ -408,7 +408,6 @@ namespace{
 	TEST_F(Render3DTests, modelVisualTest){
 
 		const GLushort indicies[] = {0, 1, 2};
-		sf::RenderWindow();
 		
 		Model deco;
 		
