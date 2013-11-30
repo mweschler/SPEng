@@ -405,7 +405,7 @@ namespace{
 
 	}
 
-	TEST_F(Render3DTests, modelVisualTest){
+	TEST_F(Render3DTests, DISABLED_modelVisualTest){
 
 		const GLushort indicies[] = {0, 1, 2};
 		

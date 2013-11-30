@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv)
 {
-	::testing::GTEST_FLAG(filter) = "*Visual*";
+	//::testing::GTEST_FLAG(filter) = "*Visual*";
 
 	//::testing::GTEST_FLAG(filter) = "*Input*";
 
@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 
 	//::testing::GTEST_FLAG(filter) = "*ConfigSuite*";
 
-	::testing::GTEST_FLAG(filter) = "logger*:assetTests*";
+	//::testing::GTEST_FLAG(filter) = "logger*:assetTests*";
 
     //::testing::GTEST_FLAG(filter) = "*AudioSuite*";
 
