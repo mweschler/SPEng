@@ -25,12 +25,15 @@ public:
 	static ConfigurationManager* Instance();
 
 	// Retrieves a configuration variable from the map with the given name.
+	// @ param name: The name of the configuration variable to retrieve
 	template <typename T> T getVariable(string name){
 		T value;
 		try {
 			value = configurationVariables.at(name)->getValue<T>();
 		} 
 		catch (const exception &exc) {
+			writeToLogger("Cannot retrieve configuration variable " + name + " because it does not exist");
+			//Proceed to return the empty string if T is a string or NULL if it is a pointer
 			if(typeid(T) == typeid(string)){
 				VariableContainer* variable = new Variable<T>();
 				variable->setValue<string>("");
@@ -39,12 +42,13 @@ public:
 			else{
 				return NULL;
 			}
-			writeToLogger("Cannot retrieve configuration variable " + name + " because it does not exist");
 		}
 		return value;
 	}
 
 	// Sets a configuration variable from the map with the given name.
+	// @ param name: The name of the configuration variable to set
+	// @ param name: The new value of the variable to replace the old value
 	template <typename T> void setVariable(string name, T newValue){
 		VariableContainer* variable = new Variable<T>();
 		variable->setValue(newValue);
@@ -52,6 +56,7 @@ public:
 	}
 
 	// Removes a configuration variable from the map with the given name.
+	// @ param name: The name of the configuration variable to be erased
 	template <typename T> void removeVariable(string name) {
 		int result = configurationVariables.erase(name);
 		if (result == 0) {

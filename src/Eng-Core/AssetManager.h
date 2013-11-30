@@ -33,17 +33,15 @@ class AssetManager{
 			T* asset = new T();
 			asset->assetSetName(assetName);
 			if(checkForDuplicate(assetName))
-			{
-				
+			{			
 				assetStorage.at(assetName)->increaseRefCount();
 				return asset;
 			}
 			else
 			{
-			asset->load(assetName);
-			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
-				cout << "inside asset catch\n";
-				
+				asset->load(assetName);
+				assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
+				cout << "inside asset catch\n";				
 				return asset;
 			}				
 		}

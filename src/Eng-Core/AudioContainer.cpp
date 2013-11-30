@@ -4,6 +4,11 @@
 
 using namespace std;
 
+AudioContainer::AudioContainer()
+{
+}
+
+//Structure used to store information passed to new thread which is used when fading an audio file
 struct threadData
 {
 	float threadNumberOfSeconds;
@@ -11,10 +16,7 @@ struct threadData
 	threadData(float numberOfSecondsParam, sf::Music &musicParam) : threadNumberOfSeconds(numberOfSecondsParam), threadMusic(musicParam) {}
 };
 
-AudioContainer::AudioContainer()
-{
-}
-
+//Returns the duration of the music file
 float AudioContainer::getDuration()
 {
 	std::ostringstream buff;
@@ -22,24 +24,22 @@ float AudioContainer::getDuration()
 	return durationOfAudioFile;
 }
 
-std::string AudioContainer::getFileName(){
-	return this->fileName;
-}
-
+//Returns if music is already playing
 bool AudioContainer::isPlaying(){
 	return music.getStatus() == music.Playing;
 }
 
 bool AudioContainer::load(std::string fileName)
 {
-	this->fileName = fileName;
 	if (!music.openFromFile(fileName)){
-		writeToLogger("Failed to open audio file");
+		writeToLogger("Failed to load audio file");
 		return false;
-	}			
+	}
+	
 	//Initialize length of audio file
 	sf::Time length = music.getDuration();
 	durationOfAudioFile = length.asSeconds();
+
 	return true;
 }
 

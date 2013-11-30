@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "InputHandler.h"
-#include "AudioManager.h"
 #include <SFML/Audio.hpp>
 
 //If this test gives you an error. It means you were pressing up

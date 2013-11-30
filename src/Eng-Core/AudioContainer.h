@@ -9,17 +9,15 @@
 class AudioContainer : public Asset
 {
 private:
-	std::string fileName;	
 	sf::Music music;
 	float durationOfAudioFile;
-	//Helper method to write to logger
+	//Internal Helper method to write to logger
 	void writeToLogger (std::string message);
 
 public:
 	bool virtual load(std::string fileName);
 	//Returns audio file length in seconds
 	float getDuration();
-	std::string getFileName();
 	AudioContainer();
 	bool virtual isPlaying();
 	void virtual play();
