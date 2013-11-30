@@ -5,8 +5,6 @@
 using namespace std;
 
 		string dataName;
-		string dataLocation;
-		string dataType;
 		int dataRefCount;
 
 
@@ -15,12 +13,11 @@ using namespace std;
 			  dataName = nameOfAsset;
 			  dataRefCount = 1;
 		}
+
 		Asset::Asset()
 		{
-			  dataName = "sauce";
-			  dataRefCount = 1;
 		}
-
+	    
 		string Asset::getName()
 		{
 			return dataName;
@@ -37,9 +34,9 @@ using namespace std;
 			dataRefCount++;
 		}
 
-		bool Asset::release(Asset asset)
+		bool Asset::releaseAsset()
 		{
-			cout << "Release it\n";
+			cout << "Release asset\n";
 			return true;
 		}
 
@@ -49,7 +46,7 @@ using namespace std;
 		}
 
 		
-		bool Asset::load(string filename)
+		bool Asset::load()
 		{
 			cout << "Load file\n";
 			return true;

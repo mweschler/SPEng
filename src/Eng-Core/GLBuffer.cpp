@@ -31,12 +31,8 @@ bool GLBuffer::bind() const{
 
 	glBindBuffer(m_type, m_buffer);
 	GLenum error = glGetError();
-	if(error == GL_INVALID_ENUM){
-		//log error
-		return false;
-	}
-	if(error == GL_INVALID_VALUE){
-		//log error
+	if(error != GL_NO_ERROR){
+		std::cout<<"Error binding buffer "<<GLHelper::errorEnumToString(error)<<std::endl;
 		return false;
 	}
 

@@ -6,7 +6,7 @@
 
 
 
-TEST(logger, test_two_testsIfDataLogIsDetectedOnceItIsCreated)
+TEST(logger, test_one_testsIfDataLogIsDetectedOnceItIsCreated)
 {
 	Logger* logger = Logger::Instance();
     logger->initialize();
@@ -15,7 +15,7 @@ TEST(logger, test_two_testsIfDataLogIsDetectedOnceItIsCreated)
 	EXPECT_EQ(b, true);
 }
 
-TEST(logger, test_three_TryingToWriteToTheLogButItDoesNotExist)
+TEST(logger, test_two_TryingToWriteToTheLogButItDoesNotExist)
 {
 	Logger* logger = Logger::Instance();
 	int k = logger->writeToLog("Hello this is a test for the log.");
@@ -25,7 +25,7 @@ TEST(logger, test_three_TryingToWriteToTheLogButItDoesNotExist)
 }
 
 
-TEST(logger, test_four_TryingToWriteToTheLogAndItDoesExist)
+TEST(logger, test_three_TryingToWriteToTheLogAndItDoesExist)
 {
 	Logger* logger = Logger::Instance();
 	logger->initialize();
@@ -36,14 +36,14 @@ TEST(logger, test_four_TryingToWriteToTheLogAndItDoesExist)
 }
 
 
-TEST(logger, test_five_TryingToDeleteALogButItDoesNotExist)
+TEST(logger, test_four_TryingToDeleteALogButItDoesNotExist)
 {
 	Logger* logger = Logger::Instance();
 	int k = logger->deleteLog();
 	EXPECT_EQ(k, 0);
 }
 
-TEST(logger, test_six_TryingToDeleteALogAndItDoesExist)
+TEST(logger, test_five_TryingToDeleteALogAndItDoesExist)
 {
 	Logger* logger = Logger::Instance();
 	logger->initialize();
@@ -56,7 +56,7 @@ TEST(logger, test_six_TryingToDeleteALogAndItDoesExist)
 
 
 
-TEST(logger, DISABLED_personal_test_if_it_writes_corrrectly)
+TEST(logger, personal_test_if_it_writes_corrrectly)
 {
 	Logger* logger = Logger::Instance();
 	logger->initialize();

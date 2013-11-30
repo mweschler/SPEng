@@ -132,7 +132,7 @@ Logger* Logger::instance = NULL;
 					}
 					int shours = hours%12;
 					
-					os << "\n new hours " << shours;
+					os << shours;
 					
 				   cout << os.str();
 					hoursString = os.str();

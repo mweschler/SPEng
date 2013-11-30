@@ -35,10 +35,12 @@ bool AudioContainer::load(std::string fileName)
 	this->fileName = fileName;
 	if (!music.openFromFile(fileName)){
 		writeToLogger("Failed to open audio file");
+		return false;
 	}			
 	//Initialize length of audio file
 	sf::Time length = music.getDuration();
 	durationOfAudioFile = length.asSeconds();
+	return true;
 }
 
 void AudioContainer::play(){
