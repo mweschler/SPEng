@@ -3,15 +3,18 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "tiny_obj_loader.h"
 
 Model::Model():
 	m_vertBuffer(GL_ARRAY_BUFFER),
 	m_normalBuffer(GL_ARRAY_BUFFER),
 	m_indexBuffer(GL_ELEMENT_ARRAY_BUFFER),
+	m_texCordsBuffer(GL_ARRAY_BUFFER),
 	m_dataLoaded(false),
 	m_hasVerts(false),
 	m_hasNormals(false),
 	m_hasIndicies(false),
+	m_hasTexture(false),
 	m_vertCount(0),
 	m_indexCount(0),
 	m_matrix(1.0f)
@@ -77,7 +80,7 @@ void parseStringPart(std::string data,GLshort &vertexIndex, GLshort &normalIndex
 	}
 }
 
-void setNormal(std::vector<glm::vec3> &normals, std::vector<GLushort> &elements, glm::vec3 normal, int eleIndex,
+void setNormal(std::vector<glm::vec3> &normals, std::vector<GLuint> &elements, glm::vec3 normal, int eleIndex,
 		std::vector<glm::vec4> &verticies){
 		
 		if(normals[elements[eleIndex]] == glm::vec3(0.0f)){
@@ -90,7 +93,7 @@ void setNormal(std::vector<glm::vec3> &normals, std::vector<GLushort> &elements,
 		}
 	}
 
-void calculateNormals(std::vector<glm::vec4> verticies, std::vector<glm::vec3> &normals, std::vector<GLushort> elements)
+void calculateNormals(std::vector<glm::vec4> verticies, std::vector<glm::vec3> &normals, std::vector<GLuint> elements)
 {
 	std::cout<<"Caclculating normals\n";
 	//initialize the normals withe one for every vertex
@@ -112,6 +115,73 @@ void calculateNormals(std::vector<glm::vec4> verticies, std::vector<glm::vec3> &
 }
 
 bool Model::load(std::string filename){
+	std::vector<tinyobj::shape_t>shapes;
+	std::string err = tinyobj::LoadObj(shapes,filename.c_str());
+
+	if(shapes.size() < 1)
+		return false;
+
+	tinyobj::mesh_t mesh = shapes[0].mesh;
+
+	//setup verticies
+	if(mesh.positions.size() < 3)
+		return false;
+
+	std::vector<glm::vec4> verticies;
+	for(int i = 0; i < mesh.positions.size(); i = i + 3){
+		glm::vec4 vert;
+		vert.x = mesh.positions[i];
+		vert.y = mesh.positions[i + 1];
+		vert.z = mesh.positions[i + 2];
+		vert.w = 1.0f;
+
+		verticies.push_back(vert);
+	}
+
+	//setup normals
+	std::vector<glm::vec3> normals;
+	if(mesh.normals.size() > 0){
+		for(int i = 0; i < mesh.normals.size(); i = i + 3){
+			glm::vec3 norm;
+			norm.x = mesh.normals[i];
+			norm.y = mesh.normals[i + 1];
+			norm.z = mesh.normals[i + 2];
+
+			normals.push_back(norm);
+		}
+	}
+
+	//setup elements
+	std::vector<GLuint> elements = mesh.indices;
+
+	//setup buffers
+	if(!loadBuffer(m_vertBuffer, verticies))
+		return false;
+
+	m_hasVerts = true;
+	m_vertCount = mesh.positions.size() * 4;
+
+	
+	if(!loadBuffer(m_indexBuffer, elements))
+		return false;
+
+	m_hasIndicies = true;
+	m_indexCount = mesh.indices.size();
+
+	if(!normals.size() > 0){
+		calculateNormals(verticies, normals, elements);
+	}
+
+	if(!loadBuffer(m_normalBuffer, normals))
+		return false;
+
+	m_hasNormals = true;
+
+	m_dataLoaded = true;
+
+	return true;
+
+	/*
 	std::ifstream file;
 		file.open(filename, std::ifstream::in);
 
@@ -231,6 +301,7 @@ bool Model::load(std::string filename){
 	m_dataLoaded = true;
 
 	return true;
+	*/
 }
 
 bool Model::load(std::vector<GLfloat> verts){

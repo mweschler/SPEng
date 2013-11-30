@@ -117,7 +117,7 @@ void RenderInternal::drawModel(const Model model, const Material material, const
 	if(model.hasIndex())
 	{
 		model.bind(Model::INDEX);
-		glDrawElements(GL_TRIANGLES, model.getIndexCount(), GL_UNSIGNED_SHORT, 0);
+		glDrawElements(GL_TRIANGLES, model.getIndexCount(), GL_UNSIGNED_INT, 0);
 	}
 	else{
 		glDrawArrays(GL_TRIANGLES, 0, model.getVertCount());
