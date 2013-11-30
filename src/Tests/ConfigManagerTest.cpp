@@ -26,7 +26,6 @@ TEST(ConfigSuite, removingNonExistingStringVariableSubsystemTest){
 	configurationManager->removeVariable<string>("Variable10");
 }
 
-/*
 TEST(ConfigSuite, storingAndRetrievingIntVariableUnitTest){
 	configurationManager->setVariable("Variable1",4);
 	int result = configurationManager->getVariable<int>("Variable1");
@@ -39,7 +38,7 @@ TEST(ConfigSuite, storingAndRetrievingDoubleVariableUnitTest){
 	EXPECT_EQ(4.0,result);
 }
 
-/*TEST(ConfigSuite, storingAndRetrievingFloatVariableUnitTest){
+TEST(ConfigSuite, storingAndRetrievingFloatVariableUnitTest){
 	configurationManager->setVariable("Variable3",4.0f);
 	float result = configurationManager->getVariable<float>("Variable3");
 	EXPECT_EQ(4.0f,result);
@@ -70,4 +69,4 @@ TEST(ConfigSuite, testingSingletonDesignPattern){
 	EXPECT_EQ(4.0f,floatResult);
 	EXPECT_EQ("4.0",stringResult);
 	EXPECT_EQ('4',charResult);
-}*/
+}

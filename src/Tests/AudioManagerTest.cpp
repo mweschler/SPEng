@@ -5,62 +5,63 @@
 #include "AudioContainer.h"
 #include "AssetManager.h"
 
-static AssetManager &assetMgr = *AssetManager::Instance();
+static AssetManager &assetMgr = *AssetManager::Instance(); 
 
 //If I declare this line here and erase the two next declarations of gunshot it works
 //AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
 //So I'm thinking there could be something wrong with what it is returning when the user tries to load the asset a second time. 
 
-TEST(AudioSuite, playingFunctionalitySubsytemTest){
+TEST(AudioSuite, playingFunctionalitySystemTest){
 	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
 	gunShot->play();
 	Sleep(5000);
 }
 
-TEST(AudioSuite, playingAgainFunctionalitySubsytemTest){
+TEST(AudioSuite, playingAgainFunctionalitySystemTest){
 	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
 	gunShot->play();
 }
 
-TEST(AudioSuite, DISABLED_fadingFunctionalitySubsytemTest){
+/*
+TEST(AudioSuite, fadingFunctionalitySystemTest){
 	AudioContainer* finalBossBattleMusic = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("throughthefireandtheflames.ogg");
 	finalBossBattleMusic->play();
 	finalBossBattleMusic->fade(4);
 }
 
-TEST(AudioSuite, DISABLED_gettingAudioFileDurationUnitTest){
+TEST(AudioSuite, gettingAudioFileDurationSubSystemTest){
 	AudioContainer* audioContainer = new AudioContainer();
 	audioContainer->load("throughthefireandtheflames.ogg");
 	audioContainer->getDuration();
 }
 
-TEST(AudioSuite, DISABLED_playingFunctionalityUnitTest){
+TEST(AudioSuite, playingFunctionalitySubSystemTest){
 	AudioContainer* audioContainer = new AudioContainer();
 	audioContainer->load("gunshot.wav");
 	audioContainer->play();
 }
 
-TEST(AudioSuite, DISABLED_loopingFunctionalityUnitTest){
+TEST(AudioSuite, loopingFunctionalitySubSystemTest){
 	AudioContainer* audioContainer = new AudioContainer();
 	audioContainer->load("gunshot.wav");
 	audioContainer->loop();
 }
 
-TEST(AudioSuite, DISABLED_fadingFunctionalityUnitTest){
+TEST(AudioSuite, fadingFunctionalitySubSystemTest){
 	AudioContainer* audioContainer = new AudioContainer();
 	audioContainer->load("throughthefireandtheflames.ogg");
 	audioContainer->play();
 	audioContainer->fade(4);
 }
 
-TEST(AudioSuite, DISABLED_fadingWhileNotPlayingUnitTest){
+TEST(AudioSuite, fadingWhileNotPlayingSubSystemTest){
 	AudioContainer* audioContainer = new AudioContainer();
 	audioContainer->load("throughthefireandtheflames.ogg");
 	audioContainer->fade(4);
 }
 
 // The tests below are testing successful integration of the SFML library 
-TEST(AudioSuite, DISABLED_playingSoundLibraryTest){
+TEST(AudioSuite, playingSoundLibraryTest){
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	if (!buffer.loadFromFile("gunshot.wav"))
@@ -71,7 +72,7 @@ TEST(AudioSuite, DISABLED_playingSoundLibraryTest){
 	std::cin.ignore();
 }
 
-TEST(AudioSuite, DISABLED_playingMusicLibraryTest){
+TEST(AudioSuite, playingMusicLibraryTest){
 	sf::Music music;
 	if (!music.openFromFile("throughthefireandtheflames.ogg"))
 		ASSERT_DEATH(NULL,NULL); // error
@@ -80,7 +81,7 @@ TEST(AudioSuite, DISABLED_playingMusicLibraryTest){
 	std::cin.ignore();
 }
 
-TEST(AudioSuite, DISABLED_loopingSoundLibraryTest){
+TEST(AudioSuite, loopingSoundLibraryTest){
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
 	if (!buffer.loadFromFile("gunshot.wav"))
@@ -92,7 +93,7 @@ TEST(AudioSuite, DISABLED_loopingSoundLibraryTest){
 	std::cin.ignore();
 }
 
-TEST(AudioSuite, DISABLED_fadingMusicTestLibraryTest){
+TEST(AudioSuite, fadingMusicTestLibraryTest){
 	sf::Music music;
 	if (!music.openFromFile("throughthefireandtheflames.ogg"))
 		ASSERT_DEATH(NULL,NULL); // error
@@ -105,6 +106,5 @@ TEST(AudioSuite, DISABLED_fadingMusicTestLibraryTest){
 		music.setVolume(i);
 	}
 	std::cin.ignore();
-}
-
+}*/
 
