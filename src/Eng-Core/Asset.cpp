@@ -1,6 +1,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include "Logger.h"
 #include "Asset.h"
 using namespace std;
 
@@ -48,6 +49,7 @@ using namespace std;
 		
 		bool Asset::load()
 		{
-			cout << "Load file\n";
+			Logger &log = *Logger::Instance();
+			log.writeToLog("load being used");
 			return true;
 		}

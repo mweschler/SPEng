@@ -3,6 +3,7 @@
 #include <map>
 #pragma once
 #include "Asset.h"
+#include "Logger.h"
 using namespace std;
 
 
@@ -29,6 +30,7 @@ class AssetManager{
 		
      	template <class T> Asset* loadAsset(string assetName)
 		{
+			Logger &log = *Logger::Instance();
 			Derived_from<T, Asset>();
 			T* asset = new T(assetName);
 			if(checkForDuplicate(assetName))
@@ -41,8 +43,8 @@ class AssetManager{
 			{
 			asset->load();
 			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
-				cout << "inside asset catch\n";
 				
+			log.writeToLog("Asset \"" + assetName + "\" has been loaded to memory.");
 				return asset;
 			}				
 		}

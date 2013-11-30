@@ -19,10 +19,10 @@ AssetManager* AssetManager::instance = NULL;
 
 		AssetManager* AssetManager::Instance()
 		{
-			cout << "inside instance\n";
+			Logger &log = *Logger::Instance();
 			if(instance == NULL)
 			{
-				cout << "inside instance is NULL\n";
+				log.writeToLog("AssetManager has been created");
 				instance = new AssetManager();
 			}
 			return instance;
@@ -32,21 +32,24 @@ AssetManager* AssetManager::instance = NULL;
 		
 		bool AssetManager::releaseAsset(string assetName)
 		{
+			Logger &log = *Logger::Instance();
 			if(checkForDuplicate(assetName))
 			{
 				if(assetStorage.at(assetName)->getRefCount() > 1)
 				{
 					assetStorage.at(assetName)->decreaseRefCount();
+					log.writeToLog("decreased reference count of " + assetName + ".");
 				}
 				else
 				{
 					assetStorage.erase(assetName);
+					log.writeToLog("Asset - " + assetName + " has been removed from memory");
 				}
 				return true;
 			}
 			else
 			{
-				cout << "failed to release asset. Asset never loaded.";
+				log.writeToLog("failed to release asset. Asset never loaded.");
 				return false;
 			}
 			
