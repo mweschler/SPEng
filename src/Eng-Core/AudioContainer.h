@@ -6,23 +6,22 @@
 #include "Asset.h"
 #include "Logger.h"
 
-using namespace std;
-
 class AudioContainer : public Asset
 {
 private:
 	std::string fileName;	
 	sf::Music music;
 	float durationOfAudioFile;
-	void virtual load();
 	//Helper method to write to logger
-	void writeToLogger (string message);
+	void writeToLogger (std::string message);
 
 public:
-	std::string getFileName();
+	bool virtual load(std::string fileName);
 	//Returns audio file length in seconds
 	float getDuration();
+	std::string getFileName();
 	AudioContainer(std::string name);
+	AudioContainer();
 	bool virtual isPlaying();
 	void virtual play();
 	void virtual stop();
