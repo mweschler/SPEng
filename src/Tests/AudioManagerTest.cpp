@@ -6,25 +6,26 @@
 
 AudioManager* audioManager = new AudioManager();
 
-TEST(AudioSuite, DISABLED_playingFunctionalitySubsytemTest){
+TEST(AudioSuite, playingFunctionalitySubsytemTest){
 	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
 	audioManager->setAudioFile(audioContainer);
 	audioManager->getAudioFile("gunshot.wav")->play();
 }
 
-TEST(AudioSuite, DISABLED_loopingFunctionalitySubsytemTest){
+TEST(AudioSuite, loopingFunctionalitySubsytemTest){
 	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
 	audioManager->setAudioFile(audioContainer);
 	audioManager->getAudioFile("gunshot.wav")->loop();
 }
 
-TEST(AudioSuite, DISABLED_fadingFunctionalitySubsytemTest){
+TEST(AudioSuite, fadingFunctionalitySubsytemTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
 	audioManager->setAudioFile(audioContainer);
 	audioManager->getAudioFile("throughthefireandtheflames.ogg")->play();
 	audioManager->getAudioFile("throughthefireandtheflames.ogg")->fade(4);
 }
 
+/*
 TEST(AudioSuite, DISABLED_gettingAudioFileDurationUnitTest){
 	AudioContainer* audioContainer = new AudioContainer("throughthefireandtheflames.ogg");
 	audioContainer->getDuration();
@@ -98,4 +99,5 @@ TEST(AudioSuite, DISABLED_fadingMusicTestLibraryTest){
 	}
 	std::cin.ignore();
 }
+*/
 

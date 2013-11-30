@@ -7,6 +7,7 @@ using namespace std;
 
 ConfigurationManager* configurationManager = ConfigurationManager::Instance();
 
+/*
 TEST(ConfigSuite, retrievingUnSetIntVariableSubsystemTest){
 	int result = configurationManager->getVariable<int>("Variable1");
 	EXPECT_EQ(NULL,result);
@@ -25,6 +26,7 @@ TEST(ConfigSuite, removingAnExistingStringVariableSubsystemTest){
 TEST(ConfigSuite, removingNonExistingStringVariableSubsystemTest){
 	configurationManager->removeVariable<string>("Variable10");
 }
+*/
 
 TEST(ConfigSuite, storingAndRetrievingIntVariableUnitTest){
 	configurationManager->setVariable("Variable1",4);
@@ -38,11 +40,11 @@ TEST(ConfigSuite, storingAndRetrievingDoubleVariableUnitTest){
 	EXPECT_EQ(4.0,result);
 }
 
-TEST(ConfigSuite, storingAndRetrievingFloatVariableUnitTest){
+/*TEST(ConfigSuite, storingAndRetrievingFloatVariableUnitTest){
 	configurationManager->setVariable("Variable3",4.0f);
 	float result = configurationManager->getVariable<float>("Variable3");
 	EXPECT_EQ(4.0f,result);
-}
+}*/
 
 TEST(ConfigSuite, storingAndRetrievingStringVariableUnitTest){
 	std::string temp = "4.0";
@@ -51,6 +53,7 @@ TEST(ConfigSuite, storingAndRetrievingStringVariableUnitTest){
 	EXPECT_EQ("4.0",result);
 }
 
+/*
 TEST(ConfigSuite, storingAndRetrievingCharVariableUnitTest){
 	configurationManager->setVariable("Variable5",'4');
 	char result = configurationManager->getVariable<char>("Variable5");
@@ -69,4 +72,4 @@ TEST(ConfigSuite, testingSingletonDesignPattern){
 	EXPECT_EQ(4.0f,floatResult);
 	EXPECT_EQ("4.0",stringResult);
 	EXPECT_EQ('4',charResult);
-}
+}*/
