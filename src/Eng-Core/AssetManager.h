@@ -27,23 +27,24 @@ class AssetManager{
 
 		int getRefCount(string name);
 		
-     	template <class T> bool loadAsset(string assetName)
+     	template <class T> Asset* loadAsset(string assetName)
 		{
 			Derived_from<T, Asset>();
-			T* asset = new T(assetName);
+			T* asset = new T();
+			asset->assetSetName(assetName);
 			if(checkForDuplicate(assetName))
 			{
 				
 				assetStorage.at(assetName)->increaseRefCount();
-				return true;
+				return asset;
 			}
 			else
 			{
-			//asset.load();
+			asset->load(assetName);
 			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
 				cout << "inside asset catch\n";
 				
-				return true;
+				return asset;
 			}				
 		}
 		
@@ -56,12 +57,6 @@ class AssetManager{
 		map<string, Asset*> assetStorage;
 
 		
-		int createAsset(Asset asset);
-		int addAsset(string name);
-	    int increaseRefcount(string name);
-		int decreaseRefCount(string name);
-		
-
 		static AssetManager* instance;
 		AssetManager();
 		AssetManager(AssetManager const&);

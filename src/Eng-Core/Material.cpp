@@ -3,7 +3,8 @@
 
 Material::Material():
 	m_diffuseColor(1.0f),
-	m_program(NULL)
+	m_program(NULL),
+	m_texture(NULL)
 {
 
 }
@@ -38,4 +39,16 @@ glm::vec3 Material::getDiffuseColor() const{
 
 const ShaderProgram *Material::getShader() const{
 	return m_program;
+}
+
+void Material::setTexture(const Texture *texture){
+	m_texture = texture;
+}
+
+bool Material::hasTexture() const{
+	return (m_texture != NULL);
+}
+
+const Texture *Material::getTexture() const{
+	return m_texture;
 }

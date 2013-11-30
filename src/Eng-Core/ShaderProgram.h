@@ -29,6 +29,10 @@ public:
 	std::string getAmbientAttrib() const;
 	void setNormMatrixAttrib(std::string);
 	std::string getNormMatrixAttrib() const;
+	void setUVAttrib(std::string);
+	std::string getUVAttrib() const;
+	void setSamplerAttrib(std::string);
+	std::string getSamplerAttrib() const;
 private:
 	bool m_linked;
 	GLuint m_program;
@@ -40,4 +44,6 @@ private:
 	std::string m_lightColor;
 	std::string m_ambient;
 	std::string m_normMatrix;
+	std::string m_uvAttrib;
+	std::string m_samplerAttrib;
 };

@@ -8,19 +8,19 @@ class Asset{
 
 	public:
 		std::string getName();
-		bool virtual load(std::string name);
+		bool virtual load(std::string fileName);
+		void assetSetName(std::string name);
 		Asset();
-		Asset(std::string name);
+		//Asset(std::string name);
 	    void decreaseRefCount();
 	   	void increaseRefCount();
-	    bool release(Asset asset);
+	    bool releaseAsset();
 		int getRefCount();
-		void createAsset();
+
+		
 		
 	private:
 		int dataRefCount;
 		std::string dataName;
-		std::string dataLocation;
-		std::string dataType;	
-
+		
 };
