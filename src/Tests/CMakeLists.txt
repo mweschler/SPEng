@@ -38,6 +38,11 @@ add_executable( runEngTests ${TESTS})
 
 #Copies necessary .dll files for sfml api to executable path
 if(WIN32)
+add_custom_command(
+		TARGET runEngTests POST_BUILD        # Adds a post-build event to runEngTests
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+		"${CMAKE_SOURCE_DIR}/../3rdparty/glew-1.10.0/bin/Release/Win32/glew32.dll"      # <--this is in-file
+		$<TARGET_FILE_DIR:runEngTests>)                 # <--this is out-file path
 	#Copies openal32.dll file to executable path
 	add_custom_command(
 		TARGET runEngTests POST_BUILD        # Adds a post-build event to runEngTests
@@ -66,5 +71,5 @@ add_custom_command(
 	${PROJECT_BINARY_DIR}
 )
 
-target_link_libraries(runEngTests gtest Eng-Control Lua ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-audio-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-system-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-window-s-d.lib) #Links sfml libraries necessary for debug environment
+target_link_libraries(runEngTests gtest Eng-Control Lua ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-audio-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-system-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-window-s-d.lib ${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/lib/sfml-graphics-s-d.lib) #Links sfml libraries necessary for debug environment
 add_test( runEngTests runEngTests)

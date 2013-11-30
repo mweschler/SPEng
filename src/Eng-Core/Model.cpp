@@ -177,6 +177,13 @@ bool Model::load(std::string filename){
 
 	m_hasNormals = true;
 
+	if(mesh.texcoords.size() > 0){
+		if(!loadBuffer(m_texCordsBuffer, mesh.texcoords))
+			return false;
+
+		m_hasTexture = true;
+	}
+
 	m_dataLoaded = true;
 
 	return true;
@@ -379,6 +386,9 @@ bool Model::bind(BufferType type) const{
 	if(type == Model::INDEX && m_hasIndicies)
 		return m_indexBuffer.bind();
 
+	if(type == Model::TEXTURE && m_hasTexture)
+		return m_texCordsBuffer.bind();
+
 	return false;
 }
 
@@ -443,4 +453,8 @@ void Model::setModelMatrix(glm::mat4 matrix){
 
 glm::mat4 Model::getModelMatrix() const{
 	return m_matrix;
+}
+
+bool Model::hasTexCords() const{
+	return m_hasTexture;
 }

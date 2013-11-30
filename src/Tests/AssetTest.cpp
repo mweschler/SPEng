@@ -9,7 +9,8 @@ TEST(assetTests, test_one_testDuplicateMethod_No_Duplicate)
 {
 	//Asset asset = new Asset();
 	AssetManager* manager = AssetManager::Instance();
-	Asset* asset = new Asset("C:\\Users\jnoda009\\Pictures\\lemons");
+	Asset* asset = new Asset();
+	asset->assetSetName("C:\\Users\jnoda009\\Pictures\\lemons");
 	bool b = manager -> checkForDuplicate(asset->getName());
 	EXPECT_EQ(b, false);
 }

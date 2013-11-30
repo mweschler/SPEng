@@ -2,6 +2,7 @@
 #include "Asset.h"
 #include <string>
 #include "SFML\Graphics\Texture.hpp"
+#include "GL/glew.h"
 
 struct TextureSize{
 	unsigned int width;
@@ -20,5 +21,7 @@ public:
 	void setRepeated(bool);
 	bool isRepeated() const;
 private:
-	sf::Texture *m_texture;
+	GLuint m_texID;
+	//sf::Texture *m_texture;
+	
 };

@@ -13,5 +13,4 @@ gui.h
 
 
 add_library (Eng-PIL STATIC ${PIL_SOURCE} ${PIL_HEADER})
-
 target_link_libraries(Eng-PIL ${GLEW_LIBRARY})

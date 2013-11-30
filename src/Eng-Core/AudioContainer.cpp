@@ -1,11 +1,8 @@
 #include "AudioContainer.h"
 #include <Windows.h>
+#include "AssetManager.h"
 
 using namespace std;
-
-string fileName;
-sf::Music music;
-float durationOfAudioFile;
 
 struct threadData
 {
@@ -14,15 +11,8 @@ struct threadData
 	threadData(float numberOfSecondsParam, sf::Music &musicParam) : threadNumberOfSeconds(numberOfSecondsParam), threadMusic(musicParam) {}
 };
 
-AudioContainer::AudioContainer(string nameOfAudioFile)
+AudioContainer::AudioContainer()
 {
-	fileName = nameOfAudioFile;		
-	load();
-}
-
-string AudioContainer::getFileName()
-{
-	return fileName;
 }
 
 float AudioContainer::getDuration()
@@ -32,12 +22,17 @@ float AudioContainer::getDuration()
 	return durationOfAudioFile;
 }
 
+std::string AudioContainer::getFileName(){
+	return this->fileName;
+}
+
 bool AudioContainer::isPlaying(){
 	return music.getStatus() == music.Playing;
 }
 
-bool AudioContainer::load()
+bool AudioContainer::load(std::string fileName)
 {
+	this->fileName = fileName;
 	if (!music.openFromFile(fileName)){
 		writeToLogger("Failed to open audio file");
 		return false;

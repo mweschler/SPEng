@@ -136,7 +136,9 @@ bool Window::create(){
 	} else{
 		attribList[0] = WGL_CONTEXT_MAJOR_VERSION_ARB;
 		attribList[2] = WGL_CONTEXT_MINOR_VERSION_ARB;
-		attribList[4] = 0;
+		attribList[4] = WGL_CONTEXT_PROFILE_MASK_ARB;
+		attribList[5] = WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB;
+		attribList[6] = 0;
 
 		if(GLEW_VERSION_4_0){
 			attribList[1] = 4;

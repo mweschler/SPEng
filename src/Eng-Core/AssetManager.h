@@ -32,7 +32,8 @@ class AssetManager{
 		{
 			Logger &log = *Logger::Instance();
 			Derived_from<T, Asset>();
-			T* asset = new T(assetName);
+			T* asset = new T();
+			asset->assetSetName(assetName);
 			if(checkForDuplicate(assetName))
 			{
 				
@@ -41,7 +42,7 @@ class AssetManager{
 			}
 			else
 			{
-			asset->load();
+			asset->load(assetName);
 			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
 				
 			log.writeToLog("Asset \"" + assetName + "\" has been loaded to memory.");

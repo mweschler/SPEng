@@ -11,7 +11,8 @@ public:
 	enum BufferType{
 		VERTEX = 0,
 		NORMAL = 1,
-		INDEX = 2
+		INDEX = 2,
+		TEXTURE = 3
 	};
 
 	Model();
@@ -26,6 +27,7 @@ public:
 	bool hasVerts() const;
 	bool hasNormals() const;
 	bool hasIndex() const;
+	bool hasTexCords() const;
 	unsigned int getVertCount() const;
 	unsigned int getIndexCount() const;
 	void setVertCount(unsigned int count);

@@ -3,16 +3,21 @@
 #include <SFML/Audio.hpp>
 #include <window.h>
 #include "AudioManager.h"
+#include "AssetManager.h"
 
-AudioManager* audioManager = new AudioManager();
+//static AudioManager* audioManager = new AudioManager();
+static AssetManager &assetMgr = *AssetManager::Instance();
 
-TEST(AudioSuite, DISABLED_playingFunctionalitySubsytemTest){
-	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
-	audioManager->setAudioFile(audioContainer);
-	audioManager->getAudioFile("gunshot.wav")->play();
+TEST(AudioSuite, playingFunctionalitySubsytemTest){
+	//AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
+	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
+	gunShot->play();
+	//audioManager->setAudioFile(audioContainer);
+	//audioManager->getAudioFile("gunshot.wav")->play();
 }
 
-TEST(AudioSuite, DISABLED_loopingFunctionalitySubsytemTest){
+/* 
+(TEST(AudioSuite, DISABLED_loopingFunctionalitySubsytemTest){
 	AudioContainer* audioContainer = new AudioContainer("gunshot.wav");
 	audioManager->setAudioFile(audioContainer);
 	audioManager->getAudioFile("gunshot.wav")->loop();
@@ -98,4 +103,5 @@ TEST(AudioSuite, DISABLED_fadingMusicTestLibraryTest){
 	}
 	std::cin.ignore();
 }
+*/
 
