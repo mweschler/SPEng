@@ -264,7 +264,7 @@ namespace{
 	void writeShaderFiles();
 
 	std::string fragData = "\nuniform sampler2D tex;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nvarying vec3 vertexNormal;\nvarying vec2 uv;\nvoid main(){\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\nvec4 texColor = texture2D(tex, uv);\ngl_FragColor = (texColor * lightColor * cosAngIncidence) + (texColor * ambient);\n}";
-	std::string fragData4 = "\nuniform sampler2D tex;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\in vec3 vertexNormal;\nout vec4 color;\nvoid main()\nin vec2 uv;{\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\nvec4 texColor = texture2D(tex, uv);\ncolor = (texColor * lightColor * cosAngIncidence) + (texColor * ambient);\n}";
+	std::string fragData4 = "\nuniform sampler2D tex;\nuniform vec3 lightDir;\nuniform vec4 lightColor;\nuniform vec4 ambient;\nuniform vec3 diffuse;\nin vec3 vertexNormal;\nout vec4 color;\nin vec2 uv;\nvoid main()\n{\nfloat cosAngIncidence = dot(normalize(vertexNormal), lightDir);\ncosAngIncidence = clamp(cosAngIncidence, 0, 1);\nvec4 texColor = texture2D(tex, uv);\ncolor = (texColor * lightColor * cosAngIncidence) + (texColor * ambient);\n}";
 	std::string vertData = "\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nattribute vec4 vertex;\nattribute vec2 texCords;\nvarying vec2 uv;\nvarying vec3 vertexNormal;\nattribute vec3 normal;\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\nuv = texCords; uv.y = 1.0f - uv.y;\ngl_Position = mvp * vertex;\n}";
 	std::string vertData4 = "\nuniform mat3 normMatrix;\nuniform mat4 mvp;\nin vec4 vertex;\nin vec2 texCords;\nout vec2 uv;out vec3 vertexNormal;\nin vec3 normal;\n\nvoid main(){\nvertexNormal = normalize(normMatrix *normal) ;\nuv = texCords; uv.y = 1.0f - uv.y;\ngl_Position = mvp * vertex;\n}";
 
@@ -282,9 +282,9 @@ namespace{
 			
 			switch(tmp->getMajorVersion())
 			{
-			case 4: version = version +"400"; 
-				vertData = vertData4; 
-				fragData = fragData4;
+			case 4: version = version +"120"; 
+				vertData = vertData; 
+				fragData = fragData;
 				break;
 			case 3: version = version + "300"; break;
 			case 2: version = version + "120"; break;
@@ -410,7 +410,7 @@ namespace{
 		const GLushort indicies[] = {0, 1, 2};
 		
 		Model deco;
-		
+		wnd->makeContextCurrent();
 		ASSERT_TRUE(deco.load("cat.obj"));
 		
 		Shader frag;
@@ -442,13 +442,13 @@ namespace{
 		ASSERT_TRUE(material.setShader(&program));
 		material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
 
-		//wnd->makeContextCurrent();
+		wnd->makeContextCurrent();
 		//glEnable(GL_TEXTURE_2D);
 		ASSERT_TRUE(texture.load("cat_diff.tga"));
 		material.setTexture(&texture);
 		program.setUVAttrib("texCords");
 		program.setSamplerAttrib("tex");
-		//wnd->makeContextCurrent();
+		wnd->makeContextCurrent();
 		float camDeg = 0;
 		camera.setTarget(glm::vec3(0.0f, 0.0f, 0.0f));
 	
@@ -466,13 +466,14 @@ namespace{
 		wnd->show();
 		while(!wnd->shouldQuit()){
 			wnd->pollEvents();
+			wnd->makeContextCurrent();
 			RenderManager::update();
 
 			float camX = sin(camDeg * M_PI / 180) * 2;
 			float camZ = cos(camDeg * M_PI / 180) * 2;
 			camera.setPosition(glm::vec3(camX, 1.0f, camZ));
 			//std::cout<<"Cam deg  "<<camDeg<<" pos "<<camX<<" 0.0f "<<camZ<<std::endl;
-			//wnd->makeContextCurrent();
+			wnd->makeContextCurrent();
 			RenderManager::drawModel(deco, material, camera);
 			wnd->swapBuffers();
 
