@@ -56,7 +56,7 @@ TEST(logger, test_five_TryingToDeleteALogAndItDoesExist)
 
 
 
-TEST(logger, DISABLED_personal_test_if_it_writes_corrrectly)
+TEST(logger, personal_test_if_it_writes_corrrectly)
 {
 	Logger* logger = Logger::Instance();
 	logger->initialize();

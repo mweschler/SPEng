@@ -36,14 +36,16 @@ bool AudioContainer::isPlaying(){
 	return music.getStatus() == music.Playing;
 }
 
-void AudioContainer::load()
+bool AudioContainer::load()
 {
 	if (!music.openFromFile(fileName)){
 		writeToLogger("Failed to open audio file");
+		return false;
 	}			
 	//Initialize length of audio file
 	sf::Time length = music.getDuration();
 	durationOfAudioFile = length.asSeconds();
+	return true;
 }
 
 void AudioContainer::play(){

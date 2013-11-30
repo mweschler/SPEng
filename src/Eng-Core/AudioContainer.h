@@ -14,7 +14,7 @@ private:
 	std::string fileName;	
 	sf::Music music;
 	float durationOfAudioFile;
-	void virtual load();
+	bool virtual load();
 	//Helper method to write to logger
 	void writeToLogger (string message);
 
