@@ -5,17 +5,23 @@
 using namespace std;
 
 		string dataName;
-		int dataRefCount;
+		int dataRefCount = 1;
 
 
-		Asset::Asset(string nameOfAsset)
+		/*Asset::Asset(string nameOfAsset)
 		{
 			  dataName = nameOfAsset;
 			  dataRefCount = 1;
-		}
+		}*/
 
 		Asset::Asset()
 		{
+		}
+
+		void Asset::assetSetName(std::string name)
+		{
+			dataName = name;
+			//dataRefCount = 1;
 		}
 	    
 		string Asset::getName()
@@ -46,8 +52,8 @@ using namespace std;
 		}
 
 		
-		bool Asset::load()
+		bool Asset::load(string fileName)
 		{
-			cout << "Load file\n";
+			//cout << "Load file\n";
 			return true;
 		}

@@ -20,7 +20,6 @@ public:
 	//Returns audio file length in seconds
 	float getDuration();
 	std::string getFileName();
-	AudioContainer(std::string name);
 	AudioContainer();
 	bool virtual isPlaying();
 	void virtual play();

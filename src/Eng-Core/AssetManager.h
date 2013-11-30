@@ -30,7 +30,8 @@ class AssetManager{
      	template <class T> Asset* loadAsset(string assetName)
 		{
 			Derived_from<T, Asset>();
-			T* asset = new T(assetName);
+			T* asset = new T();
+			asset->assetSetName(assetName);
 			if(checkForDuplicate(assetName))
 			{
 				
@@ -39,7 +40,7 @@ class AssetManager{
 			}
 			else
 			{
-			asset->load();
+			asset->load(assetName);
 			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
 				cout << "inside asset catch\n";
 				

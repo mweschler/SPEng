@@ -8,9 +8,10 @@ class Asset{
 
 	public:
 		std::string getName();
-		bool virtual load();
+		bool virtual load(std::string fileName);
+		void assetSetName(std::string name);
 		Asset();
-		Asset(std::string name);
+		//Asset(std::string name);
 	    void decreaseRefCount();
 	   	void increaseRefCount();
 	    bool releaseAsset();
