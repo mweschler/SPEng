@@ -42,7 +42,9 @@ AssetManager* AssetManager::instance = NULL;
 				}
 				else
 				{
+					//assetStorage.at(assetName)->releaseAsset();
 					assetStorage.erase(assetName);
+
 					log.writeToLog("Asset - " + assetName + " has been removed from memory");
 				}
 				return true;
