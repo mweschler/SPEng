@@ -35,17 +35,18 @@ class AssetManager{
 			T* asset = new T();
 			asset->assetSetName(assetName);
 			if(checkForDuplicate(assetName))
-			{
-				
+			{			
 				assetStorage.at(assetName)->increaseRefCount();
 				return asset;
 			}
 			else
 			{
+
 			asset->load(assetName);
 			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
 				
 			log.writeToLog("Asset \"" + assetName + "\" has been loaded to memory.");
+
 				return asset;
 			}				
 		}

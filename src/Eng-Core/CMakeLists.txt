@@ -11,7 +11,6 @@ set(CORE_SOURCE
 	GLBuffer.cpp
 	ConfigurationManager.cpp
 	GLHelper.cpp
-	AudioManager.cpp
 	Shader.cpp
 	ShaderProgram.cpp
 	InputHandler.cpp
@@ -34,7 +33,6 @@ set(CORE_HEADER
 	Model.h
 	GLBuffer.h
 	GLHelper.h
-	AudioManager.h
 	Shader.h
 	ShaderProgram.h
 	InputHandler.h
