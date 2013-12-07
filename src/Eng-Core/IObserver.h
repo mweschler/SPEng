@@ -5,7 +5,9 @@ template <typename T>
 class Observer
 {
 public:
-	virtual void update(T *subject) {};
- //virtual void storeMessage();
+	/*! this method is passed a message that the user can do anything they want with.
+		\param type what you want to do with the message in the method  */
+	virtual void update(T *message) {};
+
 
 };
