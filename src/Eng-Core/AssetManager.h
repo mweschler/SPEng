@@ -58,7 +58,11 @@ class AssetManager{
 			else
 			{
 
-			asset->load(assetName);
+			if(!asset->load(assetName)){
+				log.writeToLog("Asset \"" + assetName + "\" could not be loaded to memory.");
+				return NULL;
+			}
+
 			assetStorage.insert(pair<string,Asset*>(asset->getName(), asset));
 			asset->startRefCount();
 				

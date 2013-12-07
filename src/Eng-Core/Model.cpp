@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "Logger.h"
 #include "tiny_obj_loader.h"
 
 Model::Model():
@@ -119,7 +120,11 @@ bool Model::load(std::string filename){
 	std::string err = tinyobj::LoadObj(shapes,filename.c_str());
 
 	if(shapes.size() < 1)
+	{
+		Logger &logger = *Logger::Instance();
+		logger.writeToLog("Failed to load model file " + filename);
 		return false;
+	}
 
 	tinyobj::mesh_t mesh = shapes[0].mesh;
 

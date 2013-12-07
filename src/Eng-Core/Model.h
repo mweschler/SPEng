@@ -4,9 +4,10 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "GLBuffer.h"
+#include "Asset.h"
 
 /*! Representes a 3D model*/
-class Model{
+class Model: public Asset{
 	
 public:
 	/*! the buffer types for a model */
