@@ -50,7 +50,7 @@ public: T theMessage;
 	};
 
 
-//This test is to make sure observer 1 is attaching correctly.
+/*!This test is to make sure observer 1 is attaching correctly.*/
 TEST(messageTest, test_one)
 {
 
@@ -79,7 +79,7 @@ TEST(messageTest, test_one)
 
 }
 
-//This test is to make sure observer 2 is attaching correctly.
+/*This test is to make sure observer 2 is attaching correctly.*/
 TEST(messageTest, test_two)
 {
 	std::string theMessage;
@@ -103,7 +103,7 @@ TEST(messageTest, test_two)
 	
 }
 
-//This test is to make sure observer 3 is attaching correctly.
+/*!This test is to make sure observer 3 is attaching correctly.*/
 TEST(messageTest, test_three)
 {
 	std::string theMessage;
@@ -127,7 +127,7 @@ TEST(messageTest, test_three)
 	
 }
 
-//This test is to make sure observer 1 is being unattached succsesfully.
+/*!This test is to make sure observer 1 is being unattached succsesfully.*/
 TEST(messageTest, test_four)
 {
 	std::string theMessage;
@@ -152,7 +152,7 @@ TEST(messageTest, test_four)
 	
 }
 
-//This test is to make sure each observer is getting the message. And storing the message correctly.
+/*!This test is to make sure each observer is getting the message. And storing the message correctly.*/
 TEST(messageTest, test_five)
 {
 	std::string theMessage;
@@ -179,8 +179,8 @@ TEST(messageTest, test_five)
 	
 }
 
-//This test is to make sure each observer is getting the message. And storing the message correctly.
-//But this time the test is with ints. Using the same 3 observers that were used in previous test with strings.
+/*!This test is to make sure each observer is getting the message. And storing the message correctly.
+But this time the test is with ints. Using the same 3 observers that were used in previous test with strings.*/
 TEST(messageTest, test_six)
 {
 	int theMessage;
@@ -207,9 +207,9 @@ TEST(messageTest, test_six)
 
 
 
-//This test combines all functions. We test to make sure the observers that are attached
-//are getting the new messages. Multible messages are sent this time. We are also making
-//Sure that observers that have been unattached are not reciving the new messages.
+/*!This test combines all functions. We test to make sure the observers that are attached
+are getting the new messages. Multible messages are sent this time. We are also making
+Sure that observers that have been unattached are not reciving the new messages.*/
 TEST(messageTest, test_seven)
 {
 	//CREATING MESSAGE AND OBSERVERS
