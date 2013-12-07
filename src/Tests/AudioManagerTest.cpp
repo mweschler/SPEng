@@ -11,14 +11,15 @@ static AssetManager &assetMgr = *AssetManager::Instance();
 //AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
 //So I'm thinking there could be something wrong with what it is returning when the user tries to load the asset a second time. 
 
+
 TEST(AudioSuite, playingFunctionalitySystemTest){
-	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
+	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("throughthefireandtheflames.ogg");
 	gunShot->play();
-	Sleep(5000);
+	Sleep(125);
 }
 
 TEST(AudioSuite, playingAgainFunctionalitySystemTest){
-	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
+	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("throughthefireandtheflames.ogg");
 	gunShot->play();
 }
 
@@ -26,7 +27,12 @@ TEST(AudioSuite, playingAgainFunctionalitySystemTest){
 TEST(AudioSuite, fadingFunctionalitySystemTest){
 	AudioContainer* finalBossBattleMusic = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("throughthefireandtheflames.ogg");
 	finalBossBattleMusic->play();
-	finalBossBattleMusic->fade(4);
+	finalBossBattleMusic->fade(6);
+}
+
+TEST(AudioSuite, playingAgainFunctionalitySystemTest){
+	AudioContainer* finalBossBattleMusic = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("throughthefireandtheflames.ogg");
+	finalBossBattleMusic->play();
 }
 
 TEST(AudioSuite, gettingAudioFileDurationSubSystemTest){

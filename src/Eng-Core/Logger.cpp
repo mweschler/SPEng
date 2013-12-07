@@ -253,6 +253,8 @@ Logger* Logger::instance = NULL;
 			{		
 				//cout << "Data Log successfully removed log";
 				remove(dataLogName.c_str());	
+				dataLogExists = false;
+				instance = NULL;
 				result = 1;
 			}
 			instance = NULL;
