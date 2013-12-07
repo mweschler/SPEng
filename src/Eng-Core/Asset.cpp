@@ -52,6 +52,11 @@ using namespace std;
 			return dataRefCount;
 		}
 
+		void Asset::startRefCount()
+		{
+			dataRefCount = 1;
+		}
+
 		
 		bool Asset::load(string fileName)
 		{

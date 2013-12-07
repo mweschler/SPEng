@@ -7,8 +7,6 @@ using namespace std;
 
 AssetManager* AssetManager::instance = NULL;
 
-		string currentAssetName;
-		string currentAssetLocation;
 		map<string, Asset*> assetStorage;
 	
 
