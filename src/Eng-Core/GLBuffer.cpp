@@ -5,9 +5,7 @@
 
 #include <iostream>
 
-/*! Represents an OpenGL buffer
-	\param type The type of buffer this object represents
-*/
+
 GLBuffer::GLBuffer(GLenum type):
 	m_type(type),
 	m_buffer(0)

@@ -14,11 +14,11 @@ template <typename T>
 class Subject
 {
 public:
-	//Vector filled with pointers to the observers
+	/*! A vector that contains a list of observers*/
 	 std::vector<Observer<T> * > list;
 
-
-	 //Attach observer by pushing observer onto vector list
+	 /*! Pushes an observer onto the observer list
+		\param type the address of an obsever you wish to attach*/
 	virtual void attach(Observer<T> &concreteSubject)
 	{
 		
@@ -28,7 +28,8 @@ public:
     }
 
 
-	//Unattach observer by removing it from list.
+	/*! Remove and observer from the observer list
+		\param type the address of an obsever you wish to unattach */
 	virtual void unattach(Observer<T> &concreteSubject)
 
 	{
@@ -37,7 +38,8 @@ public:
 
 
 	}
-	
+	/*! call the update method of all observers passing what ever kind of message you wish
+		\param type the message you want to pass to all observers */
 	virtual void notifyObservers(T message)
 	{
 

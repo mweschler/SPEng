@@ -1,6 +1,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include "Logger.h"
 #include "Asset.h"
 using namespace std;
 
@@ -51,9 +52,17 @@ using namespace std;
 			return dataRefCount;
 		}
 
+		void Asset::startRefCount()
+		{
+			dataRefCount = 1;
+		}
+
 		
 		bool Asset::load(string fileName)
 		{
-			//cout << "Load file\n";
+
+			Logger &log = *Logger::Instance();
+			log.writeToLog("load being used");
+
 			return true;
 		}
