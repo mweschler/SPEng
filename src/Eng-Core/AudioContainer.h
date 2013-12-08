@@ -6,25 +6,45 @@
 #include "Asset.h"
 #include "Logger.h"
 
+/*! An AudioContainer for use in audio playback
+*/
 class AudioContainer : public Asset
 {
 private:
 	sf::Music music;
 	float durationOfAudioFile;
-	//Internal Helper method to write to logger
 	void writeToLogger (std::string message);
-
 public:
-	bool virtual load(std::string fileName);
-	//Returns audio file length in seconds
-	float getDuration();
+	/*! Default constructor for Audio Container class
+	*/
 	AudioContainer();
+	/*! Loads the audioFile to main memory, inherited from asset
+		\param fileName File name of audio file
+	*/
+	bool virtual load(std::string fileName);
+	/*! Returns the length of the audio file in seconds
+	*/
+	float getDuration();
+	/*! Returns whether or not the audio file is currently playing
+		\return true if audio file is currently playing, false otherwise
+	*/
 	bool virtual isPlaying();
+	/*! Plays audio file
+	*/
 	void virtual play();
+	/*! Stops audio file
+	*/
 	void virtual stop();
+	/*! Pauses audio file if it is currently playing
+	*/
 	void virtual pause();
-	//Plays a looped audio file
+	/*! Plays and loops an audio file until stop is called
+	*/
 	void virtual loop();
-	//Assumes audio file is playing already and fades it in a designated amount of seconds
+	/*! Fades audio file for a specified amount of seconds. If audio file is not playing, 
+		it logs the error
+		\param numberOfSeconds Number of seconds that the fading will last until audio 
+		playback has stopped
+	*/
 	void virtual fade(float numberOfSeconds); 
 };
