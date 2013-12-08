@@ -27,6 +27,7 @@ TEST(ConfigSuite, removingNonExistingStringVariableSubsystemTest){
 }
 
 TEST(ConfigSuite, storingAndRetrievingIntVariableUnitTest){
+	ConfigurationManager* configurationManager = ConfigurationManager::Instance();
 	configurationManager->setVariable("Variable1",4);
 	int result = configurationManager->getVariable<int>("Variable1");
 	EXPECT_EQ(4,result);
