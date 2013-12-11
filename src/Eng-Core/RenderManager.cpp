@@ -19,8 +19,8 @@ void RenderManager::shutdown(){
 	render.shutdown();
 }
 
-void RenderManager::drawModel(const Model model,const Material material, const Camera camera){
-	render.drawModel(model, material, camera);
+void RenderManager::drawModel(const Model model,const Material material, const Camera camera, glm::mat4 transform){
+	render.drawModel(model, material, camera, transform);
 }
 
 void RenderManager::update(){

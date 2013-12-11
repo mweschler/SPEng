@@ -18,10 +18,10 @@ public:
 
 	// Updates the Component
 	virtual void update() {};
-private:
+protected:
 	// Name of component.
 	string _name;
-
+private:
 	// Reference to parent.
 	GameObject* _parent;
 };

@@ -7,6 +7,7 @@
 struct RenderObject{
 	Model *model;
 	Material *material;
+	glm::mat4 transform;
 };
 
 class RenderList{
@@ -15,7 +16,7 @@ public:
 	RenderList();
 	void update();
 	void renderList(Camera camera);
-	void add(Model *model, Material *material);
+	void add(Model *model, Material *material, glm::mat4 transform = glm::mat4());
 private:
 	std::vector<RenderObject> m_objects;
 };

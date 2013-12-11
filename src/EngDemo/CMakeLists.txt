@@ -3,10 +3,12 @@ main.cpp
 engdemo.cpp
 modelComponent.cpp
 renderList.cpp
+ScriptComponent.cpp
 )
 set(DEMO_HEADER engdemo.h
 modelComponent.h
 renderList.h
+ScriptComponent.h
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/Eng-Pil
@@ -26,7 +28,7 @@ add_custom_command(
 		$<TARGET_FILE_DIR:EngDemo>)                 # <--this is out-file path
 	#Copies openal32.dll file to executable path
 	add_custom_command(
-		TARGET EngDemo PRE_BUILD        # Adds a pre-build event to runEngTests
+		TARGET EngDemo POST_BUILD        # Adds a pre-build event to runEngTests
 		COMMAND ${CMAKE_COMMAND} -E copy_directory  # which executes "cmake - E copy_directory..."
 		"${CMAKE_SOURCE_DIR}/../resources"      # <--this is in-directory
 		"${PROJECT_BINARY_DIR}/EngDemo")    # <--this is out-file path

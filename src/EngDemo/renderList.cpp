@@ -22,7 +22,7 @@ void RenderList::update(){
 void RenderList::renderList(Camera camera){
 	for(int i = 0; i < m_objects.size(); ++i){
 		RenderObject obj = m_objects[i];
-		RenderManager::drawModel(*obj.model, *obj.material, camera);
+		RenderManager::drawModel(*obj.model, *obj.material, camera, obj.transform);
 		//std::cout<<"Rendered an object\n";
 	}
 
@@ -31,10 +31,11 @@ void RenderList::renderList(Camera camera){
 	m_objects.clear();
 }
 
-void RenderList::add(Model *model, Material *material){
+void RenderList::add(Model *model, Material *material, glm::mat4 transform){
 	RenderObject obj;
 	obj.model = model;
 	obj.material = material;
+	obj.transform = transform;
 
 	//std::cout<<"Added to list\n";
 

@@ -50,7 +50,7 @@ void RenderInternal::update(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void RenderInternal::drawModel(const Model model, const Material material, const Camera camera){
+void RenderInternal::drawModel(const Model model, const Material material, const Camera camera, glm::mat4 transform){
 	const ShaderProgram &program = *material.getShader();
 	program.use();
 
@@ -80,7 +80,7 @@ void RenderInternal::drawModel(const Model model, const Material material, const
 	}
 
 	glm::mat4 view = glm::lookAt(camera.getPosition(), camera.getTarget(), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 mv = view * model.getModelMatrix();
+	glm::mat4 mv =   view  * model.getModelMatrix() * transform;
 
 	//set MVP matrix
 	if(program.getMVPAttrib().length() > 0){

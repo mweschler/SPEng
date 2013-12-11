@@ -25,7 +25,7 @@ GameObject::GameObject(string name, int x, int y, int z) {
 // Adds a specified component.
 void GameObject::addComponent(IComponent *comp) {
 	_components[comp->getName()] = comp;
-	//comp->setParent(this);
+	comp->setParent(this);
 }
 
 // Removes a speficied component.

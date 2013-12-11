@@ -2,5 +2,7 @@
 
 int main(int argc, char* argv[]){
 	EngDemoApp app;
-	return app.run(argc, argv);
+	int rv = app.run(argc, argv);
+	std::getchar();
+	return rv;
 }

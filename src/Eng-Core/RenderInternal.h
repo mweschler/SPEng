@@ -21,7 +21,7 @@ public:
 		/param material the material to render the model with
 		/param camera the camera that is viewing the scene
 	*/
-	void drawModel(const Model model, const Material material, const Camera camera);
+	void drawModel(const Model model, const Material material, const Camera camera, glm::mat4 transform);
 	/*! updates the system */
 	void update();
 	/*! sets the system into 3D mode

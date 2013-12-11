@@ -12,6 +12,8 @@
 #include "Logger.h"
 #include "gui.h"
 #include "RenderManager.h"
+#include "ScriptComponent.h"
+#include "ScriptingManager.h"
 
 static bool doOnce = false;
 
@@ -76,15 +78,22 @@ void EngDemoApp::update(){
 			this->quit();
 			return;
 		}
+		//
+		m_program.setVertAttrib("vertex");
+		m_program.setMVPAttrib("mvp");
 
 		m_material.setShader(&m_program);
 
 		GameWorld &world = *GameWorld::Instance();
-		world.createObject("testObj", 0, 0, 0);
+		world.createObject("testObj", 0, 10, 0);
 		GameObject &testobj = *world.getObject("testObj");
-		testobj.addComponent(new ModelComponent(m_model, &m_material));
+		ModelComponent *modelComp = new ModelComponent(m_model, &m_material);
+		
+		testobj.addComponent(modelComp);
+		testobj.addComponent(new ScriptComponent("demoTest.lua"));
 
 		m_camera.setPosition(glm::vec3(2.0f, 2.0f, 2.0f));
+		m_camera.setTarget(glm::vec3(0.0f));
 		
 		RenderManager::set3DMode(45.0f);
 		this->getWindow()->show();
@@ -99,5 +108,11 @@ void EngDemoApp::render(){
 }
 
 void EngDemoApp::shutdown(){
-
+	AssetManager &assetManager = *AssetManager::Instance();
+	GameWorld &world = *GameWorld::Instance();
+	world.deleteObject("testObj");
+	m_program.release();
+	assetManager.releaseAsset("demoVert12.vert");
+	assetManager.releaseAsset("demoFrag12.frag");
+	assetManager.releaseAsset("decocube.obj");
 }
