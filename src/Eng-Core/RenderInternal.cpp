@@ -80,12 +80,12 @@ void RenderInternal::drawModel(const Model model, const Material material, const
 	}
 
 	glm::mat4 view = glm::lookAt(camera.getPosition(), camera.getTarget(), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 mv =   view  * model.getModelMatrix() * transform;
+	glm::mat4 mv =   view  *  transform * model.getModelMatrix();
 
 	//set MVP matrix
 	if(program.getMVPAttrib().length() > 0){
 		GLint mvpLoc = glGetUniformLocation(program.getID(), program.getMVPAttrib().c_str());
-		glm::mat4 mvp = m_perspective * view * model.getModelMatrix();
+		glm::mat4 mvp = m_perspective * mv;
 		glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
 	}
 

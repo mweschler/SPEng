@@ -1,0 +1,25 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl Metal_Aluminum_Anodized
+Ka 0.000000 0.000000 0.000000
+Kd 0.792157 0.819608 0.858824
+Ks 0.330000 0.330000 0.330000
+map_Kd target/Metal_Aluminum_Anodized.jpg
+
+newmtl FrontColor
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.330000 0.330000 0.330000
+
+newmtl M_0028_AntiqueWhite
+Ka 0.000000 0.000000 0.000000
+Kd 0.980392 0.921569 0.843137
+Ks 0.330000 0.330000 0.330000
+
+newmtl M_0021_DarkRed
+Ka 0.000000 0.000000 0.000000
+Kd 0.545098 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+

@@ -14,10 +14,13 @@
 #include "RenderManager.h"
 #include "ScriptComponent.h"
 #include "ScriptingManager.h"
+#include <glm/ext.hpp>
 
 static bool doOnce = false;
 
-EngDemoApp::EngDemoApp(){
+EngDemoApp::EngDemoApp():
+	m_texture(NULL)
+{
 
 }
 
@@ -26,13 +29,15 @@ bool EngDemoApp::initialize(){
 	return true;
 }
 
+ModelComponent *modelComp;
+float rotation = 0.0f;
 void EngDemoApp::update(){
 	Logger &logger = *Logger::Instance();
 
 	if(!doOnce)
 	{
 		AssetManager &assetManager = *AssetManager::Instance();
-		m_model = (Model *)assetManager.loadAsset<Model>("decocube.obj");
+		m_model = (Model *)assetManager.loadAsset<Model>("targetobj.obj");
 		if(m_model == NULL)
 		{
 			logger.writeToLog("Could not load model, quitting");
@@ -78,27 +83,64 @@ void EngDemoApp::update(){
 			this->quit();
 			return;
 		}
-		//
+
+		m_texture = (Texture *)assetManager.loadAsset<Texture>("Target_UV_done.png");
+		if(m_texture == NULL)
+		{
+			logger.writeToLog("Could not load texture. Quitting");
+			GUI::showMessageBox("Could not load texture. Quitting", "Error");
+			this->quit();
+			return;
+		}
+
+		glEnable(GL_DEPTH_TEST); // enable depth-testing
+		glDepthMask(GL_TRUE); // turn back on
+		glDepthFunc(GL_LEQUAL);
+		glDepthRange(0.0f, 1.0f);
+	
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CW);
+		
 		m_program.setVertAttrib("vertex");
+		m_program.setDiffuseAttrib("diffuse");
 		m_program.setMVPAttrib("mvp");
+		m_program.setAmbientAttrib("ambient");
+		m_program.setLightAttribs("lightDir", "lightColor");
+		m_program.setNormAttrib("normal");
+		m_program.setNormMatrixAttrib("normMatrix");
+		m_program.setUVAttrib("texCords");
+		m_program.setSamplerAttrib("tex");
 
 		m_material.setShader(&m_program);
+		m_material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
 
-		GameWorld &world = *GameWorld::Instance();
-		world.createObject("testObj", 0, 10, 0);
-		GameObject &testobj = *world.getObject("testObj");
-		ModelComponent *modelComp = new ModelComponent(m_model, &m_material);
 		
+		m_material.setTexture(m_texture);
+
+		m_material.setDiffuseColor(glm::vec3(0.0f, 1.0f, 0.0f));
+		GameWorld &world = *GameWorld::Instance();
+		world.createObject("testObj", 0, 0, 0);
+		GameObject &testobj = *world.getObject("testObj");
+		modelComp = new ModelComponent(m_model, &m_material);
+
+		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
+		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
+
 		testobj.addComponent(modelComp);
 		testobj.addComponent(new ScriptComponent("demoTest.lua"));
 
-		m_camera.setPosition(glm::vec3(2.0f, 2.0f, 2.0f));
+		m_camera.setPosition(glm::vec3(3.0f, 0.0f, 0.0f));
 		m_camera.setTarget(glm::vec3(0.0f));
 		
 		RenderManager::set3DMode(45.0f);
 		this->getWindow()->show();
 		doOnce = true;
 	}
+	modelComp->setRotation(glm::vec3(0.0f, rotation, 90.0f));
+	rotation += 1;
+	if(rotation >= 360)
+		rotation = 0;
 }
 
 

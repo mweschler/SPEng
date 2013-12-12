@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv)
 {
-	//::testing::GTEST_FLAG(filter) = "*Visual*";
+	::testing::GTEST_FLAG(filter) = "*Visual*";
 
 	//::testing::GTEST_FLAG(filter) = "*Input*";
 

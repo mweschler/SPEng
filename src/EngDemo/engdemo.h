@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Material.h"
 #include "Model.h"
+#include "Texture.h"
 
 class EngDemoApp: public CoreGameApp{
 public:
@@ -20,4 +21,5 @@ private:
 	Model *m_model;
 	Shader *m_vertShader;
 	Shader *m_fragShader;
+	Texture *m_texture;
 };
