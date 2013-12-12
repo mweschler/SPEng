@@ -132,7 +132,7 @@ void EngDemoApp::update(){
 
 		m_camera.setPosition(glm::vec3(3.0f, 0.0f, 0.0f));
 		m_camera.setTarget(glm::vec3(0.0f));
-		
+		//
 		RenderManager::set3DMode(45.0f);
 		this->getWindow()->show();
 		doOnce = true;
