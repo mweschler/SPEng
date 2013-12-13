@@ -12,13 +12,13 @@ class AssetManager{
 
 	public:
 		/*!retrieves the singleton AssetManager of the system.
-		/return a pointer to the system's AssetManager
+		\return a pointer to the system's AssetManager
 		*/
 		static AssetManager* Instance();
 
 		/*! Checks to see if the asset the user wants to load is already loaded onto memory
-		/param the name of the asset to check if it exists already
-		/return true if there is an asset with the parameter's same name exists
+		\param the name of the asset to check if it exists already
+		\return true if there is an asset with the parameter's same name exists
 		*/
 		bool checkForDuplicate(string name);
 		
@@ -35,14 +35,14 @@ class AssetManager{
 		};
 
 		/*! Retrieves reference count of asset
-		/param name of asset for which you'd like to retrieve the reference count from.
-		/return number of references other game components use on requested asset.
+		\param name of asset for which you'd like to retrieve the reference count from.
+		\return number of references other game components use on requested asset.
 		*/
 		int getRefCount(string name);
 		 
 		/*! Creates an asset and stores it onto game memory. 
-		/param name of file to save as an asset onto game engine.
-		/return the created asset derived from the user's file request.
+		\param name of file to save as an asset onto game engine.
+		\return the created asset derived from the user's file request.
 		*/
      	template <class T> Asset* loadAsset(string assetName)
 		{
@@ -73,8 +73,8 @@ class AssetManager{
 		}
 		
 		/*! releases an asset from game memory
-		/param name of asset to be released from memory
-		/return returns true upon sucecssful release of asset
+		\param name of asset to be released from memory
+		\return returns true upon sucecssful release of asset
 		*/
 		bool releaseAsset(string name);
 		

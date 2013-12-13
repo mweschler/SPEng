@@ -11,13 +11,13 @@ public:
 	ShaderProgram();
 	~ShaderProgram();
 	/*! uses the program with the current context 
-		/return true on success
+		\return true on success
 	*/
 	bool use() const;
 	/*! linkes the shaders into a shader program 
-		/param vertexShader vertex shader for this program
-		/param fragmentShader fragment shader for this program
-		/return true on success
+		\param vertexShader vertex shader for this program
+		\param fragmentShader fragment shader for this program
+		\return true on success
 	*/
 	bool link(Shader &vertexShader, Shader &fragmentShader);
 	/*! tells if the program is linked */
@@ -27,13 +27,13 @@ public:
 	/*! gets the OpenGL ID for this program */
 	GLuint getID() const;
 	/*! sets the name of the diffuse attribute for this program 
-		/param name the name of the attribute
+		\param name the name of the attribute
 	*/
 	void setDiffuseAttrib(std::string name);
 	/*! gets the diffuse attribute name */
 	std::string getDiffuseAttrib() const;
 	/*! sets the name of the vertex attribute for this program
-		/param the name of the attribute
+		\param the name of the attribute
 	*/
 	void setVertAttrib(std::string);
 	/*! gets the name of the vertex attribute */

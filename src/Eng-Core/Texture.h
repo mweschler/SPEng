@@ -17,8 +17,8 @@ class Texture : public Asset{
 public:
 	Texture();
 	/*! loads the texture from a file 
-		/param filename the texture filename
-		/return true on success
+		\param filename the texture filename
+		\return true on success
 	*/
 	virtual bool load(std::string filename);
 	/*! releases the texture from memory*/

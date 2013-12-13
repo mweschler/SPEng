@@ -8,18 +8,18 @@ class Asset{
 
 	public:
 		/*!
-		/return returns the name of the Asset.
+		\return returns the name of the Asset.
 		*/
 		std::string getName();
 
 		/*!
-		/param the name of the file that user wishes to load
-		/return returns true upon successful laoding of asset
+		\param the name of the file that user wishes to load
+		\return returns true upon successful laoding of asset
 		*/
 		bool virtual load(std::string fileName);
 
 		/*!
-		/param the name of the file the Asset will be assigned to.
+		\param the name of the file the Asset will be assigned to.
 		*/
 		void assetSetName(std::string name);
 
@@ -38,12 +38,12 @@ class Asset{
 		void startRefCount();
 
 		/*! releases an asset from memory, ensuring no other game component requires the asset
-		/return returns true upon successful asset release
+		\return returns true upon successful asset release
 		*/
 	    bool releaseAsset();
 
 		/*! Retrieves the amount of references made to the asset by other game components.
-		/return the reference count of the asset.
+		\return the reference count of the asset.
 		*/
 		int getRefCount();
 

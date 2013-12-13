@@ -4,24 +4,24 @@
 
 using namespace std;
 
-// Component Interface to be implemented by all object inner components.
+//! Component Interface to be implemented by all object inner components.
 class IComponent {
 public:
-	// Returns a reference to the containing object.
+	//! Returns a reference to the containing object.
 	GameObject* getParent() { return _parent; };
 
-	// Returns name of the component.
+	//! Returns name of the component.
 	string getName() { return _name; };
 
-	// Sets the parent of the component.
+	//! Sets the parent of the component.
 	void setParent(GameObject* parent) { _parent = parent; };
 
-	// Updates the Component
+	//! Updates the Component
 	virtual void update() {};
 protected:
-	// Name of component.
+	//! Name of component.
 	string _name;
 private:
-	// Reference to parent.
+	//! Reference to parent.
 	GameObject* _parent;
 };
