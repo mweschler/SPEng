@@ -15,6 +15,7 @@
 #include "ScriptComponent.h"
 #include "ScriptingManager.h"
 #include <glm/ext.hpp>
+#include "AudioContainer.h"
 
 static bool doOnce = false;
 
@@ -37,6 +38,16 @@ void EngDemoApp::update(){
 	if(!doOnce)
 	{
 		AssetManager &assetManager = *AssetManager::Instance();
+
+		AudioContainer* backgroundMusic = (AudioContainer*)assetManager.loadAsset<AudioContainer>("throughthefireandtheflames.ogg");
+		if(backgroundMusic == NULL)
+		{
+			logger.writeToLog("Could not load background music, quitting");
+			GUI::showMessageBox("Could not load background music. Quitting", "Error");
+			this->quit();
+			return;
+		}
+
 		m_model = (Model *)assetManager.loadAsset<Model>("targetobj.obj");
 		if(m_model == NULL)
 		{
@@ -132,8 +143,8 @@ void EngDemoApp::update(){
 
 		m_camera.setPosition(glm::vec3(3.0f, 0.0f, 0.0f));
 		m_camera.setTarget(glm::vec3(0.0f));
-		//
 		RenderManager::set3DMode(45.0f);
+		backgroundMusic->loop();
 		this->getWindow()->show();
 		doOnce = true;
 	}
@@ -151,6 +162,8 @@ void EngDemoApp::render(){
 
 void EngDemoApp::shutdown(){
 	AssetManager &assetManager = *AssetManager::Instance();
+	AudioContainer* backgroundMusic = (AudioContainer*)assetManager.loadAsset<AudioContainer>("throughthefireandtheflames.ogg");
+	backgroundMusic->stop();
 	GameWorld &world = *GameWorld::Instance();
 	world.deleteObject("testObj");
 	m_program.release();

@@ -13,11 +13,12 @@ TEST(AudioSuite, playingFunctionalitySystemTest){
 	Sleep(500);
 }
 
+/*
 TEST(AudioSuite, playingAgainFunctionalitySystemTest){
 	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
 	gunShot->play();
 }
-/*
+
 TEST(AudioSuite, loopingFunctionalitySystemTest){
 	AudioContainer* gunShot = (AudioContainer*)assetMgr.loadAsset<AudioContainer>("gunshot.wav");
 	gunShot->loop();

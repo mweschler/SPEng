@@ -28,6 +28,17 @@ add_custom_command(
 		$<TARGET_FILE_DIR:EngDemo>)                 # <--this is out-file path
 	#Copies openal32.dll file to executable path
 	add_custom_command(
+		TARGET EngDemo POST_BUILD        # Adds a post-build event to runEngTests
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+		"${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/bin/openal32.dll"      # <--this is in-file
+		$<TARGET_FILE_DIR:EngDemo>)                 # <--this is out-file path
+	#Copies libsnd.dll file to exceutable path
+	add_custom_command(
+		TARGET EngDemo POST_BUILD        # Adds a post-build event to runEngTests
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+		"${CMAKE_SOURCE_DIR}/../3rdparty/SFML-2.1/bin/libsndfile-1.dll"      # <--this is in-file
+		$<TARGET_FILE_DIR:EngDemo>)                 # <--this is out-file path
+	add_custom_command(
 		TARGET EngDemo POST_BUILD        # Adds a pre-build event to runEngTests
 		COMMAND ${CMAKE_COMMAND} -E copy_directory  # which executes "cmake - E copy_directory..."
 		"${CMAKE_SOURCE_DIR}/../resources"      # <--this is in-directory
