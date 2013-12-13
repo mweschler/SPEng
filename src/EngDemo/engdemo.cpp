@@ -14,9 +14,15 @@
 #include "RenderManager.h"
 #include "ScriptComponent.h"
 #include "ScriptingManager.h"
+#include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include "ConfigurationManager.h"
+
 
 static bool doOnce = false;
+
+void rotateObjects(std::vector<ModelComponent *> objects);
+
 
 EngDemoApp::EngDemoApp():
 	m_texture(NULL)
@@ -25,7 +31,10 @@ EngDemoApp::EngDemoApp():
 }
 
 bool EngDemoApp::initialize(){
-
+	ConfigurationManager &config = *ConfigurationManager::Instance();
+	config.setVariable<int> ("w_width", 1600);
+	config.setVariable<int> ("w_height", 900);
+	config.setVariable<bool> ("w_fullscreen", true);
 	return true;
 }
 
@@ -45,6 +54,8 @@ void EngDemoApp::update(){
 			this->quit();
 			return;
 		}
+
+		m_model->setModelMatrix(glm::scale(glm::vec3(2.5f, 2.5f, 2.5f)));
 
 		m_vertShader = (Shader *)assetManager.loadAsset<Shader>("demoVert12.vert");
 		if(m_vertShader == NULL){
@@ -93,6 +104,24 @@ void EngDemoApp::update(){
 			return;
 		}
 
+		//setup background quad
+		m_backdrop = (Texture *)assetManager.loadAsset<Texture>("cat_diff.tga");
+		if(m_backdrop == NULL){
+			logger.writeToLog("Could not load backdrop. Quitting");
+			GUI::showMessageBox("Could not load backdrop. Quitting", "Error");
+			this->quit();
+			return;
+		}
+
+		m_quad = (Model *) assetManager.loadAsset<Model>("quad.obj");
+		if(m_quad == NULL)
+		{
+			logger.writeToLog("Could not load quad. Quitting");
+			GUI::showMessageBox("Could not load	quad. Quitting", "Error");
+			this->quit();
+			return;
+		}
+
 		glEnable(GL_DEPTH_TEST); // enable depth-testing
 		glDepthMask(GL_TRUE); // turn back on
 		glDepthFunc(GL_LEQUAL);
@@ -120,27 +149,102 @@ void EngDemoApp::update(){
 
 		m_material.setDiffuseColor(glm::vec3(0.0f, 1.0f, 0.0f));
 		GameWorld &world = *GameWorld::Instance();
-		world.createObject("testObj", 0, 0, 0);
-		GameObject &testobj = *world.getObject("testObj");
+
+		world.createObject("testObj1", 0, 3, 0);
+		world.createObject("testObj2", 0, 3, 7);
+		world.createObject("testObj3", 0, 3, -7);
+		world.createObject("testObj4", 0, -3, 7);
+		world.createObject("testObj5", 0, -3, 0);
+		world.createObject("testObj6", 0, -3, -7);
+
+		GameObject &testobj = *world.getObject("testObj1");
 		modelComp = new ModelComponent(m_model, &m_material);
+		m_components.push_back(modelComp);
 
 		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
 		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
 
 		testobj.addComponent(modelComp);
-		testobj.addComponent(new ScriptComponent("demoTest.lua"));
+		
 
-		m_camera.setPosition(glm::vec3(3.0f, 0.0f, 0.0f));
+		m_rotating.push_back(modelComp);
+
+		GameObject &testobj2 = *world.getObject("testObj2");
+		modelComp = new ModelComponent(m_model, &m_material);
+		m_components.push_back(modelComp);
+
+		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
+		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
+
+		testobj2.addComponent(modelComp);
+
+		m_rotating.push_back(modelComp);
+
+		GameObject &testobj3 = *world.getObject("testObj3");
+		modelComp = new ModelComponent(m_model, &m_material);
+		m_components.push_back(modelComp);
+
+		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
+		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
+
+		testobj3.addComponent(modelComp);
+		
+		m_rotating.push_back(modelComp);
+
+		GameObject &testobj4 = *world.getObject("testObj4");
+		modelComp = new ModelComponent(m_model, &m_material);
+		m_components.push_back(modelComp);
+
+		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
+		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
+
+		testobj4.addComponent(modelComp);
+		m_rotating.push_back(modelComp);
+
+		GameObject &testobj5 = *world.getObject("testObj5");
+		modelComp = new ModelComponent(m_model, &m_material);
+		m_components.push_back(modelComp);
+
+		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
+		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
+
+		testobj5.addComponent(modelComp);
+
+		m_rotating.push_back(modelComp);
+
+		GameObject &testobj6 = *world.getObject("testObj6");
+		modelComp = new ModelComponent(m_model, &m_material);
+		m_components.push_back(modelComp);
+
+		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
+		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
+
+		testobj6.addComponent(modelComp);
+
+		m_camera.setPosition(glm::vec3(10.0f, 0.0f, 0.0f));
 		m_camera.setTarget(glm::vec3(0.0f));
 		//
-		RenderManager::set3DMode(45.0f);
+		RenderManager::set3DMode(70.0f);
 		this->getWindow()->show();
 		doOnce = true;
 	}
-	modelComp->setRotation(glm::vec3(0.0f, rotation, 90.0f));
-	rotation += 1;
-	if(rotation >= 360)
-		rotation = 0;
+
+	rotateObjects(m_rotating);
+}
+
+void rotateObjects(std::vector<ModelComponent *> objects){
+	for(auto object  = objects.begin(); object != objects.end();)
+	{
+		glm::vec3 objRotation = (*object)->getRotation();
+		objRotation.y += 1;
+
+		if(objRotation.y >= 360)
+			object = objects.erase(object);
+		else{
+			(*object)->setRotation(objRotation);
+			++object;
+		}
+	}
 }
 
 
@@ -152,7 +256,9 @@ void EngDemoApp::render(){
 void EngDemoApp::shutdown(){
 	AssetManager &assetManager = *AssetManager::Instance();
 	GameWorld &world = *GameWorld::Instance();
-	world.deleteObject("testObj");
+	world.deleteObject("testObj1");
+	world.deleteObject("testObj2");
+	world.deleteObject("testObj3");
 	m_program.release();
 	assetManager.releaseAsset("demoVert12.vert");
 	assetManager.releaseAsset("demoFrag12.frag");
