@@ -48,7 +48,65 @@ ModelComponent *modelComp;
 float rotation = 0.0f;
 void EngDemoApp::update(){
 	Logger &logger = *Logger::Instance();
+	sf::Joystick::update();
 
+	UserInput input;
+	sf::Joystick::update();
+	float posOfLeftY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+	float posOfLeftX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+	float posOfRightX = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
+	float posOfRightY = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
+	float Triggers = sf::Joystick::getAxisPosition(0, sf::Joystick::Z);
+	sf::Vector2i mousePos = input.getMousePosition();
+	//Move Right
+	if(posOfLeftX >=40 )
+	{
+		input.setMousePostion(mousePos.x +2,mousePos.y);
+	}
+
+	//Move Right
+	if(posOfLeftX <= -40 )
+	{
+		input.setMousePostion(mousePos.x -2,mousePos.y);
+	}
+
+	if(posOfLeftY >=40 )
+	{
+		input.setMousePostion(mousePos.x,mousePos.y + 2);
+	}
+	if(posOfLeftY <= -40 )
+	{
+		input.setMousePostion(mousePos.x,mousePos.y -2);
+	}
+
+	//Move Diagonally bottom left
+	if(posOfLeftX <= -40 && posOfLeftY >=40)
+	{
+		input.setMousePostion(mousePos.x -2,mousePos.y +2);
+	}
+
+	//Move Diagonally bottom Right
+	if(posOfLeftX >=40 && posOfLeftY >=40)
+	{
+		input.setMousePostion(mousePos.x +2,mousePos.y +2);
+	}
+
+	//Move Diagonally Top Right
+	if(posOfLeftX >=40 && posOfLeftY <= -40)
+	{
+		input.setMousePostion(mousePos.x +2,mousePos.y -2);
+	}
+
+	//Move Diagonally Top Left
+	if(posOfLeftX <=-40 && posOfLeftY <= -40)
+	{
+		input.setMousePostion(mousePos.x -2,mousePos.y -2);
+	}
+
+
+
+
+	sf::Joystick::update();
 	if(!doOnce)
 	{
 		AssetManager &assetManager = *AssetManager::Instance();
@@ -128,6 +186,7 @@ void EngDemoApp::update(){
 			this->quit();
 			return;
 		}
+		sf::Joystick::update();
 
 		m_quad = (Model *) assetManager.loadAsset<Model>("quad.obj");
 		if(m_quad == NULL)
@@ -142,11 +201,11 @@ void EngDemoApp::update(){
 		glDepthMask(GL_TRUE); // turn back on
 		glDepthFunc(GL_LEQUAL);
 		glDepthRange(0.0f, 1.0f);
-	
+
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CW);
-		
+
 		m_program.setVertAttrib("vertex");
 		m_program.setDiffuseAttrib("diffuse");
 		m_program.setMVPAttrib("mvp");
@@ -160,12 +219,12 @@ void EngDemoApp::update(){
 		m_material.setShader(&m_program);
 		m_material.setDiffuseColor(glm::vec3(0.0f, 0.0f, 1.0f));
 
-		
+
 		m_material.setTexture(m_texture);
 
 		m_material.setDiffuseColor(glm::vec3(0.0f, 1.0f, 0.0f));
 		GameWorld &world = *GameWorld::Instance();
-		
+
 		//0 = middle
 		world.createObject("testObj1", 0, 3, 0);
 		//1 = top right
@@ -178,7 +237,7 @@ void EngDemoApp::update(){
 		world.createObject("testObj5", 0, -3, 0);
 		//5 = bottom left
 		world.createObject("testObj6", 0, -3, -7);
-
+		sf::Joystick::update();
 		GameObject &testobj = *world.getObject("testObj1");
 		modelComp = new ModelComponent(m_model, &m_material);
 		m_components.push_back(modelComp);
@@ -187,7 +246,7 @@ void EngDemoApp::update(){
 		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
 
 		testobj.addComponent(modelComp);
-		
+
 
 		m_rotating.push_back(modelComp);
 
@@ -210,7 +269,7 @@ void EngDemoApp::update(){
 		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
 
 		testobj3.addComponent(modelComp);
-		
+
 		m_rotating.push_back(modelComp);
 
 		GameObject &testobj4 = *world.getObject("testObj4");
@@ -237,7 +296,7 @@ void EngDemoApp::update(){
 		GameObject &testobj6 = *world.getObject("testObj6");
 		modelComp = new ModelComponent(m_model, &m_material);
 		m_components.push_back(modelComp);
-
+		sf::Joystick::update();
 		//m_model->setModelMatrix(glm::translate(glm::mat4(1.0f), -0.5f, -0.5f, -0.5f));
 		modelComp->setRotation(glm::vec3(0.0f, 0.0f, 90.0f));
 
@@ -252,17 +311,17 @@ void EngDemoApp::update(){
 		doOnce = true;
 	}
 
-	UserInput input;
+	sf::Joystick::update();
 
-	if(input.isMouseKeyPressed(sf::Mouse::Left)) {
+	if(input.isMouseKeyPressed(sf::Mouse::Left) || input.isJoystickButtonPressed(0,0)) {
 		sf::Vector2i point = input.getMousePosition();
 		double distance = checkPointDistance(point);
-		
+
 		int width = ConfigurationManager::Instance()->getVariable<int>("w_width");
 		int height = ConfigurationManager::Instance()->getVariable<int>("w_height");
-		
+
 		int index;
-		
+
 		if(point.x < width/3 && point.y < height/2) {
 			index = 1;
 		} else if(point.x < width/3*2 && point.y < height/2) {
@@ -292,6 +351,10 @@ void EngDemoApp::update(){
 	}
 	rotateObjects(m_rotating);
 }
+
+
+
+
 
 double EngDemoApp::checkPointDistance(sf::Vector2i point) {
 	return sqrt(pow(point.x, 2.0) + pow(point.y, 2.0));
