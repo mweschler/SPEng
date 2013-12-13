@@ -14,9 +14,14 @@
 #include "RenderManager.h"
 #include "ScriptComponent.h"
 #include "ScriptingManager.h"
+#include "InputHandler.h"
 #include <glm/ext.hpp>
+#include <xtgmath.h>
+#include <limits.h>
 
 static bool doOnce = false;
+
+typedef std::numeric_limits< double > dbl;
 
 EngDemoApp::EngDemoApp():
 	m_texture(NULL)
@@ -141,8 +146,19 @@ void EngDemoApp::update(){
 	rotation += 1;
 	if(rotation >= 360)
 		rotation = 0;
+
+	UserInput input;
+
+	if(input.isMouseKeyPressed(sf::Mouse::Left)) {
+		double distance = checkPointDistance(input.getMousePosition());
+		cout.precision(dbl::digits10);
+		cout<< "distance: " << fixed << distance << endl;
+	}
 }
 
+double EngDemoApp::checkPointDistance(sf::Vector2i point){
+	return sqrt(pow(point.x, 2.0) + pow(point.y, 2.0));
+}
 
 void EngDemoApp::render(){
 	RenderList &renderList = *RenderList::Instance();

@@ -7,6 +7,7 @@
 #include "AssetManager.h"
 #include "ScriptingManager.h"
 #include "IObserver.h"
+#include "InputHandler.h"
 #include "GameWorld.h"
 #include "GL/glew.h"
 #include <sstream>

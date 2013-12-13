@@ -14,6 +14,7 @@ protected:
 	virtual void update();
 	virtual void render();
 	virtual void shutdown();
+	double checkPointDistance(sf::Vector2i);
 private:
 	Camera m_camera;
 	Material m_material;
