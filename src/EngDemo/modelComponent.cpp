@@ -6,7 +6,8 @@
 ModelComponent::ModelComponent(Model *model, Material *material):
 	m_model(model),
 	m_material(material),
-	m_rotation(1.0f)
+	m_rotation(1.0f),
+	m_lastRotate(0.0f)
 {
 	this->_name = "ModelComponent";
 }
@@ -24,5 +25,10 @@ void ModelComponent::setRotation(glm::vec3 rotation){
 	m_rotation = glm::rotate(glm::mat4(1.0f), rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
 	m_rotation = glm::rotate(m_rotation, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
 	m_rotation = glm::rotate(m_rotation, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+
+	m_lastRotate = rotation;
 }
 
+glm::vec3 ModelComponent::getRotation() const{
+	return m_lastRotate;
+}

@@ -1,7 +1,8 @@
 #include "gtest/gtest.h"
 #include "InputHandler.h"
 #include <SFML/Audio.hpp>
-
+#include <windows.h>
+#include <conio.h>
 //If this test gives you an error. It means you were pressing up
 TEST(userInputTest, DISABLED_test_one)
 {
@@ -411,7 +412,7 @@ TEST(userInputTest, test_six)
 	bufferReload.loadFromFile("reload.wav");
 	soundReload.setBuffer(bufferReload);
 
-
+	
 	UserInput input;
 	sf::Joystick::update();
 
@@ -421,6 +422,10 @@ TEST(userInputTest, test_six)
 
 
 	bool flag = true;
+
+
+		
+
 
 	while(flag)
 	{
@@ -485,19 +490,19 @@ TEST(userInputTest, test_six)
 		}
 
 
-
-	
-
-
-
-
-
 		//POV IS D PAD
 		float posOfLeftY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 		float posOfLeftX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 		float posOfRightX = sf::Joystick::getAxisPosition(0, sf::Joystick::R);
 		float posOfRightY = sf::Joystick::getAxisPosition(0, sf::Joystick::U);
 		float Triggers = sf::Joystick::getAxisPosition(0, sf::Joystick::Z);
+	
+
+
+
+
+
+	
 		sf::Vector2i mousePos = input.getMousePosition();
 
 
@@ -505,32 +510,72 @@ TEST(userInputTest, test_six)
 		{
 
 
-		//	input.setMousePostion(mousePos.x,mousePos.y - 1);
-			printf("Left Stick moved up");
-			_sleep(100);
+			input.setMousePostion(mousePos.x,mousePos.y + 1);
+			//printf("Left Stick moved up");
+			_sleep(0.5);
 			
 		}
 
+		
 		if(posOfLeftY <= -40 )
 		{
 
-		//	input.setMousePostion(mousePos.x,mousePos.y +1);
-			_sleep(100);
+			input.setMousePostion(mousePos.x,mousePos.y -1);
+			_sleep(1);
 		
 		}
+		sf::Joystick::update();
 
-
+		//Move Right
 		if(posOfLeftX >=40 )
 		{
 
 
-			//input.setMousePostion(mousePos.x -1,mousePos.y);
-				_sleep(100);
+			input.setMousePostion(mousePos.x +1,mousePos.y);
+				_sleep(0.5);
 		}
 
+		//Move Right
+		if(posOfLeftX <= -40 )
+		{
+
+
+			input.setMousePostion(mousePos.x -1,mousePos.y);
+				_sleep(0.5);
 		
+		}
 
+		//Move Diagonally bottom left
+		if(posOfLeftX <= -40 && posOfLeftY >=40)
+		{
+			input.setMousePostion(mousePos.x -2,mousePos.y +2);
 
+			_sleep(0.5);
+		}
+
+		//Move Diagonally bottom Right
+		if(posOfLeftX >=40 && posOfLeftY >=40)
+		{
+			input.setMousePostion(mousePos.x +2,mousePos.y +2);
+
+			_sleep(0.5);
+		}
+
+		//Move Diagonally Top Right
+		if(posOfLeftX >=40 && posOfLeftY <= -40)
+		{
+			input.setMousePostion(mousePos.x +2,mousePos.y -2);
+
+			_sleep(0.5);
+		}
+
+		//Move Diagonally Top Left
+		if(posOfLeftX <=-40 && posOfLeftY <= -40)
+		{
+			input.setMousePostion(mousePos.x -2,mousePos.y -2);
+
+			_sleep(0.5);
+		}
 		
 		if(posOfRightX <=-40 )
 		{
@@ -540,6 +585,7 @@ TEST(userInputTest, test_six)
 			
 		}
 
+		sf::Joystick::update();
 		if(posOfRightY <=-40 )
 		{
 
@@ -556,14 +602,7 @@ TEST(userInputTest, test_six)
 			
 		}
 
-		if(posOfLeftX <= -40 )
-		{
-
-
-			input.setMousePostion(mousePos.x +1,mousePos.y);
-				_sleep(3);
 		
-		}
 
 			if(Triggers >= 40 )
 		{
@@ -579,8 +618,7 @@ TEST(userInputTest, test_six)
 			sound.play();
 			_sleep(100);
 
-		    
-			_sleep(150);
+		   
 
 
 		}
